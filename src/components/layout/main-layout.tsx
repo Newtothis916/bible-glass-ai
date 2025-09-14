@@ -9,19 +9,22 @@ interface MainLayoutProps {
 export function MainLayout({ children, currentTab = "home" }: MainLayoutProps) {
   const [activeTab, setActiveTab] = useState(currentTab);
 
-      const handleTabClick = (tab: string) => {
+  const handleTabClick = (tab: string) => {
     setActiveTab(tab);
     
     // Handle navigation to different sections
     switch (tab) {
+      case 'home':
+        window.location.href = '/';
+        break;
       case 'read':
-        window.location.href = '/read/web/joh/3';
+        window.location.href = '/read';
         break;
       case 'listen':
         window.location.href = '/listen';
         break;
       case 'pray':
-        // Stay on current page, prayer journal is in dashboard
+        window.location.href = '/?tab=pray';
         break;
       case 'more':
         window.location.href = '/ai';
