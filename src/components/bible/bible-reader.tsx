@@ -1,144 +1,307 @@
-import { useState } from "react";
-import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/components/ui/liquid-glass-card";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
-import { BookOpen, ChevronLeft, ChevronRight, Highlighter, MessageSquare, Share, Sparkles } from "lucide-react";
-
-// Sample verse data
-const sampleVerses = [
-  { number: 1, text: "In the beginning was the Word, and the Word was with God, and the Word was God." },
-  { number: 2, text: "He was in the beginning with God." },
-  { number: 3, text: "All things were made through him. Without him, nothing was made that has been made." },
-  { number: 4, text: "In him was life, and the life was the light of men." },
-  { number: 5, text: "The light shines in darkness, and the darkness hasn't overcome it." },
-  { number: 6, text: "There came a man sent from God, whose name was John." },
-  { number: 7, text: "The same came as a witness, that he might testify about the light, that all might believe through him." },
-  { number: 8, text: "He was not the light, but was sent that he might testify about the light." },
-];
+import { BibleVerse } from "./bible-verse";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { bibleAPI, BibleVersion, Book, Chapter, Highlight, Bookmark, Note } from "@/lib/bible-api";
+import { useAuth } from "@/hooks/use-auth";
+import { ChevronLeft, ChevronRight, Settings, Share, MessageSquare, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export function BibleReader() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { version = 'web', book = 'joh', chapter = '3' } = useParams();
+  
+  const [versions, setVersions] = useState<BibleVersion[]>([]);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const [selectedVerse, setSelectedVerse] = useState<number | null>(null);
-  const [highlightedVerses, setHighlightedVerses] = useState<Set<number>>(new Set());
+  const [highlights, setHighlights] = useState<Highlight[]>([]);
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const toggleHighlight = (verseNumber: number) => {
-    const newHighlighted = new Set(highlightedVerses);
-    if (newHighlighted.has(verseNumber)) {
-      newHighlighted.delete(verseNumber);
-    } else {
-      newHighlighted.add(verseNumber);
+  // Load initial data
+  useEffect(() => {
+    loadVersions();
+  }, []);
+
+  // Load chapter when params change
+  useEffect(() => {
+    if (version && book && chapter) {
+      loadChapter();
     }
-    setHighlightedVerses(newHighlighted);
+  }, [version, book, chapter]);
+
+  // Load user annotations when chapter or user changes
+  useEffect(() => {
+    if (currentChapter && user) {
+      loadUserAnnotations();
+    }
+  }, [currentChapter, user]);
+
+  const loadVersions = async () => {
+    try {
+      const versionsData = await bibleAPI.getVersions();
+      setVersions(versionsData);
+      
+      // Load books for current version
+      if (versionsData.length > 0) {
+        const currentVersion = versionsData.find(v => v.code === version) || versionsData[0];
+        const booksData = await bibleAPI.getBooks(currentVersion.id);
+        setBooks(booksData);
+      }
+    } catch (error) {
+      console.error('Error loading versions:', error);
+      setError('Failed to load Bible versions');
+    }
   };
 
-  return (
-    <div className="min-h-screen p-4 space-y-4">
-      {/* Header */}
-      <LiquidGlassCard variant="glass">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <LiquidGlassButton variant="ghost" size="icon">
-                <ChevronLeft className="w-5 h-5" />
-              </LiquidGlassButton>
-              <div>
-                <CardTitle className="text-lg">John 1</CardTitle>
-                <p className="text-sm text-muted-foreground">World English Bible</p>
-              </div>
-            </div>
-            <LiquidGlassButton variant="ghost" size="icon">
-              <ChevronRight className="w-5 h-5" />
-            </LiquidGlassButton>
-          </div>
-        </CardHeader>
-      </LiquidGlassCard>
+  const loadChapter = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const chapterData = await bibleAPI.getChapterByReference(version!, book!, parseInt(chapter!));
+      
+      if (!chapterData) {
+        setError('Chapter not found');
+        return;
+      }
+      
+      setCurrentChapter(chapterData);
+    } catch (error) {
+      console.error('Error loading chapter:', error);
+      setError('Failed to load chapter');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      {/* Bible Text */}
-      <LiquidGlassCard variant="elevated">
-        <CardContent className="p-6 space-y-4">
-          <div className="space-y-4">
-            {sampleVerses.map((verse) => (
-              <div
-                key={verse.number}
-                className={`group relative p-3 rounded-xl transition-all duration-300 cursor-pointer ${
-                  highlightedVerses.has(verse.number)
-                    ? "bg-secondary/20 border border-secondary/30"
-                    : selectedVerse === verse.number
-                    ? "bg-primary/10 border border-primary/20"
-                    : "hover:bg-muted/50"
-                }`}
-                onClick={() => setSelectedVerse(selectedVerse === verse.number ? null : verse.number)}
-              >
-                <div className="flex gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 bg-gradient-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium shadow-soft">
-                    {verse.number}
-                  </span>
-                  <p className="text-base leading-relaxed flex-1 text-foreground">
-                    {verse.text}
-                  </p>
-                </div>
+  const loadUserAnnotations = async () => {
+    if (!currentChapter?.verses || !user) return;
 
-                {/* Verse Actions */}
-                {selectedVerse === verse.number && (
-                  <div className="mt-4 flex gap-2 animate-in slide-in-from-top-2 duration-300">
-                    <LiquidGlassButton
-                      variant="outline"
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleHighlight(verse.number);
-                      }}
-                      className={highlightedVerses.has(verse.number) ? "bg-secondary/20 border-secondary" : ""}
-                    >
-                      <Highlighter className="w-4 h-4" />
-                      {highlightedVerses.has(verse.number) ? "Highlighted" : "Highlight"}
-                    </LiquidGlassButton>
-                    <LiquidGlassButton variant="outline" size="sm">
-                      <MessageSquare className="w-4 h-4" />
-                      Note
-                    </LiquidGlassButton>
-                    <LiquidGlassButton variant="outline" size="sm">
-                      <Sparkles className="w-4 h-4" />
-                      Ask AI
-                    </LiquidGlassButton>
-                    <LiquidGlassButton variant="ghost" size="sm">
-                      <Share className="w-4 h-4" />
-                    </LiquidGlassButton>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </LiquidGlassCard>
+    const verseIds = currentChapter.verses.map(v => v.id);
+    
+    try {
+      const [highlightsData, bookmarksData, notesData] = await Promise.all([
+        bibleAPI.getUserHighlights(user.id, verseIds),
+        bibleAPI.getUserBookmarks(user.id, verseIds),
+        bibleAPI.getUserNotes(user.id, verseIds)
+      ]);
+      
+      setHighlights(highlightsData);
+      setBookmarks(bookmarksData);
+      setNotes(notesData);
+    } catch (error) {
+      console.error('Error loading annotations:', error);
+    }
+  };
 
-      {/* Chapter Navigation */}
-      <div className="flex justify-between items-center gap-4">
-        <LiquidGlassButton variant="outline" className="flex-1">
-          <ChevronLeft className="w-4 h-4" />
-          Previous Chapter
-        </LiquidGlassButton>
-        <LiquidGlassButton variant="outline" className="flex-1">
-          Next Chapter
-          <ChevronRight className="w-4 h-4" />
-        </LiquidGlassButton>
+  const handleVersionChange = (newVersion: string) => {
+    navigate(`/read/${newVersion}/${book}/${chapter}`);
+  };
+
+  const handleBookChange = (newBook: string) => {
+    navigate(`/read/${version}/${newBook}/1`);
+  };
+
+  const handleChapterChange = (newChapter: number) => {
+    navigate(`/read/${version}/${book}/${newChapter}`);
+  };
+
+  const getCurrentBook = () => books.find(b => b.code === book);
+  const getCurrentVersion = () => versions.find(v => v.code === version);
+
+  const canNavigatePrev = () => {
+    const currentBook = getCurrentBook();
+    return currentBook && (parseInt(chapter!) > 1);
+  };
+
+  const canNavigateNext = () => {
+    const currentBook = getCurrentBook();
+    return currentBook && (parseInt(chapter!) < currentBook.chapter_count);
+  };
+
+  const navigatePrevChapter = () => {
+    if (canNavigatePrev()) {
+      handleChapterChange(parseInt(chapter!) - 1);
+    }
+  };
+
+  const navigateNextChapter = () => {
+    if (canNavigateNext()) {
+      handleChapterChange(parseInt(chapter!) + 1);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="w-8 h-8 animate-spin" />
       </div>
+    );
+  }
 
-      {/* Quick AI Ask */}
-      <LiquidGlassCard variant="divine" className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-divine opacity-10" />
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-secondary rounded-full flex items-center justify-center shadow-divine">
-              <Sparkles className="w-5 h-5 text-secondary-foreground" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-primary-foreground">Need help understanding?</h3>
-              <p className="text-sm text-primary-foreground/80">Ask the AI Study Guide about this chapter</p>
-            </div>
-            <LiquidGlassButton variant="glass" size="sm">
-              Ask AI
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <p className="text-muted-foreground">{error}</p>
+          <Button onClick={() => navigate('/read')}>Go to Reader</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const currentBook = getCurrentBook();
+  const currentVersion = getCurrentVersion();
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <LiquidGlassCard className="p-4">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">
+            {currentBook?.name} {chapter}
+          </h1>
+          <div className="flex items-center gap-2">
+            <LiquidGlassButton variant="ghost" size="sm">
+              <Settings className="w-4 h-4" />
+            </LiquidGlassButton>
+            <LiquidGlassButton variant="ghost" size="sm">
+              <Share className="w-4 h-4" />
             </LiquidGlassButton>
           </div>
-        </CardContent>
+        </div>
+        
+        {/* Version and Book selectors */}
+        <div className="flex flex-wrap items-center gap-4 mb-4">
+          <Select value={version} onValueChange={handleVersionChange}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {versions.map((v) => (
+                <SelectItem key={v.id} value={v.code}>
+                  {v.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={book} onValueChange={handleBookChange}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {books.map((b) => (
+                <SelectItem key={b.id} value={b.code}>
+                  {b.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={chapter} onValueChange={(value) => handleChapterChange(parseInt(value))}>
+            <SelectTrigger className="w-[100px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {currentBook && Array.from({ length: currentBook.chapter_count }, (_, i) => (
+                <SelectItem key={i + 1} value={(i + 1).toString()}>
+                  {i + 1}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <span>{currentVersion?.name}</span>
+          <span>•</span>
+          <span>{currentBook?.testament?.toUpperCase()}</span>
+          {currentVersion?.copyright_notice && (
+            <>
+              <span>•</span>
+              <span>{currentVersion.copyright_notice}</span>
+            </>
+          )}
+        </div>
+      </LiquidGlassCard>
+
+      {/* Verses */}
+      {currentChapter && (
+        <LiquidGlassCard className="p-6">
+          <div className="space-y-4">
+            {currentChapter.verses.map((verse) => {
+              const highlight = highlights.find(h => h.verse_id === verse.id);
+              const bookmark = bookmarks.find(b => b.verse_id === verse.id);
+              const note = notes.find(n => n.verse_id === verse.id);
+              
+              return (
+                <BibleVerse
+                  key={verse.id}
+                  verse={verse}
+                  highlight={highlight}
+                  bookmark={bookmark}
+                  note={note}
+                  isSelected={selectedVerse === verse.number}
+                  onSelect={() => setSelectedVerse(verse.number)}
+                  onAnnotationChange={loadUserAnnotations}
+                />
+              );
+            })}
+          </div>
+        </LiquidGlassCard>
+      )}
+
+      {/* Navigation */}
+      <LiquidGlassCard className="p-4">
+        <div className="flex items-center justify-between">
+          <Button 
+            variant="outline" 
+            onClick={navigatePrevChapter}
+            disabled={!canNavigatePrev()}
+          >
+            <ChevronLeft className="w-4 h-4 mr-2" />
+            Chapter {parseInt(chapter!) - 1}
+          </Button>
+          
+          <span className="text-sm text-muted-foreground">
+            Chapter {chapter} of {currentBook?.chapter_count}
+          </span>
+          
+          <Button 
+            variant="outline" 
+            onClick={navigateNextChapter}
+            disabled={!canNavigateNext()}
+          >
+            Chapter {parseInt(chapter!) + 1}
+            <ChevronRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      </LiquidGlassCard>
+
+      {/* AI Study Guide Prompt */}
+      <LiquidGlassCard className="p-6 border-primary/20">
+        <div className="text-center space-y-3">
+          <h3 className="font-semibold">Need help understanding this passage?</h3>
+          <p className="text-sm text-muted-foreground">
+            Ask our AI Bible Guide any questions about {currentBook?.name} {chapter}
+          </p>
+          <LiquidGlassButton 
+            className="bg-primary/10 hover:bg-primary/20"
+            onClick={() => navigate('/ai')}
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Ask AI Guide
+          </LiquidGlassButton>
+        </div>
       </LiquidGlassCard>
     </div>
   );

@@ -366,7 +366,7 @@ export type Database = {
           is_premium_only: boolean | null
           member_count: number | null
           name: string
-          owner_id: string
+          owner_id: string | null
           updated_at: string | null
           visibility: Database["public"]["Enums"]["group_visibility"] | null
         }
@@ -378,7 +378,7 @@ export type Database = {
           is_premium_only?: boolean | null
           member_count?: number | null
           name: string
-          owner_id: string
+          owner_id?: string | null
           updated_at?: string | null
           visibility?: Database["public"]["Enums"]["group_visibility"] | null
         }
@@ -390,7 +390,7 @@ export type Database = {
           is_premium_only?: boolean | null
           member_count?: number | null
           name?: string
-          owner_id?: string
+          owner_id?: string | null
           updated_at?: string | null
           visibility?: Database["public"]["Enums"]["group_visibility"] | null
         }
