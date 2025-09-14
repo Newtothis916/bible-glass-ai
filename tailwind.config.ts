@@ -13,18 +13,28 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
+        "border-glass": "var(--border-glass)",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        fg: "hsl(var(--fg))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          light: "hsl(var(--primary-light))",
+          dark: "hsl(var(--primary-dark))",
+          glow: "hsl(var(--primary-glow))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          dark: "hsl(var(--secondary-dark))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -33,30 +43,40 @@ export default {
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
+          dark: "hsl(var(--muted-dark))",
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
         card: {
           DEFAULT: "hsl(var(--card))",
+          glass: "var(--card-glass)",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        glass: {
+          bg: "var(--glass-bg)",
+          border: "var(--glass-border)",
         },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-secondary": "var(--gradient-secondary)",
+        "gradient-divine": "var(--gradient-divine)",
+        "gradient-glass": "var(--gradient-glass)",
+        "gradient-hero": "var(--gradient-hero)",
+      },
+      boxShadow: {
+        "soft": "var(--shadow-soft)",
+        "medium": "var(--shadow-medium)",
+        "elegant": "var(--shadow-elegant)",
+        "glow": "var(--shadow-glow)",
+        "divine": "var(--shadow-divine)",
+        "glass": "var(--glass-shadow)",
+        "glass-lg": "var(--glass-shadow-lg)",
       },
       borderRadius: {
         lg: "var(--radius)",
