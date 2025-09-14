@@ -147,7 +147,7 @@ export function BibleVerse({
     <>
       <div 
         className={cn(
-          'group flex items-start gap-3 p-2 rounded-lg transition-all duration-200 hover:bg-muted/30',
+          'group flex items-start gap-3 p-2 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:scale-105 shadow-xl backdrop-blur-md',
           highlightColorClass,
           isSelected && 'ring-2 ring-primary',
           'cursor-pointer'
@@ -162,7 +162,7 @@ export function BibleVerse({
           <p className="text-sm leading-relaxed">{verse.text}</p>
           
           {note && (
-            <div className="bg-muted/50 rounded p-2">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/5">
               <p className="text-xs text-muted-foreground mb-1">Your note:</p>
               <p className="text-sm">{note.content}</p>
             </div>

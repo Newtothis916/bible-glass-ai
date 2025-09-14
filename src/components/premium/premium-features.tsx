@@ -108,7 +108,7 @@ export function PremiumFeatures() {
 
         {/* Premium Plan */}
         <LiquidGlassCard variant="premium" className="relative border-2 border-secondary">
-          <div className="absolute top-4 right-4 bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs font-medium">
+          <div className="absolute top-4 right-4 bg-secondary/20 backdrop-blur-md border border-secondary/30 text-secondary px-3 py-1 rounded-2xl text-xs font-inter font-normal tracking-tighter shadow-xl transition-all duration-300 hover:scale-105">
             Most Popular
           </div>
           <CardHeader>

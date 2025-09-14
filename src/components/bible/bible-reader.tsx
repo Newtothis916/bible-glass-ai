@@ -290,12 +290,12 @@ export function BibleReader() {
       {/* AI Study Guide Prompt */}
       <LiquidGlassCard className="p-6 border-primary/20">
         <div className="text-center space-y-3">
-          <h3 className="font-semibold">Need help understanding this passage?</h3>
+          <h3 className="font-inter font-normal tracking-tighter">Need help understanding this passage?</h3>
           <p className="text-sm text-muted-foreground">
             Ask our AI Bible Guide any questions about {currentBook?.name} {chapter}
           </p>
           <LiquidGlassButton 
-            className="bg-primary/10 hover:bg-primary/20"
+            className="bg-primary/20 backdrop-blur-md border border-primary/30 hover:bg-primary/30 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20"
             onClick={() => navigate('/ai')}
           >
             <MessageSquare className="w-4 h-4 mr-2" />

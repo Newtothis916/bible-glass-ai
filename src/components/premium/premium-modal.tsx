@@ -65,9 +65,9 @@ export function PremiumModal({ trigger, defaultTier = 'premium' }: PremiumModalP
 
   const getTierColor = (tierId: string) => {
     switch (tierId) {
-      case 'premium': return 'border-amber-500/50 bg-amber-500/10';
-      case 'family': return 'border-blue-500/50 bg-blue-500/10';
-      default: return 'border-border-glass';
+      case 'premium': return 'border-amber-500/50 bg-amber-500/20 backdrop-blur-md';
+      case 'family': return 'border-blue-500/50 bg-blue-500/20 backdrop-blur-md';
+      default: return 'border-white/30 bg-white/10 backdrop-blur-md';
     }
   };
 
@@ -101,7 +101,7 @@ export function PremiumModal({ trigger, defaultTier = 'premium' }: PremiumModalP
               <CardHeader className="text-center pb-4">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   {getTierIcon(tier.id)}
-                  <h3 className="font-semibold text-lg">{tier.name}</h3>
+                  <h3 className="font-inter font-normal tracking-tighter text-lg">{tier.name}</h3>
                 </div>
                 
                 {tier.price > 0 ? (
@@ -141,8 +141,8 @@ export function PremiumModal({ trigger, defaultTier = 'premium' }: PremiumModalP
           ))}
         </div>
 
-        <div className="mt-6 p-4 bg-muted/10 rounded-lg border border-border-glass">
-          <h4 className="font-medium mb-2">Why upgrade?</h4>
+        <div className="mt-6 p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/30 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/5">
+          <h4 className="font-inter font-normal tracking-tighter mb-2">Why upgrade?</h4>
           <ul className="text-sm text-muted-foreground space-y-1">
             <li>• Unlimited AI Bible study assistance</li>
             <li>• Access to multiple Bible translations</li>

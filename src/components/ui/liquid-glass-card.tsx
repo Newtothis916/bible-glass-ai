@@ -3,17 +3,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const liquidGlassCardVariants = cva(
-  "rounded-2xl backdrop-blur-md transition-all duration-300",
+  "rounded-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-xl",
   {
     variants: {
       variant: {
-        default: "bg-card-glass border border-border-glass shadow-glass hover:shadow-elegant",
-        elevated: "bg-card-glass border border-border-glass shadow-elegant hover:shadow-glow hover:scale-[1.02]",
-        outline: "border-2 border-primary/20 bg-glass-bg backdrop-blur-md shadow-soft hover:border-primary/40 hover:shadow-medium",
-        solid: "bg-card border border-border shadow-soft hover:shadow-medium",
-        glass: "bg-glass-bg backdrop-blur-md border border-border-glass shadow-glass hover:shadow-elegant",
+        default: "bg-white/10 border border-white/20 hover:shadow-2xl hover:shadow-white/5",
+        elevated: "bg-white/10 border border-white/20 shadow-elegant hover:shadow-glow",
+        outline: "border-2 border-primary/20 bg-transparent backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10",
+        solid: "bg-card border border-border hover:shadow-2xl hover:shadow-white/5",
+        glass: "bg-glass-bg backdrop-blur-md border border-glass-border hover:shadow-2xl hover:shadow-white/5",
         divine: "bg-gradient-glass border border-border-glass shadow-divine hover:shadow-glow",
-        premium: "bg-gradient-divine border border-secondary/30 shadow-divine hover:shadow-glow hover:scale-[1.01]",
+        premium: "bg-gradient-divine border border-secondary/30 shadow-divine hover:shadow-glow",
       },
       padding: {
         none: "p-0",
@@ -62,7 +62,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
+    className={cn("font-inter font-normal leading-none tracking-tighter", className)}
     {...props}
   />
 ));
@@ -74,7 +74,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm font-inter tracking-tighter text-muted-foreground", className)}
     {...props}
   />
 ));

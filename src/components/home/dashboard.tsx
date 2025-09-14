@@ -35,7 +35,7 @@ export function Dashboard() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <h3 className="font-semibold text-primary-foreground">7-Day Foundations - Day 1</h3>
+            <h3 className="font-inter font-normal tracking-tighter text-primary-foreground">7-Day Foundations - Day 1</h3>
             <p className="text-primary-foreground/90 text-sm">
               "In the beginning was the Word..." - Discover the foundation of faith
             </p>
@@ -54,7 +54,7 @@ export function Dashboard() {
               <BookOpen className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h3 className="font-medium text-sm">Continue Reading</h3>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Continue Reading</h3>
               <p className="text-xs text-muted-foreground">John 3:16</p>
             </div>
           </CardContent>
@@ -66,7 +66,7 @@ export function Dashboard() {
               <Sparkles className="w-6 h-6 text-secondary-foreground" />
             </div>
             <div>
-              <h3 className="font-medium text-sm">Ask AI Guide</h3>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Ask AI Guide</h3>
               <p className="text-xs text-muted-foreground">3 questions left</p>
             </div>
           </CardContent>
@@ -79,7 +79,7 @@ export function Dashboard() {
           <CardContent className="p-4 text-center space-y-3">
             <Heart className="w-8 h-8 text-destructive mx-auto" />
             <div>
-              <h3 className="font-medium text-sm">Prayer Journal</h3>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Prayer Journal</h3>
               <p className="text-xs text-muted-foreground">2 active prayers</p>
             </div>
           </CardContent>
@@ -89,7 +89,7 @@ export function Dashboard() {
           <CardContent className="p-4 text-center space-y-3">
             <Award className="w-8 h-8 text-secondary mx-auto" />
             <div>
-              <h3 className="font-medium text-sm">7 Day Streak</h3>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">7 Day Streak</h3>
               <p className="text-xs text-muted-foreground">Keep it up!</p>
             </div>
           </CardContent>
@@ -111,7 +111,7 @@ export function Dashboard() {
                 JD
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium">John shared a reflection</p>
+                <p className="text-sm font-inter font-normal tracking-tighter">John shared a reflection</p>
                 <p className="text-xs text-muted-foreground">"This verse changed my perspective on forgiveness..."</p>
                 <p className="text-xs text-muted-foreground mt-1">Matthew 6:14 • 2 hours ago</p>
               </div>
@@ -122,7 +122,7 @@ export function Dashboard() {
                 SM
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium">Sarah completed 7-Day Foundations</p>
+                <p className="text-sm font-inter font-normal tracking-tighter">Sarah completed 7-Day Foundations</p>
                 <p className="text-xs text-muted-foreground">"Amazing journey through the Gospel!"</p>
                 <p className="text-xs text-muted-foreground mt-1">Just now</p>
               </div>
@@ -142,10 +142,10 @@ export function Dashboard() {
           <CardTitle>Verse of the Day</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <blockquote className="text-lg font-medium leading-relaxed">
+          <blockquote className="text-lg font-inter font-normal tracking-tighter leading-relaxed">
             "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
           </blockquote>
-          <p className="text-sm text-muted-foreground font-medium">John 3:16 (WEB)</p>
+          <p className="text-sm text-muted-foreground font-inter font-normal tracking-tighter">John 3:16 (WEB)</p>
           
           <div className="flex gap-2">
             <LiquidGlassButton variant="outline" size="sm">

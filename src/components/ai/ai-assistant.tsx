@@ -124,7 +124,7 @@ export function AIAssistant() {
                         Scripture References
                       </h4>
                       {message.citations.map((citation, index) => (
-                        <div key={index} className="text-xs bg-glass-bg p-2 rounded-lg">
+                        <div key={index} className="text-xs bg-white/10 backdrop-blur-md border border-white/30 p-2 rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
                           <p className="font-medium">{citation.ref}</p>
                           <p className="text-muted-foreground mt-1">"{citation.excerpt}"</p>
                         </div>

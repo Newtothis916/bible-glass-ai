@@ -360,13 +360,13 @@ export function AIPage() {
 
         {/* History Sidebar */}
         {showHistory && user && (
-          <div className="w-80 border-l border-border-glass p-4 bg-background/50">
-            <h3 className="font-medium mb-4">Recent Questions</h3>
+          <div className="w-80 border-l border-white/30 p-4 bg-white/10 backdrop-blur-md">
+            <h3 className="font-inter font-normal tracking-tighter mb-4">Recent Questions</h3>
             <div className="space-y-2">
               {userHistory.map((query) => (
                 <div 
                   key={query.id} 
-                  className="p-3 rounded-lg bg-muted/50 hover:bg-muted/70 cursor-pointer transition-colors"
+                  className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/15 cursor-pointer transition-all duration-300 hover:scale-105 shadow-xl"
                   onClick={() => setInput(query.question)}
                 >
                   <p className="text-sm line-clamp-2">{query.question}</p>
