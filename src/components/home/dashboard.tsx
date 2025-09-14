@@ -15,7 +15,7 @@ export function Dashboard() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 text-white">
             <h1 className="text-4xl font-bold mb-2">
-              Ultimate Bible
+              Devotion
             </h1>
             <p className="text-lg opacity-90">
               AI Study • Prayer • Community
