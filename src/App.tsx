@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/use-auth";
 import Index from "./pages/Index";
 import ReadPage from "./pages/read";
+import PlansPage from "./pages/plans";
+import SearchPage from "./pages/search";
+import AIPage from "./pages/ai";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +24,9 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/read" element={<ReadPage />} />
             <Route path="/read/:version/:book/:chapter" element={<ReadPage />} />
+            <Route path="/plans" element={<PlansPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/ai" element={<AIPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
