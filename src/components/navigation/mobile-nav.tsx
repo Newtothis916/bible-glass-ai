@@ -1,4 +1,4 @@
-import { Home, BookOpen, HeadphonesIcon, Heart, MoreHorizontal } from "lucide-react";
+import { Home, BookOpen, HeadphonesIcon, Heart, Users } from "lucide-react";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
 import { cn } from "@/lib/utils";
 
@@ -12,7 +12,7 @@ const navItems = [
   { id: "read", label: "Read", icon: BookOpen },
   { id: "listen", label: "Listen", icon: HeadphonesIcon },
   { id: "pray", label: "Pray", icon: Heart },
-  { id: "more", label: "More", icon: MoreHorizontal },
+  { id: "groups", label: "Groups", icon: Users },
 ];
 
 export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {

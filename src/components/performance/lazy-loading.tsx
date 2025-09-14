@@ -1,4 +1,4 @@
-import { lazy, Suspense, ComponentType } from 'react';
+import { lazy, Suspense, ComponentType, useState, useEffect } from 'react';
 import { LiquidGlassCard, CardContent } from "@/components/ui/liquid-glass-card";
 import { Skeleton } from "@/components/ui/skeleton";
 

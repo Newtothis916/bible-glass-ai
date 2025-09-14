@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import { MobileNav } from "@/components/navigation/mobile-nav";
+import { OfflineIndicator } from "@/components/ui/offline-indicator";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -26,8 +27,8 @@ export function MainLayout({ children, currentTab = "home" }: MainLayoutProps) {
       case 'pray':
         window.location.href = '/?tab=pray';
         break;
-      case 'more':
-        window.location.href = '/ai';
+      case 'groups':
+        window.location.href = '/groups';
         break;
       default:
         console.log(`Navigate to: ${tab}`);
@@ -38,6 +39,9 @@ export function MainLayout({ children, currentTab = "home" }: MainLayoutProps) {
     <div className="min-h-screen bg-gradient-hero font-inter">
       {/* Background pattern */}
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.3),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(255,206,84,0.3),transparent_50%),radial-gradient(circle_at_40%_40%,rgba(120,119,198,0.2),transparent_50%)]" />
+      
+      {/* Offline Indicator */}
+      <OfflineIndicator />
       
       {/* Main content */}
       <div className="relative z-10 pb-20">

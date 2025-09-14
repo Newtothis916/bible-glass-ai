@@ -12,6 +12,7 @@ import AIPage from "./pages/ai";
 import ListenPage from "./pages/listen";
 import GroupsPage from "./pages/groups";
 import PrayPage from "./pages/pray";
+import Success from "./pages/success";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/listen" element={<ListenPage />} />
             <Route path="/groups" element={<GroupsPage />} />
             <Route path="/pray" element={<PrayPage />} />
+            <Route path="/success" element={<Success />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
