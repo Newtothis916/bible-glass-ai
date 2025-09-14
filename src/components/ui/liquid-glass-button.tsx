@@ -4,25 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const liquidGlassButtonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 backdrop-blur-md border border-border-glass",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-gradient-primary text-primary-foreground shadow-elegant hover:shadow-glow hover:scale-[1.02] active:scale-[0.98]",
-        secondary: "bg-gradient-secondary text-secondary-foreground shadow-elegant hover:shadow-divine hover:scale-[1.02] active:scale-[0.98]",
+        default: "bg-primary text-primary-foreground hover:bg-primary-dark shadow-elegant hover:shadow-glow hover:scale-[1.02] active:scale-[0.98]",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-dark shadow-soft hover:shadow-divine hover:scale-[1.02] active:scale-[0.98]",
+        outline: "border border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground backdrop-blur-md shadow-soft hover:shadow-elegant",
+        ghost: "text-foreground hover:bg-accent hover:text-accent-foreground backdrop-blur-md",
+        glass: "bg-glass-bg backdrop-blur-md border border-glass-border text-foreground hover:bg-glass-bg/80 shadow-glass hover:shadow-elegant hover:scale-[1.02] active:scale-[0.98]",
+        divine: "bg-gradient-divine text-primary-foreground hover:shadow-glow border border-accent/30 hover:scale-[1.02] active:scale-[0.98]",
+        sacred: "bg-gradient-primary text-primary-foreground hover:shadow-divine border border-primary-glow/20 hover:scale-[1.02] active:scale-[0.98]",
         destructive: "bg-destructive text-destructive-foreground shadow-elegant hover:bg-destructive/90 hover:scale-[1.02] active:scale-[0.98]",
-        outline: "border-2 border-primary/20 bg-glass-bg backdrop-blur-md text-primary hover:bg-primary/10 hover:border-primary/40 shadow-glass hover:shadow-elegant",
-        ghost: "bg-transparent hover:bg-glass-bg hover:text-primary backdrop-blur-sm shadow-none hover:shadow-soft",
         link: "text-primary underline-offset-4 hover:underline bg-transparent shadow-none",
-        glass: "bg-glass-bg backdrop-blur-md border-glass-border text-foreground shadow-glass hover:bg-glass-bg/80 hover:shadow-elegant hover:scale-[1.02] active:scale-[0.98]",
-        divine: "bg-gradient-divine text-primary-foreground shadow-elegant hover:shadow-glow hover:shadow-divine hover:scale-[1.02] active:scale-[0.98]",
       },
       size: {
-        default: "h-12 px-6 py-3",
-        sm: "h-10 px-4 py-2 text-xs",
-        lg: "h-14 px-8 py-4 text-base",
-        xl: "h-16 px-10 py-5 text-lg",
-        icon: "h-12 w-12",
+        sm: "h-8 rounded-lg px-3 text-xs",
+        default: "h-10 px-4 py-2",
+        lg: "h-12 rounded-xl px-6 text-base",
+        icon: "h-10 w-10",
       },
     },
     defaultVariants: {

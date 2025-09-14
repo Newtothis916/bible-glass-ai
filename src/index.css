@@ -3,70 +3,71 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ultimate Bible - Liquid Glass Design System 
-All colors, gradients, fonts, and effects defined here.
+/* Ultimate Bible - Strategic Purple Design System 
+Sacred color palette for spiritual connection and divine inspiration.
 */
 
 @layer base {
   :root {
     /* Liquid Glass Foundation */
-    --glass-bg: rgba(255, 255, 255, 0.12);
-    --glass-border: rgba(255, 255, 255, 0.35);
-    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    --glass-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.35);
+    --glass-bg: rgba(116, 4, 191, 0.08);
+    --glass-border: rgba(116, 4, 191, 0.25);
+    --glass-shadow: 0 10px 30px rgba(116, 4, 191, 0.15);
+    --glass-shadow-lg: 0 20px 60px rgba(116, 4, 191, 0.25);
     
-    /* OKLCH Color Palette */
-    --background: 0 0% 100%;
-    --foreground: 260 5% 15%;
-    --fg: 260 2% 95%;
+    /* Sacred Color Palette - Strategic Implementation */
+    /* 60% - Sacred Cream: Main backgrounds, reading areas */
+    --background: 30 33% 96%;
+    --foreground: 274 94% 15%;
+    --fg: 30 33% 92%;
 
-    /* Primary - Sacred Purple */
-    --primary: 260 40% 45%;
-    --primary-light: 260 35% 60%;
-    --primary-dark: 260 45% 35%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 260 40% 70%;
+    /* 30% - Deep Spiritual Purple: Primary brand, navigation */
+    --primary: 274 94% 38%;
+    --primary-light: 275 60% 64%;
+    --primary-dark: 274 94% 28%;
+    --primary-foreground: 30 33% 96%;
+    --primary-glow: 275 60% 84%;
 
-    /* Secondary - Divine Gold */
-    --secondary: 45 85% 70%;
-    --secondary-dark: 45 75% 55%;
-    --secondary-foreground: 260 5% 15%;
+    /* 10% - Royal Purple: Interactive elements, buttons */
+    --secondary: 290 68% 45%;
+    --secondary-dark: 290 68% 35%;
+    --secondary-foreground: 30 33% 96%;
 
-    /* Neutral Grays */
-    --muted: 260 5% 96%;
-    --muted-foreground: 260 5% 45%;
-    --muted-dark: 260 10% 20%;
+    /* Semantic Color Mapping */
+    --muted: 30 33% 92%;
+    --muted-foreground: 274 94% 45%;
+    --muted-dark: 274 94% 25%;
     
-    --card: 0 0% 100%;
-    --card-foreground: 260 5% 15%;
-    --card-glass: rgba(255, 255, 255, 0.8);
+    --card: 30 33% 98%;
+    --card-foreground: 274 94% 20%;
+    --card-glass: rgba(242, 234, 228, 0.9);
 
-    --border: 260 5% 90%;
-    --border-glass: rgba(255, 255, 255, 0.2);
-    --input: 260 5% 94%;
-    --ring: 260 40% 45%;
+    --border: 30 33% 88%;
+    --border-glass: rgba(116, 4, 191, 0.15);
+    --input: 30 33% 94%;
+    --ring: 274 94% 38%;
 
-    /* Accent Colors */
-    --accent: 180 50% 85%;
-    --accent-foreground: 260 5% 15%;
+    /* Accent & Interactive Colors */
+    --accent: 275 60% 84%;
+    --accent-foreground: 274 94% 20%;
     --success: 140 50% 50%;
     --warning: 30 90% 60%;
     --destructive: 0 75% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 30 33% 96%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(260 40% 45%), hsl(260 35% 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(45 85% 70%), hsl(45 75% 55%));
-    --gradient-divine: linear-gradient(135deg, hsl(260 40% 45%), hsl(45 85% 70%));
-    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-    --gradient-hero: linear-gradient(135deg, hsl(260 40% 45%) 0%, hsl(260 35% 60%) 50%, hsl(45 85% 70%) 100%);
+    /* Strategic Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(274 94% 38%), hsl(275 60% 64%));
+    --gradient-secondary: linear-gradient(135deg, hsl(290 68% 45%), hsl(275 60% 84%));
+    --gradient-divine: linear-gradient(135deg, hsl(274 94% 38%), hsl(275 60% 84%));
+    --gradient-glass: linear-gradient(135deg, rgba(242,234,228,0.15), rgba(216,189,242,0.08));
+    --gradient-hero: linear-gradient(135deg, hsl(274 94% 38%) 0%, hsl(290 68% 45%) 50%, hsl(275 60% 84%) 100%);
 
-    /* Shadows */
-    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
-    --shadow-elegant: 0 10px 30px -10px hsl(260 40% 45% / 0.3);
-    --shadow-glow: 0 0 40px hsl(260 35% 60% / 0.4);
-    --shadow-divine: 0 20px 60px hsl(45 85% 70% / 0.2);
+    /* Contextual Shadows */
+    --shadow-soft: 0 4px 20px rgba(116, 4, 191, 0.08);
+    --shadow-medium: 0 8px 30px rgba(116, 4, 191, 0.12);
+    --shadow-elegant: 0 10px 30px -10px hsl(274 94% 38% / 0.3);
+    --shadow-glow: 0 0 40px hsl(275 60% 64% / 0.4);
+    --shadow-divine: 0 20px 60px hsl(275 60% 84% / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -97,48 +98,49 @@ All colors, gradients, fonts, and effects defined here.
   }
 
   .dark {
-    --background: 260 15% 8%;
-    --foreground: 260 5% 95%;
-    --fg: 260 5% 95%;
+    /* Dark Mode Sacred Palette */
+    --background: 274 94% 8%;
+    --foreground: 30 33% 92%;
+    --fg: 30 33% 92%;
 
-    --primary: 260 40% 60%;
-    --primary-light: 260 35% 70%;
-    --primary-dark: 260 45% 45%;
-    --primary-foreground: 260 15% 8%;
-    --primary-glow: 260 40% 80%;
+    --primary: 275 60% 64%;
+    --primary-light: 275 60% 74%;
+    --primary-dark: 274 94% 38%;
+    --primary-foreground: 274 94% 8%;
+    --primary-glow: 275 60% 84%;
 
-    --secondary: 45 85% 75%;
-    --secondary-dark: 45 75% 60%;
-    --secondary-foreground: 260 15% 8%;
+    --secondary: 290 68% 55%;
+    --secondary-dark: 290 68% 45%;
+    --secondary-foreground: 274 94% 8%;
 
-    --muted: 260 10% 15%;
-    --muted-foreground: 260 5% 65%;
-    --muted-dark: 260 15% 8%;
+    --muted: 274 94% 12%;
+    --muted-foreground: 30 33% 75%;
+    --muted-dark: 274 94% 8%;
 
-    --card: 260 10% 12%;
-    --card-foreground: 260 5% 95%;
-    --card-glass: rgba(255, 255, 255, 0.05);
+    --card: 274 94% 10%;
+    --card-foreground: 30 33% 92%;
+    --card-glass: rgba(116, 4, 191, 0.08);
 
-    --border: 260 10% 20%;
-    --border-glass: rgba(255, 255, 255, 0.1);
-    --input: 260 10% 16%;
-    --ring: 260 40% 60%;
+    --border: 274 94% 18%;
+    --border-glass: rgba(173, 108, 217, 0.15);
+    --input: 274 94% 14%;
+    --ring: 275 60% 64%;
 
-    --accent: 180 50% 25%;
-    --accent-foreground: 260 5% 95%;
+    --accent: 275 60% 84%;
+    --accent-foreground: 274 94% 15%;
     
     /* Dark mode gradients */
-    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-    --gradient-hero: linear-gradient(135deg, hsl(260 40% 20%) 0%, hsl(260 35% 30%) 50%, hsl(45 85% 40%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(173,108,217,0.12), rgba(116,4,191,0.05));
+    --gradient-hero: linear-gradient(135deg, hsl(274 94% 15%) 0%, hsl(290 68% 25%) 50%, hsl(275 60% 35%) 100%);
     
     /* Dark shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(260 40% 60% / 0.2);
-    --shadow-glow: 0 0 40px hsl(260 35% 70% / 0.3);
-    --shadow-divine: 0 20px 60px hsl(45 85% 75% / 0.1);
+    --shadow-elegant: 0 10px 30px -10px hsl(275 60% 64% / 0.25);
+    --shadow-glow: 0 0 40px hsl(275 60% 74% / 0.3);
+    --shadow-divine: 0 20px 60px hsl(275 60% 84% / 0.15);
 
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --glass-bg: rgba(116, 4, 191, 0.08);
+    --glass-border: rgba(173, 108, 217, 0.2);
+    --glass-shadow: 0 10px 30px rgba(116, 4, 191, 0.3);
   }
 }
 

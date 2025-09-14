@@ -37,8 +37,10 @@ export function MainLayout({ children, currentTab = "home" }: MainLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gradient-hero font-inter">
-      {/* Background pattern */}
-      <div className="fixed inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.3),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(255,206,84,0.3),transparent_50%),radial-gradient(circle_at_40%_40%,rgba(120,119,198,0.2),transparent_50%)]" />
+      {/* Sacred background pattern */}
+      <div className="fixed inset-0 bg-gradient-hero">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(274_94%_38%_/_0.15),transparent_50%),radial-gradient(circle_at_80%_20%,hsl(275_60%_84%_/_0.2),transparent_50%),radial-gradient(circle_at_40%_40%,hsl(290_68%_45%_/_0.1),transparent_50%)]" />
+      </div>
       
       {/* Offline Indicator */}
       <OfflineIndicator />
