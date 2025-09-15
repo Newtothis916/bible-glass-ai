@@ -14,6 +14,15 @@ import GroupsPage from "./pages/groups";
 import PrayPage from "./pages/pray";
 import Success from "./pages/success";
 import NotFound from "./pages/NotFound";
+import ProfilePage from "./pages/profile";
+import SettingsPage from "./pages/settings";
+import NotesPage from "./pages/notes";
+import BookmarksPage from "./pages/bookmarks";
+import DownloadsPage from "./pages/downloads";
+import AnalyticsPage from "./pages/analytics";
+import HelpPage from "./pages/help";
+import FeedbackPage from "./pages/feedback";
+import AboutPage from "./pages/about";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +43,15 @@ const App = () => (
             <Route path="/listen" element={<ListenPage />} />
             <Route path="/groups" element={<GroupsPage />} />
             <Route path="/pray" element={<PrayPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/notes" element={<NotesPage />} />
+            <Route path="/bookmarks" element={<BookmarksPage />} />
+            <Route path="/downloads" element={<DownloadsPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/help" element={<HelpPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/success" element={<Success />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

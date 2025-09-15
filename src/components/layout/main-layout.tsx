@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MobileNav } from "@/components/navigation/mobile-nav";
+import { FloatingSideNav } from "@/components/navigation/floating-side-nav";
 import { OfflineIndicator } from "@/components/ui/offline-indicator";
 
 interface MainLayoutProps {
@@ -54,6 +55,9 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       <div className="fixed inset-0 bg-background">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(274_94%_38%_/_0.05),transparent_50%),radial-gradient(circle_at_80%_20%,hsl(275_60%_84%_/_0.08),transparent_50%)]" />
       </div>
+      
+      {/* Floating Side Navigation */}
+      <FloatingSideNav />
       
       {/* Offline Indicator */}
       <OfflineIndicator />
