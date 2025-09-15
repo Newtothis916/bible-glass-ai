@@ -141,7 +141,7 @@ export function PremiumModal({ trigger, defaultTier = 'premium' }: PremiumModalP
           ))}
         </div>
 
-        <div className="mt-6 p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/30 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/5">
+        <div className="mt-6 p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/30 shadow-xl transition-all duration-300 hover:scale-[1.045] hover:shadow-xl hover:shadow-white/5">
           <h4 className="font-inter font-normal tracking-tighter mb-2">Why upgrade?</h4>
           <ul className="text-sm text-muted-foreground space-y-1">
             <li>• Unlimited AI Bible study assistance</li>

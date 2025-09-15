@@ -48,7 +48,7 @@ export function Dashboard() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4">
-        <LiquidGlassCard variant="elevated" className="cursor-pointer hover:scale-105 transition-transform duration-300">
+        <LiquidGlassCard variant="elevated" className="cursor-pointer hover:scale-[1.045] transition-transform duration-300">
           <CardContent className="p-4 text-center space-y-3">
             <div className="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto shadow-glow">
               <BookOpen className="w-6 h-6 text-primary-foreground" />
@@ -60,7 +60,7 @@ export function Dashboard() {
           </CardContent>
         </LiquidGlassCard>
 
-        <LiquidGlassCard variant="elevated" className="cursor-pointer hover:scale-105 transition-transform duration-300">
+        <LiquidGlassCard variant="elevated" className="cursor-pointer hover:scale-[1.045] transition-transform duration-300">
           <CardContent className="p-4 text-center space-y-3">
             <div className="w-12 h-12 bg-gradient-secondary rounded-2xl flex items-center justify-center mx-auto shadow-divine">
               <Sparkles className="w-6 h-6 text-secondary-foreground" />

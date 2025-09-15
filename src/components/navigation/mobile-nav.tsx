@@ -28,7 +28,7 @@ export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
             className={cn(
               "flex flex-col items-center gap-1 h-14 px-3 py-2 text-xs font-inter font-normal tracking-tighter transition-all duration-300",
               activeTab === id 
-                ? "text-primary-foreground bg-primary shadow-xl hover:bg-primary-dark hover:shadow-2xl hover:shadow-primary/20" 
+                ? "text-primary-foreground bg-primary shadow-xl hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/20" 
                 : "text-muted-foreground hover:text-primary hover:bg-muted"
             )}
           >

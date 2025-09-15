@@ -14,8 +14,21 @@ export default {
     },
     extend: {
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        serif: ['"EB Garamond"', '"Minion Pro"', '"Georgia"', 'serif'],
+        sans: ['"EB Garamond"', '"Minion Pro"', '"Georgia"', 'serif'],
+        inter: ['"EB Garamond"', '"Minion Pro"', '"Georgia"', 'serif'],
+      },
+      fontSize: {
+        'hero': ['40px', { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '600' }],
+        'h1': ['32px', { lineHeight: '1.15', fontWeight: '600' }],
+        'h2': ['28px', { lineHeight: '1.15', fontWeight: '600' }],
+        'h3': ['24px', { lineHeight: '1.20', fontWeight: '600' }],
+        'h4': ['20px', { lineHeight: '1.25', fontWeight: '600' }],
+        'body': ['17px', { lineHeight: '1.50', fontWeight: '400' }],
+        'body-lg': ['18px', { lineHeight: '1.50', fontWeight: '400' }],
+        'lyric': ['17px', { lineHeight: '1.35', fontWeight: '400' }],
+        'small': ['14px', { lineHeight: '1.40', fontWeight: '400' }],
+        'caption': ['12px', { lineHeight: '1.35', fontWeight: '400' }],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -3,15 +3,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const liquidGlassCardVariants = cva(
-  "rounded-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-xl",
+  "rounded-2xl backdrop-blur-md transition-all duration-300 hover:scale-[1.045] shadow-xl",
   {
     variants: {
       variant: {
-        default: "bg-card border border-border hover:shadow-2xl hover:shadow-primary/10",
+        default: "bg-card border border-border hover:shadow-xl hover:shadow-primary/10",
         elevated: "bg-card border border-border shadow-elegant hover:shadow-glow",
-        outline: "border-2 border-primary/30 bg-card hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10",
-        solid: "bg-card border border-border hover:shadow-2xl hover:shadow-primary/5",
-        glass: "bg-white/10 backdrop-blur-md border border-white/30 hover:shadow-2xl hover:shadow-white/5",
+        outline: "border-2 border-primary/30 bg-card hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10",
+        solid: "bg-card border border-border hover:shadow-xl hover:shadow-primary/5",
+        glass: "bg-white/10 backdrop-blur-md border border-white/30 hover:shadow-xl hover:shadow-white/5",
         divine: "bg-gradient-glass border border-border-glass shadow-divine hover:shadow-glow",
         premium: "bg-gradient-divine border border-secondary/30 shadow-divine hover:shadow-glow",
       },
@@ -62,7 +62,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-inter font-normal leading-none tracking-tighter", className)}
+    className={cn("font-serif font-normal leading-none tracking-tighter", className)}
     {...props}
   />
 ));
@@ -74,7 +74,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm font-inter tracking-tighter text-muted-foreground", className)}
+    className={cn("text-sm font-serif tracking-tighter text-muted-foreground", className)}
     {...props}
   />
 ));

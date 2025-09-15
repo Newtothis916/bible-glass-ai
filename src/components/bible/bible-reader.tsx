@@ -295,7 +295,7 @@ export function BibleReader() {
             Ask our AI Bible Guide any questions about {currentBook?.name} {chapter}
           </p>
           <LiquidGlassButton 
-            className="bg-primary/20 backdrop-blur-md border border-primary/30 hover:bg-primary/30 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20"
+            className="bg-primary/20 backdrop-blur-md border border-primary/30 hover:bg-primary/30 shadow-xl transition-all duration-300 hover:scale-[1.045] hover:shadow-xl hover:shadow-primary/20"
             onClick={() => navigate('/ai')}
           >
             <MessageSquare className="w-4 h-4 mr-2" />

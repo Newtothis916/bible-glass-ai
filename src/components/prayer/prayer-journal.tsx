@@ -209,14 +209,14 @@ export function PrayerJournal() {
               placeholder="Prayer title..."
               value={newPrayerTitle}
               onChange={(e) => setNewPrayerTitle(e.target.value)}
-              className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl text-sm font-inter tracking-tighter placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 hover:scale-[1.02] hover:bg-white/15"
+              className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl text-sm font-serif tracking-tighter placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 hover:scale-[1.018] hover:bg-white/15"
             />
             <textarea
               placeholder="What would you like to pray about?"
               rows={4}
               value={newPrayerBody}
               onChange={(e) => setNewPrayerBody(e.target.value)}
-              className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl text-sm font-inter tracking-tighter placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 hover:scale-[1.02] hover:bg-white/15 resize-none"
+              className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl text-sm font-serif tracking-tighter placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 hover:scale-[1.018] hover:bg-white/15 resize-none"
             />
             <div className="flex gap-2">
               <LiquidGlassButton variant="default" size="sm" onClick={addPrayer}>
@@ -262,7 +262,7 @@ export function PrayerJournal() {
                     {prayer.tags && prayer.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 bg-primary/10 backdrop-blur-md border border-primary/30 text-primary text-xs rounded-2xl transition-all duration-300 hover:scale-105 shadow-xl"
+                        className="px-2 py-1 bg-primary/10 backdrop-blur-md border border-primary/30 text-primary text-xs rounded-2xl transition-all duration-300 hover:scale-[1.045] shadow-xl"
                       >
                         #{tag}
                       </span>

@@ -366,7 +366,7 @@ export function AIPage() {
               {userHistory.map((query) => (
                 <div 
                   key={query.id} 
-                  className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/15 cursor-pointer transition-all duration-300 hover:scale-105 shadow-xl"
+                  className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/15 cursor-pointer transition-all duration-300 hover:scale-[1.045] shadow-xl"
                   onClick={() => setInput(query.question)}
                 >
                   <p className="text-sm line-clamp-2">{query.question}</p>
