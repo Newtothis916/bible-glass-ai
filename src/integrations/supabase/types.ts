@@ -428,6 +428,154 @@ export type Database = {
           },
         ]
       }
+      life_rules: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          evening_practices: Json | null
+          id: string
+          is_active: boolean | null
+          midday_practices: Json | null
+          morning_practices: Json | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          evening_practices?: Json | null
+          id?: string
+          is_active?: boolean | null
+          midday_practices?: Json | null
+          morning_practices?: Json | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          evening_practices?: Json | null
+          id?: string
+          is_active?: boolean | null
+          midday_practices?: Json | null
+          morning_practices?: Json | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      memory_cards: {
+        Row: {
+          added_at: string | null
+          deck_id: string
+          id: string
+          user_id: string
+          verse_ref: string
+        }
+        Insert: {
+          added_at?: string | null
+          deck_id: string
+          id?: string
+          user_id: string
+          verse_ref: string
+        }
+        Update: {
+          added_at?: string | null
+          deck_id?: string
+          id?: string
+          user_id?: string
+          verse_ref?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_memory_cards_deck_id"
+            columns: ["deck_id"]
+            isOneToOne: false
+            referencedRelation: "memory_decks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memory_decks: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_default: boolean | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_default?: boolean | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_default?: boolean | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      memory_reviews: {
+        Row: {
+          card_id: string
+          created_at: string | null
+          due_at: string
+          ease_factor: number | null
+          id: string
+          interval_days: number | null
+          last_grade: string | null
+          last_reviewed_at: string | null
+          review_count: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          card_id: string
+          created_at?: string | null
+          due_at: string
+          ease_factor?: number | null
+          id?: string
+          interval_days?: number | null
+          last_grade?: string | null
+          last_reviewed_at?: string | null
+          review_count?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          card_id?: string
+          created_at?: string | null
+          due_at?: string
+          ease_factor?: number | null
+          id?: string
+          interval_days?: number | null
+          last_grade?: string | null
+          last_reviewed_at?: string | null
+          review_count?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_memory_reviews_card_id"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "memory_cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           body: string | null
@@ -695,6 +843,116 @@ export type Database = {
         }
         Relationships: []
       }
+      practice_prompts: {
+        Row: {
+          created_at: string | null
+          id: string
+          locale: string | null
+          practice_slug: string
+          prompt_text: string
+          step_index: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          locale?: string | null
+          practice_slug: string
+          prompt_text: string
+          step_index: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          locale?: string | null
+          practice_slug?: string
+          prompt_text?: string
+          step_index?: number
+        }
+        Relationships: []
+      }
+      practice_sessions: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          duration_sec: number | null
+          id: string
+          notes_md: string | null
+          passage_ref: string | null
+          practice_slug: string
+          started_at: string | null
+          step_data: Json | null
+          steps_completed: number | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          duration_sec?: number | null
+          id?: string
+          notes_md?: string | null
+          passage_ref?: string | null
+          practice_slug: string
+          started_at?: string | null
+          step_data?: Json | null
+          steps_completed?: number | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          duration_sec?: number | null
+          id?: string
+          notes_md?: string | null
+          passage_ref?: string | null
+          practice_slug?: string
+          started_at?: string | null
+          step_data?: Json | null
+          steps_completed?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_practice_sessions_practice_slug"
+            columns: ["practice_slug"]
+            isOneToOne: false
+            referencedRelation: "practices"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      practices: {
+        Row: {
+          created_at: string | null
+          default_passage: string | null
+          description: string | null
+          estimated_minutes: number | null
+          id: string
+          slug: string
+          steps: number
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          default_passage?: string | null
+          description?: string | null
+          estimated_minutes?: number | null
+          id?: string
+          slug: string
+          steps?: number
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          default_passage?: string | null
+          description?: string | null
+          estimated_minutes?: number | null
+          id?: string
+          slug?: string
+          steps?: number
+          title?: string
+        }
+        Relationships: []
+      }
       prayer_circle_members: {
         Row: {
           circle_id: string
@@ -882,6 +1140,44 @@ export type Database = {
           type?: string
         }
         Relationships: []
+      }
+      rule_completions: {
+        Row: {
+          completed_at: string | null
+          date_iso: string
+          id: string
+          notes: string | null
+          rule_id: string
+          time_slot: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          date_iso: string
+          id?: string
+          notes?: string | null
+          rule_id: string
+          time_slot: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          date_iso?: string
+          id?: string
+          notes?: string | null
+          rule_id?: string
+          time_slot?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_rule_completions_rule_id"
+            columns: ["rule_id"]
+            isOneToOne: false
+            referencedRelation: "life_rules"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       streaks: {
         Row: {
