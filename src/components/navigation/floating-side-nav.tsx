@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { 
   Menu, X, User, Settings, BookOpen, Bookmark, Download, BarChart3,
   HelpCircle, MessageSquare, Info, Shield, Mail, Heart, Users,
-  Headphones, Search, Bot, Calendar, Home, Crown
+  Headphones, Search, Bot, Calendar, Home, Crown, Brain, Target
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
@@ -26,6 +26,14 @@ const navigationSections = [
       { id: "listen", label: "Listen", icon: Headphones, path: "/listen" },
       { id: "pray", label: "Prayer Journal", icon: Heart, path: "/pray" },
       { id: "groups", label: "Groups", icon: Users, path: "/groups" },
+    ]
+  },
+  {
+    title: "Spiritual Growth",
+    items: [
+      { id: "practices", label: "Guided Practices", icon: Calendar, path: "/practices" },
+      { id: "memory", label: "Memory Verses", icon: Brain, path: "/memory" },
+      { id: "rule-of-life", label: "Rule of Life", icon: Target, path: "/rule-of-life" },
     ]
   },
   {

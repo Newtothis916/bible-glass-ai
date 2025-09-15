@@ -12,6 +12,9 @@ import AIPage from "./pages/ai";
 import ListenPage from "./pages/listen";
 import GroupsPage from "./pages/groups";
 import PrayPage from "./pages/pray";
+import PracticesPage from "./pages/practices";
+import MemoryPage from "./pages/memory";
+import RuleOfLifePage from "./pages/rule-of-life";
 import Success from "./pages/success";
 import NotFound from "./pages/NotFound";
 import ProfilePage from "./pages/profile";
@@ -43,6 +46,9 @@ const App = () => (
             <Route path="/listen" element={<ListenPage />} />
             <Route path="/groups" element={<GroupsPage />} />
             <Route path="/pray" element={<PrayPage />} />
+            <Route path="/practices" element={<PracticesPage />} />
+            <Route path="/memory" element={<MemoryPage />} />
+            <Route path="/rule-of-life" element={<RuleOfLifePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/notes" element={<NotesPage />} />

@@ -1,9 +1,48 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/components/ui/liquid-glass-card";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
-import { BookOpen, Sparkles, Heart, Users, Award, Calendar } from "lucide-react";
+import { BookOpen, Sparkles, Heart, Users, Award, Calendar, Brain, Target, Play } from "lucide-react";
+import { practicesAPI } from "@/lib/practices-api";
+import { memoryAPI } from "@/lib/memory-api";
+import { prayerAPI } from "@/lib/prayer-api";
 import heroBible from "@/assets/hero-bible.jpg";
 
 export function Dashboard() {
+  const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    practiceStreak: 0,
+    memoryCards: 0,
+    activePrayers: 0,
+    completedSessions: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadDashboardStats();
+  }, []);
+
+  const loadDashboardStats = async () => {
+    try {
+      const [practiceStats, memoryStats, prayers] = await Promise.all([
+        practicesAPI.getRecentPracticeStats(),
+        memoryAPI.getMemoryStats(),
+        prayerAPI.getUserPrayers()
+      ]);
+
+      setStats({
+        practiceStreak: practiceStats.weeklyStreak,
+        memoryCards: memoryStats.totalCards,
+        activePrayers: prayers.filter(p => p.status === 'active').length,
+        completedSessions: practiceStats.completedSessions
+      });
+    } catch (error) {
+      console.error('Error loading dashboard stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen p-6 space-y-6">
       {/* Header with Hero Image */}
@@ -48,7 +87,11 @@ export function Dashboard() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4">
-        <LiquidGlassCard variant="elevated" className="cursor-pointer hover:scale-[1.045] transition-transform duration-300">
+        <LiquidGlassCard 
+          variant="elevated" 
+          className="cursor-pointer hover:scale-[1.045] transition-transform duration-300"
+          onClick={() => navigate('/read')}
+        >
           <CardContent className="p-4 text-center space-y-3">
             <div className="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto shadow-glow">
               <BookOpen className="w-6 h-6 text-primary-foreground" />
@@ -60,14 +103,63 @@ export function Dashboard() {
           </CardContent>
         </LiquidGlassCard>
 
-        <LiquidGlassCard variant="elevated" className="cursor-pointer hover:scale-[1.045] transition-transform duration-300">
+        <LiquidGlassCard 
+          variant="elevated" 
+          className="cursor-pointer hover:scale-[1.045] transition-transform duration-300"
+          onClick={() => navigate('/ai')}
+        >
           <CardContent className="p-4 text-center space-y-3">
             <div className="w-12 h-12 bg-gradient-secondary rounded-2xl flex items-center justify-center mx-auto shadow-divine">
               <Sparkles className="w-6 h-6 text-secondary-foreground" />
             </div>
             <div>
               <h3 className="font-inter font-normal tracking-tighter text-sm">Ask AI Guide</h3>
-              <p className="text-xs text-foreground/70">3 questions left</p>
+              <p className="text-xs text-foreground/70">Get Bible insights</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+      </div>
+
+      {/* Spiritual Growth Features */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/practices')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Play className="w-8 h-8 text-primary mx-auto" />
+            <div>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Guided Practices</h3>
+              <p className="text-xs text-foreground/70">{stats.completedSessions} sessions</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/memory')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Brain className="w-8 h-8 text-purple-500 mx-auto" />
+            <div>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Memory Verses</h3>
+              <p className="text-xs text-foreground/70">{stats.memoryCards} cards</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/rule-of-life')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Target className="w-8 h-8 text-green-500 mx-auto" />
+            <div>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Rule of Life</h3>
+              <p className="text-xs text-foreground/70">Daily practices</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -75,12 +167,16 @@ export function Dashboard() {
 
       {/* Prayer & Streak */}
       <div className="grid grid-cols-2 gap-4">
-        <LiquidGlassCard variant="outline">
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/pray')}
+        >
           <CardContent className="p-4 text-center space-y-3">
             <Heart className="w-8 h-8 text-destructive mx-auto" />
             <div>
               <h3 className="font-inter font-normal tracking-tighter text-sm">Prayer Journal</h3>
-              <p className="text-xs text-foreground/70">2 active prayers</p>
+              <p className="text-xs text-foreground/70">{stats.activePrayers} active prayers</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -89,7 +185,7 @@ export function Dashboard() {
           <CardContent className="p-4 text-center space-y-3">
             <Award className="w-8 h-8 text-secondary mx-auto" />
             <div>
-              <h3 className="font-inter font-normal tracking-tighter text-sm">7 Day Streak</h3>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">{stats.practiceStreak} Week Streak</h3>
               <p className="text-xs text-foreground/70">Keep it up!</p>
             </div>
           </CardContent>
