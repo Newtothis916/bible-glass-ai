@@ -55,7 +55,7 @@ export function Dashboard() {
             </div>
             <div>
               <h3 className="font-inter font-normal tracking-tighter text-sm">Continue Reading</h3>
-              <p className="text-xs text-muted-foreground">John 3:16</p>
+              <p className="text-xs text-foreground/70">John 3:16</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -67,7 +67,7 @@ export function Dashboard() {
             </div>
             <div>
               <h3 className="font-inter font-normal tracking-tighter text-sm">Ask AI Guide</h3>
-              <p className="text-xs text-muted-foreground">3 questions left</p>
+              <p className="text-xs text-foreground/70">3 questions left</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -80,7 +80,7 @@ export function Dashboard() {
             <Heart className="w-8 h-8 text-destructive mx-auto" />
             <div>
               <h3 className="font-inter font-normal tracking-tighter text-sm">Prayer Journal</h3>
-              <p className="text-xs text-muted-foreground">2 active prayers</p>
+              <p className="text-xs text-foreground/70">2 active prayers</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -90,7 +90,7 @@ export function Dashboard() {
             <Award className="w-8 h-8 text-secondary mx-auto" />
             <div>
               <h3 className="font-inter font-normal tracking-tighter text-sm">7 Day Streak</h3>
-              <p className="text-xs text-muted-foreground">Keep it up!</p>
+              <p className="text-xs text-foreground/70">Keep it up!</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -112,8 +112,8 @@ export function Dashboard() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-inter font-normal tracking-tighter">John shared a reflection</p>
-                <p className="text-xs text-muted-foreground">"This verse changed my perspective on forgiveness..."</p>
-                <p className="text-xs text-muted-foreground mt-1">Matthew 6:14 • 2 hours ago</p>
+                <p className="text-xs text-foreground/70">"This verse changed my perspective on forgiveness..."</p>
+                <p className="text-xs text-foreground/50 mt-1">Matthew 6:14 • 2 hours ago</p>
               </div>
             </div>
             
@@ -123,8 +123,8 @@ export function Dashboard() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-inter font-normal tracking-tighter">Sarah completed 7-Day Foundations</p>
-                <p className="text-xs text-muted-foreground">"Amazing journey through the Gospel!"</p>
-                <p className="text-xs text-muted-foreground mt-1">Just now</p>
+                <p className="text-xs text-foreground/70">"Amazing journey through the Gospel!"</p>
+                <p className="text-xs text-foreground/50 mt-1">Just now</p>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export function Dashboard() {
           <blockquote className="text-lg font-inter font-normal tracking-tighter leading-relaxed">
             "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
           </blockquote>
-          <p className="text-sm text-muted-foreground font-inter font-normal tracking-tighter">John 3:16 (WEB)</p>
+          <p className="text-sm text-foreground/70 font-inter font-normal tracking-tighter">John 3:16 (WEB)</p>
           
           <div className="flex gap-2">
             <LiquidGlassButton variant="outline" size="sm">

@@ -41,7 +41,7 @@ Sacred color palette for spiritual connection and divine inspiration.
     
     /* Very Light Purple #D8BDF2 - Subtle card variants */
     --muted: 275 50% 92%;
-    --muted-foreground: 274 94% 25%; /* Darker purple for contrast */
+    --muted-foreground: 274 94% 55%; /* Much lighter for better contrast on light backgrounds */
     --muted-dark: 274 94% 20%;
     
     /* Borders and inputs - visible but subtle */
@@ -134,7 +134,7 @@ Sacred color palette for spiritual connection and divine inspiration.
     --card-glass: 116, 4, 191; /* Solid dark purple */
 
     --muted: 274 94% 12%;
-    --muted-foreground: 30 33% 75%;
+    --muted-foreground: 30 33% 85%; /* Lighter for dark mode */
     --muted-dark: 274 94% 8%;
 
     --border: 274 94% 18%;

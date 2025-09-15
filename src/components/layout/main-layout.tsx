@@ -49,10 +49,10 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero font-inter">
-      {/* Sacred background pattern */}
-      <div className="fixed inset-0 bg-gradient-hero">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(274_94%_38%_/_0.15),transparent_50%),radial-gradient(circle_at_80%_20%,hsl(275_60%_84%_/_0.2),transparent_50%),radial-gradient(circle_at_40%_40%,hsl(290_68%_45%_/_0.1),transparent_50%)]" />
+    <div className="min-h-screen bg-background font-inter">
+      {/* Subtle background pattern */}
+      <div className="fixed inset-0 bg-background">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(274_94%_38%_/_0.05),transparent_50%),radial-gradient(circle_at_80%_20%,hsl(275_60%_84%_/_0.08),transparent_50%)]" />
       </div>
       
       {/* Offline Indicator */}
