@@ -137,7 +137,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
 
       {/* Floating Side Navigation */}
       <div className={cn(
-        "fixed top-0 left-0 h-full w-80 z-50 transform transition-transform duration-300 ease-in-out",
+        "fixed top-0 left-0 h-full w-80 max-w-[90vw] z-50 transform transition-transform duration-300 ease-in-out",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <LiquidGlassCard className="h-full m-4 overflow-hidden flex flex-col">

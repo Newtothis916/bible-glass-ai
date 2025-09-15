@@ -138,11 +138,11 @@ export function EnhancedAIAssistant() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'study': return 'bg-blue-500';
-      case 'prayer': return 'bg-purple-500';
-      case 'theology': return 'bg-green-500';
-      case 'application': return 'bg-orange-500';
-      default: return 'bg-gray-500';
+      case 'study': return 'bg-primary';
+      case 'prayer': return 'bg-secondary';
+      case 'theology': return 'bg-accent';
+      case 'application': return 'bg-muted';
+      default: return 'bg-muted';
     }
   };
 
@@ -278,10 +278,12 @@ export function EnhancedAIAssistant() {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
               disabled={isLoading}
+              className="mobile-input"
             />
             <LiquidGlassButton
               onClick={() => handleSendMessage()}
               disabled={!inputMessage.trim() || isLoading}
+              className="mobile-touch-target"
             >
               <Send className="w-4 h-4" />
             </LiquidGlassButton>

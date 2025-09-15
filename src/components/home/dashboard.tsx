@@ -44,19 +44,19 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen p-6 space-y-6">
+    <div className="min-h-screen px-4 py-6 space-y-6 max-w-6xl mx-auto">
       {/* Header with Hero Image */}
       <div className="relative rounded-3xl overflow-hidden mb-8">
         <div 
-          className="h-48 bg-cover bg-center relative"
+          className="h-48 sm:h-56 md:h-64 bg-cover bg-center relative"
           style={{ backgroundImage: `url(${heroBible})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute bottom-6 left-6 text-white">
-            <h1 className="text-4xl font-bold mb-2">
+          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">
               Devotion
             </h1>
-            <p className="text-lg opacity-90">
+            <p className="text-sm sm:text-base md:text-lg opacity-90">
               AI Study • Prayer • Community
             </p>
           </div>
@@ -89,7 +89,7 @@ export function Dashboard() {
       <div className="grid grid-cols-2 gap-4">
         <LiquidGlassCard 
           variant="elevated" 
-          className="cursor-pointer hover:scale-[1.045] transition-transform duration-300"
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
           onClick={() => navigate('/read')}
         >
           <CardContent className="p-4 text-center space-y-3">
@@ -97,15 +97,15 @@ export function Dashboard() {
               <BookOpen className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h3 className="font-inter font-normal tracking-tighter text-sm">Continue Reading</h3>
-              <p className="text-xs text-foreground/70">John 3:16</p>
+              <h3 className="font-medium text-sm">Continue Reading</h3>
+              <p className="text-xs text-muted-foreground">John 3:16</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
 
         <LiquidGlassCard 
           variant="elevated" 
-          className="cursor-pointer hover:scale-[1.045] transition-transform duration-300"
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
           onClick={() => navigate('/ai')}
         >
           <CardContent className="p-4 text-center space-y-3">
@@ -113,8 +113,8 @@ export function Dashboard() {
               <Sparkles className="w-6 h-6 text-secondary-foreground" />
             </div>
             <div>
-              <h3 className="font-inter font-normal tracking-tighter text-sm">Ask AI Guide</h3>
-              <p className="text-xs text-foreground/70">Get Bible insights</p>
+              <h3 className="font-medium text-sm">Ask AI Guide</h3>
+              <p className="text-xs text-muted-foreground">Get Bible insights</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -142,10 +142,10 @@ export function Dashboard() {
           onClick={() => navigate('/memory')}
         >
           <CardContent className="p-4 text-center space-y-3">
-            <Brain className="w-8 h-8 text-purple-500 mx-auto" />
+            <Brain className="w-8 h-8 text-secondary mx-auto" />
             <div>
-              <h3 className="font-inter font-normal tracking-tighter text-sm">Memory Verses</h3>
-              <p className="text-xs text-foreground/70">{stats.memoryCards} cards</p>
+              <h3 className="font-medium text-sm">Memory Verses</h3>
+              <p className="text-xs text-muted-foreground">{stats.memoryCards} cards</p>
             </div>
           </CardContent>
         </LiquidGlassCard>
@@ -156,10 +156,10 @@ export function Dashboard() {
           onClick={() => navigate('/rule-of-life')}
         >
           <CardContent className="p-4 text-center space-y-3">
-            <Target className="w-8 h-8 text-green-500 mx-auto" />
+            <Target className="w-8 h-8 text-accent mx-auto" />
             <div>
-              <h3 className="font-inter font-normal tracking-tighter text-sm">Rule of Life</h3>
-              <p className="text-xs text-foreground/70">Daily practices</p>
+              <h3 className="font-medium text-sm">Rule of Life</h3>
+              <p className="text-xs text-muted-foreground">Daily practices</p>
             </div>
           </CardContent>
         </LiquidGlassCard>

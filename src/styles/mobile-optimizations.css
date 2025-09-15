@@ -1,0 +1,99 @@
+/* Mobile-First Optimizations */
+
+/* Safe area support for iOS and Android */
+@supports (padding: max(0px)) {
+  .safe-area-inset {
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Improved touch targets for mobile */
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Better mobile navigation */
+.mobile-nav-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+/* Responsive text scaling */
+@media (max-width: 640px) {
+  .responsive-text-hero {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+  
+  .responsive-text-h1 {
+    font-size: 1.75rem;
+    line-height: 1.15;
+  }
+  
+  .responsive-text-h2 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+}
+
+/* Improved scrolling on mobile */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Better form elements on mobile */
+.mobile-input {
+  font-size: 16px; /* Prevents zoom on iOS */
+  line-height: 1.5;
+}
+
+/* Prevent content shift during loading */
+.prevent-shift {
+  contain: layout;
+}
+
+/* Improved grid responsiveness */
+.mobile-grid-responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Better image handling */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Improved loading states */
+.skeleton-loading {
+  background: linear-gradient(90deg, transparent, hsla(var(--muted), 0.1), transparent);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

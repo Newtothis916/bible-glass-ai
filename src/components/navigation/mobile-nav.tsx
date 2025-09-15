@@ -17,25 +17,27 @@ const navItems = [
 
 export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-t border-white/30 p-2 shadow-xl">
-      <div className="flex items-center justify-around max-w-sm mx-auto">
-        {navItems.map(({ id, label, icon: Icon }) => (
-          <LiquidGlassButton
-            key={id}
-            variant="ghost"
-            size="sm"
-            onClick={() => onTabClick(id)}
-            className={cn(
-              "flex flex-col items-center gap-1 h-14 px-3 py-2 text-xs font-inter font-normal tracking-tighter transition-all duration-300",
-              activeTab === id 
-                ? "text-primary-foreground bg-primary shadow-xl hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/20" 
-                : "text-muted-foreground hover:text-primary hover:bg-muted"
-            )}
-          >
-            <Icon className="w-5 h-5" />
-            <span className="text-[10px]">{label}</span>
-          </LiquidGlassButton>
-        ))}
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-xl mobile-nav-safe">
+      <div className="px-2 py-2">
+        <div className="flex items-center justify-around max-w-md mx-auto">
+          {navItems.map(({ id, label, icon: Icon }) => (
+            <LiquidGlassButton
+              key={id}
+              variant="ghost"
+              size="sm"
+              onClick={() => onTabClick(id)}
+              className={cn(
+                "flex flex-col items-center gap-1 h-14 px-3 py-2 text-xs font-medium transition-all duration-300 mobile-touch-target",
+                activeTab === id 
+                  ? "text-primary-foreground bg-primary shadow-md hover:bg-primary/90" 
+                  : "text-muted-foreground hover:text-primary hover:bg-muted/50"
+              )}
+            >
+              <Icon className="w-5 h-5" />
+              <span className="text-[10px]">{label}</span>
+            </LiquidGlassButton>
+          ))}
+        </div>
       </div>
     </nav>
   );

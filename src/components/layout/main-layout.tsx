@@ -54,7 +54,7 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
     <div className="min-h-screen bg-background font-inter">
       {/* Subtle background pattern */}
       <div className="fixed inset-0 bg-background">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(274_94%_38%_/_0.05),transparent_50%),radial-gradient(circle_at_80%_20%,hsl(275_60%_84%_/_0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(var(--primary)_/_0.05),transparent_50%),radial-gradient(circle_at_80%_20%,hsl(var(--primary-light)_/_0.08),transparent_50%)]" />
       </div>
       
       {/* Floating Side Navigation */}
@@ -66,9 +66,11 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       {/* Offline Indicator */}
       <OfflineIndicator />
       
-      {/* Main content */}
-      <div className="relative z-10 pb-20 pt-20">
-        {children}
+      {/* Main content with proper mobile spacing */}
+      <div className="relative z-10 min-h-screen">
+        <div className="pb-20 pt-4 safe-area-inset">
+          {children}
+        </div>
       </div>
 
       {/* Mobile Navigation - Hidden when side nav is open */}

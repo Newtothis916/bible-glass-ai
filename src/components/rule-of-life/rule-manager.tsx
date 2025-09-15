@@ -297,11 +297,13 @@ export function RuleManager() {
                 placeholder="Rule title (e.g., Daily Spiritual Practices)"
                 value={newRule.title}
                 onChange={(e) => setNewRule(prev => ({ ...prev, title: e.target.value }))}
+                className="mobile-input"
               />
               <Textarea
                 placeholder="Description (optional)"
                 value={newRule.description}
                 onChange={(e) => setNewRule(prev => ({ ...prev, description: e.target.value }))}
+                className="mobile-input"
               />
             </div>
 
@@ -336,11 +338,12 @@ export function RuleManager() {
                           placeholder="Practice name"
                           value={practice.name}
                           onChange={(e) => updatePracticeInNewRule(timeSlot, index, 'name', e.target.value)}
+                          className="mobile-input"
                         />
                         <Input
                           type="number"
                           placeholder="Minutes"
-                          className="w-24"
+                          className="w-24 mobile-input"
                           value={practice.duration_minutes || ''}
                           onChange={(e) => updatePracticeInNewRule(timeSlot, index, 'duration_minutes', parseInt(e.target.value))}
                         />
@@ -348,6 +351,7 @@ export function RuleManager() {
                           size="sm"
                           variant="outline"
                           onClick={() => removePracticeFromNewRule(timeSlot, index)}
+                          className="mobile-touch-target"
                         >
                           <X className="w-3 h-3" />
                         </LiquidGlassButton>

@@ -128,11 +128,11 @@ export default function ListenPage() {
 
   return (
     <MainLayout currentTab="listen">
-      <div className="container mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold">Listen</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Listen</h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Experience Scripture through audio Bible, sermons, and spiritual content
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function ListenPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search audio content..."
-                className="pl-10"
+                className="pl-10 mobile-input"
               />
             </div>
 
@@ -178,10 +178,11 @@ export default function ListenPage() {
                   variant={selectedType === value ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedType(value)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 mobile-touch-target"
                 >
                   <Icon className="w-4 h-4" />
-                  {label}
+                  <span className="hidden sm:inline">{label}</span>
+                  <span className="sm:hidden">{label.split(' ')[0]}</span>
                 </Button>
               ))}
             </div>

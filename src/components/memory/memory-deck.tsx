@@ -100,21 +100,21 @@ export function MemoryDeckComponent() {
         
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-orange-500">{stats.dueToday}</div>
+            <div className="text-2xl font-bold text-secondary">{stats.dueToday}</div>
             <div className="text-sm text-muted-foreground">Due Today</div>
           </CardContent>
         </LiquidGlassCard>
         
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-500">{stats.reviewStreak}</div>
+            <div className="text-2xl font-bold text-accent">{stats.reviewStreak}</div>
             <div className="text-sm text-muted-foreground">Day Streak</div>
           </CardContent>
         </LiquidGlassCard>
         
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-500">{stats.masteredCards}</div>
+            <div className="text-2xl font-bold text-primary">{stats.masteredCards}</div>
             <div className="text-sm text-muted-foreground">Mastered</div>
           </CardContent>
         </LiquidGlassCard>
@@ -135,8 +135,9 @@ export function MemoryDeckComponent() {
               value={newVerseRef}
               onChange={(e) => setNewVerseRef(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAddVerse()}
+              className="mobile-input"
             />
-            <LiquidGlassButton onClick={handleAddVerse}>
+            <LiquidGlassButton onClick={handleAddVerse} className="mobile-touch-target">
               Add
             </LiquidGlassButton>
           </div>

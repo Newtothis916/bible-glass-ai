@@ -160,18 +160,20 @@ export function EnhancedPrayerJournal() {
                 placeholder="Prayer title"
                 value={newPrayer.title}
                 onChange={(e) => setNewPrayer(prev => ({ ...prev, title: e.target.value }))}
+                className="mobile-input"
               />
               <Textarea
                 placeholder="Prayer details (optional)"
                 value={newPrayer.body}
                 onChange={(e) => setNewPrayer(prev => ({ ...prev, body: e.target.value }))}
                 rows={4}
+                className="mobile-input"
               />
               <div className="flex gap-2">
-                <LiquidGlassButton onClick={handleAddPrayer}>
+                <LiquidGlassButton onClick={handleAddPrayer} className="mobile-touch-target">
                   Add Prayer
                 </LiquidGlassButton>
-                <LiquidGlassButton variant="outline" onClick={() => setShowAddDialog(false)}>
+                <LiquidGlassButton variant="outline" onClick={() => setShowAddDialog(false)} className="mobile-touch-target">
                   Cancel
                 </LiquidGlassButton>
               </div>
@@ -184,7 +186,7 @@ export function EnhancedPrayerJournal() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-500">
+            <div className="text-2xl font-bold text-primary">
               {prayers.filter(p => p.status === 'active').length}
             </div>
             <div className="text-sm text-muted-foreground">Active Prayers</div>
@@ -193,7 +195,7 @@ export function EnhancedPrayerJournal() {
         
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-500">
+            <div className="text-2xl font-bold text-accent">
               {prayers.filter(p => p.status === 'answered').length}
             </div>
             <div className="text-sm text-muted-foreground">Answered</div>
@@ -202,7 +204,7 @@ export function EnhancedPrayerJournal() {
         
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-500">
+            <div className="text-2xl font-bold text-primary">
               {prayers.length}
             </div>
             <div className="text-sm text-muted-foreground">Total Prayers</div>
@@ -211,7 +213,7 @@ export function EnhancedPrayerJournal() {
         
         <LiquidGlassCard variant="outline">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-orange-500">
+            <div className="text-2xl font-bold text-secondary">
               {prayers.filter(p => p.status === 'archived').length}
             </div>
             <div className="text-sm text-muted-foreground">Archived</div>

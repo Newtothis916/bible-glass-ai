@@ -6,15 +6,15 @@ import { Info, BookOpen } from "lucide-react";
 export default function AboutPage() {
   return (
     <MainLayout>
-      <div className="min-h-screen p-4 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
             About Bible App
           </h1>
           <p className="text-muted-foreground">Your digital companion for Bible study</p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="space-y-6">
           <LiquidGlassCard variant="elevated">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
