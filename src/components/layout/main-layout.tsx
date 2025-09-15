@@ -67,7 +67,7 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       <OfflineIndicator />
       
       {/* Main content */}
-      <div className="relative z-10 pb-20">
+      <div className="relative z-10 pb-20 pt-20">
         {children}
       </div>
 
