@@ -9,14 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary/20 backdrop-blur-md border border-primary/30 text-primary-foreground shadow-xl hover:bg-primary/30 hover:shadow-2xl hover:shadow-primary/20",
-        secondary: "bg-secondary/20 backdrop-blur-md border border-secondary/30 text-secondary-foreground shadow-xl hover:bg-secondary/30 hover:shadow-2xl hover:shadow-secondary/20",
-        outline: "bg-transparent backdrop-blur-md border-2 border-primary/40 text-primary shadow-xl hover:bg-primary/10 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/10",
-        ghost: "bg-transparent backdrop-blur-sm text-foreground hover:bg-white/10 hover:backdrop-blur-md",
-        link: "bg-transparent text-primary underline-offset-4 hover:underline hover:bg-white/5",
-        destructive: "bg-destructive/20 backdrop-blur-md border border-destructive/40 text-destructive shadow-xl hover:bg-destructive/30 hover:shadow-2xl hover:shadow-destructive/30",
+        default: "bg-primary text-primary-foreground border border-primary shadow-xl hover:bg-primary-dark hover:shadow-2xl hover:shadow-primary/20",
+        secondary: "bg-secondary text-secondary-foreground border border-secondary shadow-xl hover:bg-secondary-dark hover:shadow-2xl hover:shadow-secondary/20",
+        outline: "bg-background border-2 border-primary text-primary shadow-xl hover:bg-muted hover:text-muted-foreground hover:shadow-2xl hover:shadow-primary/10",
+        ghost: "bg-transparent text-foreground hover:bg-muted hover:text-muted-foreground",
+        link: "bg-transparent text-primary underline-offset-4 hover:underline hover:bg-muted/50",
+        destructive: "bg-destructive text-destructive-foreground border border-destructive shadow-xl hover:bg-destructive/90 hover:shadow-2xl hover:shadow-destructive/30",
         sacred: "bg-gradient-divine text-primary-foreground hover:shadow-glow border border-primary-glow/20 shadow-xl",
-        glass: "bg-glass-bg backdrop-blur-md border border-glass-border text-foreground hover:bg-glass-bg/80 shadow-xl hover:shadow-2xl hover:shadow-white/5",
+        glass: "bg-glass-bg backdrop-blur-md border border-glass-border text-foreground hover:bg-muted shadow-xl hover:shadow-2xl",
       },
       size: {
         default: "h-10 px-4 py-2",

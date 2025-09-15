@@ -17,7 +17,7 @@ const navItems = [
 
 export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-t border-white/30 p-2 shadow-xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border p-2 shadow-xl">
       <div className="flex items-center justify-around max-w-sm mx-auto">
         {navItems.map(({ id, label, icon: Icon }) => (
           <LiquidGlassButton
@@ -28,8 +28,8 @@ export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
             className={cn(
               "flex flex-col items-center gap-1 h-14 px-3 py-2 text-xs font-inter font-normal tracking-tighter transition-all duration-300",
               activeTab === id 
-                ? "text-primary bg-primary/20 backdrop-blur-md shadow-xl hover:shadow-2xl hover:shadow-primary/20" 
-                : "text-muted-foreground hover:text-primary hover:bg-white/10"
+                ? "text-primary-foreground bg-primary shadow-xl hover:bg-primary-dark hover:shadow-2xl hover:shadow-primary/20" 
+                : "text-muted-foreground hover:text-primary hover:bg-muted"
             )}
           >
             <Icon className="w-5 h-5" />

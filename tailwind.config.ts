@@ -61,6 +61,10 @@ export default {
           bg: "var(--glass-bg)",
           border: "var(--glass-border)",
         },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
       },
       backgroundImage: {
         "gradient-primary": "var(--gradient-primary)",

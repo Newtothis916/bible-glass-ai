@@ -9,51 +9,62 @@ Sacred color palette for spiritual connection and divine inspiration.
 
 @layer base {
   :root {
-    /* Liquid Glass Foundation */
-    --glass-bg: rgba(116, 4, 191, 0.08);
-    --glass-border: rgba(116, 4, 191, 0.25);
-    --glass-shadow: 0 10px 30px rgba(116, 4, 191, 0.15);
-    --glass-shadow-lg: 0 20px 60px rgba(116, 4, 191, 0.25);
+    /* Professional Color System - Based on Adobe Color Palette */
     
-    /* Sacred Color Palette - Strategic Implementation */
-    /* 60% - Sacred Cream: Main backgrounds, reading areas */
-    --background: 30 33% 96%;
-    --foreground: 274 94% 15%;
-    --fg: 30 33% 92%;
-
-    /* 30% - Deep Spiritual Purple: Primary brand, navigation */
+    /* 60% Rule - Primary Backgrounds (Cream #F2EAE4) */
+    --background: 30 33% 94%;  /* Cream background */
+    --foreground: 274 94% 15%; /* Deep purple text for high contrast */
+    --fg: 30 33% 94%;
+    
+    /* 30% Rule - Brand Colors */
+    /* Deep Purple #7404BF - Primary brand, navigation, headers */
     --primary: 274 94% 38%;
     --primary-light: 275 60% 64%;
     --primary-dark: 274 94% 28%;
-    --primary-foreground: 30 33% 96%;
+    --primary-foreground: 30 33% 94%; /* Cream text on purple */
     --primary-glow: 275 60% 84%;
-
-    /* 10% - Royal Purple: Interactive elements, buttons */
+    
+    /* Medium Purple #B124BF - Secondary actions */
     --secondary: 290 68% 45%;
     --secondary-dark: 290 68% 35%;
-    --secondary-foreground: 30 33% 96%;
-
-    /* Semantic Color Mapping */
-    --muted: 30 33% 92%;
-    --muted-foreground: 274 94% 45%;
-    --muted-dark: 274 94% 25%;
+    --secondary-foreground: 30 33% 94%; /* Cream text on purple */
     
-    --card: 30 33% 98%;
-    --card-foreground: 274 94% 20%;
-    --card-glass: rgba(242, 234, 228, 0.9);
-
-    --border: 30 33% 88%;
-    --border-glass: rgba(116, 4, 191, 0.15);
-    --input: 30 33% 94%;
+    /* 10% Rule - Accent Colors */
+    /* Light Purple #AD6CD9 - Subtle highlights */
+    --accent: 275 60% 76%;
+    --accent-foreground: 274 94% 15%; /* Dark text on light purple */
+    
+    /* Card System - Solid backgrounds for readability */
+    --card: 30 33% 96%; /* Light cream for cards */
+    --card-foreground: 274 94% 15%; /* Dark purple text */
+    --card-glass: 242, 234, 228; /* Solid cream, no transparency */
+    
+    /* Very Light Purple #D8BDF2 - Subtle card variants */
+    --muted: 275 50% 92%;
+    --muted-foreground: 274 94% 25%; /* Darker purple for contrast */
+    --muted-dark: 274 94% 20%;
+    
+    /* Borders and inputs - visible but subtle */
+    --border: 275 40% 85%;
+    --border-glass: rgba(116, 4, 191, 0.2);
+    --input: 30 33% 98%;
     --ring: 274 94% 38%;
+    
+    /* Popover system - SOLID backgrounds for dropdowns */
+    --popover: 30 33% 98%; /* Solid cream background */
+    --popover-foreground: 274 94% 15%; /* Dark text for contrast */
 
-    /* Accent & Interactive Colors */
-    --accent: 275 60% 84%;
-    --accent-foreground: 274 94% 20%;
+    /* Status Colors - High contrast */
     --success: 140 50% 50%;
     --warning: 30 90% 60%;
     --destructive: 0 75% 60%;
     --destructive-foreground: 30 33% 96%;
+    
+    /* Glass effects - minimal and tasteful */
+    --glass-bg: rgba(242, 234, 228, 0.95); /* Almost solid cream */
+    --glass-border: rgba(116, 4, 191, 0.15);
+    --glass-shadow: 0 10px 30px rgba(116, 4, 191, 0.1);
+    --glass-shadow-lg: 0 20px 60px rgba(116, 4, 191, 0.15);
 
     /* Strategic Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(274 94% 38%), hsl(275 60% 64%));
@@ -98,11 +109,12 @@ Sacred color palette for spiritual connection and divine inspiration.
   }
 
   .dark {
-    /* Dark Mode Sacred Palette */
+    /* Dark Mode - Professional Implementation */
     --background: 274 94% 8%;
     --foreground: 30 33% 92%;
     --fg: 30 33% 92%;
 
+    /* Dark mode brand colors */
     --primary: 275 60% 64%;
     --primary-light: 275 60% 74%;
     --primary-dark: 274 94% 38%;
@@ -113,34 +125,37 @@ Sacred color palette for spiritual connection and divine inspiration.
     --secondary-dark: 290 68% 45%;
     --secondary-foreground: 274 94% 8%;
 
+    --accent: 275 60% 84%;
+    --accent-foreground: 274 94% 15%;
+
+    /* Dark mode surfaces - solid for readability */
+    --card: 274 94% 12%;
+    --card-foreground: 30 33% 92%;
+    --card-glass: 116, 4, 191; /* Solid dark purple */
+
     --muted: 274 94% 12%;
     --muted-foreground: 30 33% 75%;
     --muted-dark: 274 94% 8%;
-
-    --card: 274 94% 10%;
-    --card-foreground: 30 33% 92%;
-    --card-glass: rgba(116, 4, 191, 0.08);
 
     --border: 274 94% 18%;
     --border-glass: rgba(173, 108, 217, 0.15);
     --input: 274 94% 14%;
     --ring: 275 60% 64%;
-
-    --accent: 275 60% 84%;
-    --accent-foreground: 274 94% 15%;
     
-    /* Dark mode gradients */
-    --gradient-glass: linear-gradient(135deg, rgba(173,108,217,0.12), rgba(116,4,191,0.05));
-    --gradient-hero: linear-gradient(135deg, hsl(274 94% 15%) 0%, hsl(290 68% 25%) 50%, hsl(275 60% 35%) 100%);
+    /* Dark mode popover - SOLID background */
+    --popover: 274 94% 10%;
+    --popover-foreground: 30 33% 92%;
+    
+    /* Dark mode glass effects */
+    --glass-bg: rgba(116, 4, 191, 0.15);
+    --glass-border: rgba(173, 108, 217, 0.2);
+    --glass-shadow: 0 10px 30px rgba(116, 4, 191, 0.3);
+    --glass-shadow-lg: 0 20px 60px rgba(116, 4, 191, 0.25);
     
     /* Dark shadows */
     --shadow-elegant: 0 10px 30px -10px hsl(275 60% 64% / 0.25);
     --shadow-glow: 0 0 40px hsl(275 60% 74% / 0.3);
     --shadow-divine: 0 20px 60px hsl(275 60% 84% / 0.15);
-
-    --glass-bg: rgba(116, 4, 191, 0.08);
-    --glass-border: rgba(173, 108, 217, 0.2);
-    --glass-shadow: 0 10px 30px rgba(116, 4, 191, 0.3);
   }
 }
 
