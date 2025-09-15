@@ -25,18 +25,18 @@ export function Dashboard() {
       </div>
 
       {/* Today's Focus */}
-      <LiquidGlassCard variant="divine" className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-divine opacity-10" />
+      <LiquidGlassCard variant="elevated" className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-divine opacity-5" />
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-primary-foreground">
+          <CardTitle className="flex items-center gap-2 text-foreground">
             <Calendar className="w-5 h-5" />
             Today's Focus
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <h3 className="font-inter font-normal tracking-tighter text-primary-foreground">7-Day Foundations - Day 1</h3>
-            <p className="text-primary-foreground/90 text-sm">
+            <h3 className="font-inter font-normal tracking-tighter text-foreground">7-Day Foundations - Day 1</h3>
+            <p className="text-foreground/70 text-sm">
               "In the beginning was the Word..." - Discover the foundation of faith
             </p>
           </div>
