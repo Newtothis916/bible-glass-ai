@@ -280,7 +280,7 @@ export function RuleManager() {
                   </div>
                 </div>
               </div>
-            )))}
+            ))}
           </CardContent>
         </LiquidGlassCard>
       )}
@@ -410,7 +410,7 @@ export function RuleManager() {
                     {renderPracticesList(rule.evening_practices, 'evening', <Sunset className="w-4 h-4" />)}
                   </div>
                 </div>
-              )))}
+              ))}
             </div>
           )}
         </CardContent>

@@ -77,40 +77,53 @@ export class RuleOfLifeAPI {
     } : null;
   }
 
-  async createRule(rule: {
-    title: string;
-    description?: string;
-    morning_practices: string[];
-    midday_practices: string[];
-    evening_practices: string[];
-  }): Promise<LifeRule> {
+  getTodayCompletions(dateIso: string): Promise<RuleCompletion[]> {
+    return this.getCompletions(dateIso);
+  }
+
+  async getCompletions(dateIso: string): Promise<RuleCompletion[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from('rule_completions')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('date_iso', dateIso);
+
+    if (error) throw error;
+    return (data || []) as RuleCompletion[];
+  }
+
+  async completeTimeSlot(ruleId: string, timeSlot: 'morning' | 'midday' | 'evening'): Promise<void> {
+    return this.markSlotComplete(ruleId, timeSlot);
+  }
+
+  async createRule(
+    title: string,
+    description: string,
+    morningPractices: any[],
+    middayPractices: any[],
+    eveningPractices: any[]
+  ): Promise<void> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
-    // Deactivate other rules first
     await this.deactivateAllRules();
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('life_rules')
       .insert({
         user_id: user.id,
-        title: rule.title,
-        description: rule.description || null,
-        morning_practices: rule.morning_practices,
-        midday_practices: rule.midday_practices,
-        evening_practices: rule.evening_practices,
+        title,
+        description,
+        morning_practices: morningPractices,
+        midday_practices: middayPractices,
+        evening_practices: eveningPractices,
         is_active: true
-      })
-      .select('*')
-      .single();
+      });
 
     if (error) throw error;
-    return {
-      ...data,
-      morning_practices: data.morning_practices as string[],
-      midday_practices: data.midday_practices as string[],
-      evening_practices: data.evening_practices as string[]
-    };
   }
 
   async updateRule(ruleId: string, updates: Partial<LifeRule>): Promise<void> {

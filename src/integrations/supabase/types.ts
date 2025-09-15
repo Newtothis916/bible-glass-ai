@@ -1341,6 +1341,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ai_bible_guide: {
+        Args: { context_messages?: Json; question_text: string }
+        Returns: Json
+      }
       binary_quantize: {
         Args: { "": string } | { "": unknown }
         Returns: unknown

@@ -1,17 +1,10 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+}
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -20,181 +13,136 @@ serve(async (req) => {
   }
 
   try {
-    const { question, contextRefs = [], userId } = await req.json();
+    const { question, context = [] } = await req.json()
 
-    if (!question || typeof question !== 'string') {
-      return new Response(
-        JSON.stringify({ error: 'Question is required and must be a string' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    if (!question) {
+      throw new Error('Question is required')
     }
 
-    console.log('AI Bible Guide request:', { question, contextRefs, userId });
+    // Initialize Supabase client
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    )
 
-    // Build context from verse references
-    let contextText = '';
-    if (contextRefs.length > 0) {
-      try {
-        // Simple verse lookup - in production you'd want more sophisticated retrieval
-        const { data: verses } = await supabase
-          .from('verses')
-          .select(`
-            text,
-            number,
-            chapter:chapters!inner(
-              number,
-              book:books!inner(
-                name,
-                code
-              )
-            )
-          `)
-          .in('id', contextRefs)
-          .limit(10);
-
-        if (verses && verses.length > 0) {
-          contextText = verses.map(v => 
-            `${v.chapter.book.name} ${v.chapter.number}:${v.number} - "${v.text}"`
-          ).join('\n');
-        }
-      } catch (error) {
-        console.error('Error fetching context verses:', error);
-      }
+    // Get user from auth header
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      throw new Error('No authorization header')
     }
 
-    // Enhanced system prompt for Bible study guidance
-    const systemPrompt = `You are a wise and knowledgeable Bible study assistant called "AI Bible Guide". Your purpose is to help people understand Scripture with accuracy, reverence, and pastoral care.
+    const { data: { user }, error: userError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    )
 
-CORE PRINCIPLES:
-- Always cite specific Bible verses to support your answers
-- Present different Christian perspectives respectfully when they exist
-- Point people to Scripture as the ultimate authority
-- Be encouraging and pastoral in tone
-- Acknowledge when something is unclear or debated
+    if (userError || !user) {
+      throw new Error('Invalid user')
+    }
 
-DENOMINATIONAL AWARENESS:
-When doctrinal differences exist between traditions (Catholic, Protestant, Orthodox), briefly acknowledge different viewpoints:
-- "Some traditions interpret this as... while others understand..."
-- "The Catholic Church teaches... while many Protestant denominations hold..."
-- Be fair and respectful to all mainstream Christian traditions
+    // Prepare OpenAI API call
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY')
+    if (!openaiApiKey) {
+      throw new Error('OpenAI API key not configured')
+    }
 
-RESPONSE FORMAT:
-You must respond with valid JSON in this exact format:
-{
-  "answer_md": "Your markdown-formatted answer with verse citations",
-  "citations": [
-    {"type": "verse", "ref": "John 3:16", "excerpt": "For God so loved the world..."},
-    {"type": "resource", "ref": "Commentary Title", "excerpt": "Brief relevant quote"}
-  ]
-}
+    // Build context for the AI
+    const systemPrompt = `You are a knowledgeable Bible assistant. You help users understand Scripture, theology, and Christian living. Always provide biblically accurate responses with relevant verse references. Be encouraging and pastoral in your tone while maintaining theological accuracy.`
 
-GUIDELINES:
-- Include at least 2-3 Bible verse citations in your citations array
-- Use markdown formatting in your answer (headers, lists, emphasis)
-- Keep answers focused but thorough (300-800 words typically)
-- If asked about non-Christian religions, redirect to biblical perspective
-- For personal/medical/legal advice, suggest speaking with a pastor/counselor
-- Always include practical application when appropriate
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      ...context.slice(-5), // Last 5 messages for context
+      { role: 'user', content: question }
+    ]
 
-CONTEXT PROVIDED:
-${contextText ? `Scripture Context:\n${contextText}\n` : 'No specific verses provided as context.'}`;
-
-    const userPrompt = `Question: ${question}
-
-Please provide a biblical answer with appropriate Scripture citations.`;
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call OpenAI API
+    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
+        model: 'gpt-4o-mini',
+        messages: messages,
+        max_tokens: 1000,
         temperature: 0.7,
-        max_tokens: 1500,
-        response_format: { type: "json_object" }
       }),
-    });
+    })
 
-    if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`);
+    if (!openaiResponse.ok) {
+      const error = await openaiResponse.json()
+      throw new Error(`OpenAI API error: ${error.error?.message || 'Unknown error'}`)
     }
 
-    const data = await response.json();
-    let aiResponse;
+    const openaiData = await openaiResponse.json()
+    const answer = openaiData.choices[0]?.message?.content || 'I apologize, but I could not generate a response.'
+    const tokensUsed = openaiData.usage?.total_tokens || 0
 
-    try {
-      aiResponse = JSON.parse(data.choices[0].message.content);
-    } catch (parseError) {
-      console.error('Failed to parse AI response as JSON:', parseError);
-      return new Response(
-        JSON.stringify({ error: 'Invalid AI response format' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // Extract potential Bible references from the answer
+    const citations = extractBibleReferences(answer)
+
+    // Log the query to database
+    const { error: logError } = await supabase
+      .from('ai_queries')
+      .insert({
+        user_id: user.id,
+        question: question,
+        answer_md: answer,
+        citations: citations,
+        tokens_used: tokensUsed,
+        response_time_ms: 0 // Could measure actual response time
+      })
+
+    if (logError) {
+      console.error('Error logging AI query:', logError)
     }
 
-    // Validate response structure
-    if (!aiResponse.answer_md || !aiResponse.citations || !Array.isArray(aiResponse.citations)) {
-      console.error('Invalid AI response structure:', aiResponse);
-      return new Response(
-        JSON.stringify({ error: 'AI response missing required fields' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Calculate usage for tracking
-    const tokensUsed = data.usage?.total_tokens || 0;
-    const responseTimeMs = Date.now() - new Date().getTime();
-
-    // Log the query in database if user is provided
-    if (userId) {
-      try {
-        await supabase
-          .from('ai_queries')
-          .insert({
-            user_id: userId,
-            question: question,
-            context_refs: contextRefs,
-            answer_md: aiResponse.answer_md,
-            citations: aiResponse.citations,
-            tokens_used: tokensUsed,
-            response_time_ms: responseTimeMs
-          });
-      } catch (dbError) {
-        console.error('Error logging query to database:', dbError);
-        // Don't fail the request if logging fails
-      }
-    }
-
-    console.log('AI Bible Guide response generated successfully');
-    
     return new Response(
       JSON.stringify({
-        ...aiResponse,
-        tokens_used: tokensUsed,
-        response_time_ms: responseTimeMs
+        answer: answer,
+        citations: citations,
+        tokens_used: tokensUsed
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
-
+      },
+    )
   } catch (error) {
-    console.error('Error in AI Bible Guide function:', error);
+    console.error('AI Bible Guide Error:', error)
     return new Response(
-      JSON.stringify({
+      JSON.stringify({ 
         error: error.message || 'Internal server error',
-        details: 'Failed to process AI request'
+        answer: "I apologize, but I'm experiencing technical difficulties. Please try again in a moment."
       }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+      },
+    )
   }
-});
+})
+
+// Helper function to extract Bible references from text
+function extractBibleReferences(text: string): string[] {
+  const bibleBooks = [
+    'Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth',
+    '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah',
+    'Esther', 'Job', 'Psalms', 'Psalm', 'Proverbs', 'Ecclesiastes', 'Song of Songs', 'Isaiah',
+    'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah',
+    'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi',
+    'Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians',
+    'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians',
+    '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter',
+    '1 John', '2 John', '3 John', 'Jude', 'Revelation'
+  ]
+  
+  const references: string[] = []
+  const pattern = new RegExp(`(${bibleBooks.join('|')})\\s+\\d+(?::\\d+(?:-\\d+)?)?`, 'gi')
+  const matches = text.match(pattern)
+  
+  if (matches) {
+    references.push(...matches.map(match => match.trim()))
+  }
+  
+  return [...new Set(references)] // Remove duplicates
+}
