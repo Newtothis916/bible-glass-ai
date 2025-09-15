@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MobileNav } from "@/components/navigation/mobile-nav";
 import { FloatingSideNav } from "@/components/navigation/floating-side-nav";
@@ -10,6 +10,7 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children, currentTab }: MainLayoutProps) {
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,7 +58,10 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       </div>
       
       {/* Floating Side Navigation */}
-      <FloatingSideNav />
+      <FloatingSideNav 
+        isOpen={isSideNavOpen} 
+        setIsOpen={setIsSideNavOpen} 
+      />
       
       {/* Offline Indicator */}
       <OfflineIndicator />
@@ -67,8 +71,12 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
         {children}
       </div>
 
-      {/* Mobile Navigation */}
-      <MobileNav activeTab={getActiveTab()} onTabClick={handleTabClick} />
+      {/* Mobile Navigation - Hidden when side nav is open */}
+      {!isSideNavOpen && (
+        <div className="z-40">
+          <MobileNav activeTab={getActiveTab()} onTabClick={handleTabClick} />
+        </div>
+      )}
     </div>
   );
 }

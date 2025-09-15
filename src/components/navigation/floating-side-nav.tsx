@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { 
   Menu, X, User, Settings, BookOpen, Bookmark, Download, BarChart3,
@@ -13,6 +13,8 @@ import { useAuth } from "@/hooks/use-auth";
 
 interface FloatingSideNavProps {
   className?: string;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
 const navigationSections = [
@@ -57,14 +59,39 @@ const navigationSections = [
   }
 ];
 
-export function FloatingSideNav({ className }: FloatingSideNavProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNavProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
 
   const isPremium = false; // TODO: Add subscription logic
   const currentPath = location.pathname;
+
+  // Scroll lock effect
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Escape key handler
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, setIsOpen]);
 
   const handleNavigation = (path: string) => {
     navigate(path);
