@@ -6,6 +6,7 @@ import { BookOpen, Sparkles, Heart, Users, Award, Calendar, Brain, Target, Play 
 import { practicesAPI } from "@/lib/practices-api";
 import { memoryAPI } from "@/lib/memory-api";
 import { prayerAPI } from "@/lib/prayer-api";
+import heroBible from "@/assets/hero-bible.jpg";
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -43,191 +44,215 @@ export function Dashboard() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Professional Header */}
-      <div className="text-center space-y-4 mb-12">
-        <div className="relative mx-auto w-20 h-20 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6">
-          <BookOpen className="w-10 h-10 text-white" />
+    <div className="min-h-screen px-4 py-6 space-y-6 max-w-6xl mx-auto">
+      {/* Header with Hero Image */}
+      <div className="relative rounded-3xl overflow-hidden mb-8">
+        <div 
+          className="h-48 sm:h-56 md:h-64 bg-cover bg-center relative"
+          style={{ backgroundImage: `url(${heroBible})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">
+              Devotion
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg opacity-90">
+              AI Study • Prayer • Community
+            </p>
+          </div>
         </div>
-        <h1 className="text-4xl font-bold text-foreground">Welcome Back</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Continue your spiritual journey with guided practices, prayer, and study
-        </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <LiquidGlassCard>
-          <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-              <Award className="w-6 h-6 text-primary" />
-            </div>
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {loading ? "..." : stats.practiceStreak}
-            </div>
-            <div className="text-sm text-muted-foreground">Day Streak</div>
-          </CardContent>
-        </LiquidGlassCard>
-
-        <LiquidGlassCard>
-          <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-              <Brain className="w-6 h-6 text-primary" />
-            </div>
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {loading ? "..." : stats.memoryCards}
-            </div>
-            <div className="text-sm text-muted-foreground">Memory Cards</div>
-          </CardContent>
-        </LiquidGlassCard>
-
-        <LiquidGlassCard>
-          <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-              <Heart className="w-6 h-6 text-primary" />
-            </div>
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {loading ? "..." : stats.activePrayers}
-            </div>
-            <div className="text-sm text-muted-foreground">Active Prayers</div>
-          </CardContent>
-        </LiquidGlassCard>
-
-        <LiquidGlassCard>
-          <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-              <Target className="w-6 h-6 text-primary" />
-            </div>
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {loading ? "..." : stats.completedSessions}
-            </div>
-            <div className="text-sm text-muted-foreground">Sessions Done</div>
-          </CardContent>
-        </LiquidGlassCard>
-      </div>
+      {/* Today's Focus */}
+      <LiquidGlassCard variant="elevated" className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-divine opacity-5" />
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-foreground">
+            <Calendar className="w-5 h-5" />
+            Today's Focus
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <h3 className="font-inter font-normal tracking-tighter text-foreground">7-Day Foundations - Day 1</h3>
+            <p className="text-foreground/70 text-sm">
+              "In the beginning was the Word..." - Discover the foundation of faith
+            </p>
+          </div>
+          <LiquidGlassButton variant="glass" size="sm">
+            Continue Reading
+          </LiquidGlassButton>
+        </CardContent>
+      </LiquidGlassCard>
 
       {/* Quick Actions */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-foreground">Quick Actions</h2>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <LiquidGlassCard className="group hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/read')}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                  <BookOpen className="w-6 h-6 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Read Scripture</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Continue your Bible reading journey
-                  </p>
-                  <LiquidGlassButton size="sm" variant="outline">
-                    Start Reading
-                  </LiquidGlassButton>
-                </div>
-              </div>
-            </CardContent>
-          </LiquidGlassCard>
+      <div className="grid grid-cols-2 gap-4">
+        <LiquidGlassCard 
+          variant="elevated" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/read')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <div className="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto shadow-glow">
+              <BookOpen className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <div>
+              <h3 className="font-medium text-sm">Continue Reading</h3>
+              <p className="text-xs text-muted-foreground">John 3:16</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
 
-          <LiquidGlassCard className="group hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/practices')}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
-                  <Sparkles className="w-6 h-6 text-green-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Daily Practice</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Guided spiritual exercises and meditation
-                  </p>
-                  <LiquidGlassButton size="sm" variant="outline">
-                    Begin Practice
-                  </LiquidGlassButton>
-                </div>
-              </div>
-            </CardContent>
-          </LiquidGlassCard>
-
-          <LiquidGlassCard className="group hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/pray')}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                  <Heart className="w-6 h-6 text-purple-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Prayer Journal</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Record and track your prayer requests
-                  </p>
-                  <LiquidGlassButton size="sm" variant="outline">
-                    Open Journal
-                  </LiquidGlassButton>
-                </div>
-              </div>
-            </CardContent>
-          </LiquidGlassCard>
-
-          <LiquidGlassCard className="group hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/memory')}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors">
-                  <Brain className="w-6 h-6 text-orange-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Memory Verses</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Learn and review scripture by heart
-                  </p>
-                  <LiquidGlassButton size="sm" variant="outline">
-                    Study Cards
-                  </LiquidGlassButton>
-                </div>
-              </div>
-            </CardContent>
-          </LiquidGlassCard>
-
-          <LiquidGlassCard className="group hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/groups')}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center group-hover:bg-pink-500/20 transition-colors">
-                  <Users className="w-6 h-6 text-pink-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Study Groups</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Connect with others in faith community
-                  </p>
-                  <LiquidGlassButton size="sm" variant="outline">
-                    Join Groups
-                  </LiquidGlassButton>
-                </div>
-              </div>
-            </CardContent>
-          </LiquidGlassCard>
-
-          <LiquidGlassCard className="group hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/listen')}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center group-hover:bg-indigo-500/20 transition-colors">
-                  <Play className="w-6 h-6 text-indigo-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Audio Bible</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Listen to scripture narrations
-                  </p>
-                  <LiquidGlassButton size="sm" variant="outline">
-                    Start Listening
-                  </LiquidGlassButton>
-                </div>
-              </div>
-            </CardContent>
-          </LiquidGlassCard>
-        </div>
+        <LiquidGlassCard 
+          variant="elevated" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/ai')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <div className="w-12 h-12 bg-gradient-secondary rounded-2xl flex items-center justify-center mx-auto shadow-divine">
+              <Sparkles className="w-6 h-6 text-secondary-foreground" />
+            </div>
+            <div>
+              <h3 className="font-medium text-sm">Ask AI Guide</h3>
+              <p className="text-xs text-muted-foreground">Get Bible insights</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
       </div>
+
+      {/* Spiritual Growth Features */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/practices')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Play className="w-8 h-8 text-primary mx-auto" />
+            <div>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Guided Practices</h3>
+              <p className="text-xs text-foreground/70">{stats.completedSessions} sessions</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/memory')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Brain className="w-8 h-8 text-secondary mx-auto" />
+            <div>
+              <h3 className="font-medium text-sm">Memory Verses</h3>
+              <p className="text-xs text-muted-foreground">{stats.memoryCards} cards</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/rule-of-life')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Target className="w-8 h-8 text-accent mx-auto" />
+            <div>
+              <h3 className="font-medium text-sm">Rule of Life</h3>
+              <p className="text-xs text-muted-foreground">Daily practices</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+      </div>
+
+      {/* Prayer & Streak */}
+      <div className="grid grid-cols-2 gap-4">
+        <LiquidGlassCard 
+          variant="outline" 
+          className="cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+          onClick={() => navigate('/pray')}
+        >
+          <CardContent className="p-4 text-center space-y-3">
+            <Heart className="w-8 h-8 text-destructive mx-auto" />
+            <div>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">Prayer Journal</h3>
+              <p className="text-xs text-foreground/70">{stats.activePrayers} active prayers</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+
+        <LiquidGlassCard variant="outline">
+          <CardContent className="p-4 text-center space-y-3">
+            <Award className="w-8 h-8 text-secondary mx-auto" />
+            <div>
+              <h3 className="font-inter font-normal tracking-tighter text-sm">{stats.practiceStreak} Week Streak</h3>
+              <p className="text-xs text-foreground/70">Keep it up!</p>
+            </div>
+          </CardContent>
+        </LiquidGlassCard>
+      </div>
+
+      {/* Community Highlights */}
+      <LiquidGlassCard variant="default">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            Community Highlights
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-xs font-medium text-primary-foreground">
+                JD
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-inter font-normal tracking-tighter">John shared a reflection</p>
+                <p className="text-xs text-foreground/70">"This verse changed my perspective on forgiveness..."</p>
+                <p className="text-xs text-foreground/50 mt-1">Matthew 6:14 • 2 hours ago</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 bg-gradient-secondary rounded-full flex items-center justify-center text-xs font-medium text-secondary-foreground">
+                SM
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-inter font-normal tracking-tighter">Sarah completed 7-Day Foundations</p>
+                <p className="text-xs text-foreground/70">"Amazing journey through the Gospel!"</p>
+                <p className="text-xs text-foreground/50 mt-1">Just now</p>
+              </div>
+            </div>
+          </div>
+
+          <LiquidGlassButton variant="outline" size="sm" className="w-full">
+            Join Discussion
+          </LiquidGlassButton>
+        </CardContent>
+      </LiquidGlassCard>
+
+      {/* Verse of the Day */}
+      <LiquidGlassCard variant="elevated" className="relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-divine opacity-20 rounded-full -translate-y-16 translate-x-16" />
+        <CardHeader>
+          <CardTitle>Verse of the Day</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <blockquote className="text-lg font-inter font-normal tracking-tighter leading-relaxed">
+            "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+          </blockquote>
+          <p className="text-sm text-foreground/70 font-inter font-normal tracking-tighter">John 3:16 (WEB)</p>
+          
+          <div className="flex gap-2">
+            <LiquidGlassButton variant="outline" size="sm">
+              Share
+            </LiquidGlassButton>
+            <LiquidGlassButton variant="ghost" size="sm">
+              Save
+            </LiquidGlassButton>
+          </div>
+        </CardContent>
+      </LiquidGlassCard>
     </div>
   );
 }
