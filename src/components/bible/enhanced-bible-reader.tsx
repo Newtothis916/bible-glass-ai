@@ -3,7 +3,7 @@ import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/component
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Bookmark, Highlighter, MessageSquare, Volume2, Share2 } from "lucide-react";
+import { BookOpen, Bookmark, Highlighter, MessageSquare, Volume2, Share2, Settings, ChevronLeft, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface BibleVerse {
@@ -39,6 +39,7 @@ export function EnhancedBibleReader() {
     { id: '4', name: 'John', code: 'JOH', chapter_count: 21 }
   ]);
   const [verses, setVerses] = useState<BibleVerse[]>([]);
+  const [showSettings, setShowSettings] = useState(false);
   
   const [selectedVersion, setSelectedVersion] = useState('1');
   const [selectedBook, setSelectedBook] = useState('4'); // John
@@ -98,89 +99,117 @@ export function EnhancedBibleReader() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Bible Navigation */}
-      <LiquidGlassCard>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BookOpen className="w-5 h-5" />
-            Bible Reader
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select value={selectedVersion} onValueChange={setSelectedVersion}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select version" />
-              </SelectTrigger>
-              <SelectContent>
-                {versions.map((version) => (
-                  <SelectItem key={version.id} value={version.id}>
-                    {version.name} ({version.code})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select value={selectedBook} onValueChange={setSelectedBook}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select book" />
-              </SelectTrigger>
-              <SelectContent>
-                {books.map((book) => (
-                  <SelectItem key={book.id} value={book.id}>
-                    {book.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select value={selectedChapter.toString()} onValueChange={(value) => setSelectedChapter(parseInt(value))}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select chapter" />
-              </SelectTrigger>
-              <SelectContent>
-                {Array.from({ length: 21 }, (_, i) => i + 1).map((chapter) => (
-                  <SelectItem key={chapter} value={chapter.toString()}>
-                    Chapter {chapter}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-      </LiquidGlassCard>
-
-      {/* Bible Text */}
-      <LiquidGlassCard>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>
-              John Chapter {selectedChapter}
-            </CardTitle>
-            <Badge variant="outline">
+    <div className="min-h-screen bg-background">
+      {/* Header with minimal navigation */}
+      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-md border-b border-border/10">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl font-semibold text-foreground">
+              {books.find(b => b.id === selectedBook)?.name} {selectedChapter}
+            </h1>
+            <Badge variant="secondary" className="text-xs">
               {versions.find(v => v.id === selectedVersion)?.code}
             </Badge>
           </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
+          
+          <div className="flex items-center gap-2">
+            {/* Chapter Navigation */}
+            <LiquidGlassButton
+              size="sm"
+              variant="ghost"
+              disabled={selectedChapter === 1}
+              onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </LiquidGlassButton>
+            
+            <LiquidGlassButton
+              size="sm"
+              variant="ghost"
+              disabled={selectedChapter === 21}
+              onClick={() => setSelectedChapter(prev => Math.min(21, prev + 1))}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </LiquidGlassButton>
+            
+            <LiquidGlassButton
+              size="sm"
+              variant="ghost"
+              onClick={() => setShowSettings(!showSettings)}
+            >
+              <Settings className="w-4 h-4" />
+            </LiquidGlassButton>
+          </div>
+        </div>
+
+        {/* Settings Panel */}
+        {showSettings && (
+          <div className="border-t border-border/10 p-4 bg-muted/20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <Select value={selectedVersion} onValueChange={setSelectedVersion}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Version" />
+                </SelectTrigger>
+                <SelectContent>
+                  {versions.map((version) => (
+                    <SelectItem key={version.id} value={version.id}>
+                      {version.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedBook} onValueChange={setSelectedBook}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Book" />
+                </SelectTrigger>
+                <SelectContent>
+                  {books.map((book) => (
+                    <SelectItem key={book.id} value={book.id}>
+                      {book.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedChapter.toString()} onValueChange={(value) => setSelectedChapter(parseInt(value))}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Chapter" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from({ length: 21 }, (_, i) => i + 1).map((chapter) => (
+                    <SelectItem key={chapter} value={chapter.toString()}>
+                      Chapter {chapter}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Bible Text - Clean YouVersion-style layout */}
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="space-y-4">
           {verses.map((verse) => (
             <div key={verse.id} className="group relative">
-              <div className="flex gap-4">
-                <Badge variant="outline" className="mt-1 flex-shrink-0">
+              <div className="flex gap-3 items-start">
+                <span className="text-sm font-medium text-muted-foreground mt-1 w-8 flex-shrink-0 text-right">
                   {verse.number}
-                </Badge>
-                <div className="flex-1">
-                  <p className="text-lg leading-relaxed mb-3">
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-lg leading-relaxed text-foreground font-inter">
                     {verse.text}
                   </p>
                   
-                  {/* Verse Actions */}
-                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {/* Verse Actions - Hidden by default, shown on hover/tap */}
+                  <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transition-opacity duration-200">
                     <LiquidGlassButton
                       size="sm"
                       variant="ghost"
                       onClick={() => handleBookmark(verse.id)}
+                      className="h-7 w-7 p-0"
                     >
                       <Bookmark className="w-3 h-3" />
                     </LiquidGlassButton>
@@ -189,6 +218,7 @@ export function EnhancedBibleReader() {
                       size="sm"
                       variant="ghost"
                       onClick={() => handleHighlight(verse.id, 'yellow')}
+                      className="h-7 w-7 p-0"
                     >
                       <Highlighter className="w-3 h-3" />
                     </LiquidGlassButton>
@@ -197,6 +227,7 @@ export function EnhancedBibleReader() {
                       size="sm"
                       variant="ghost"
                       onClick={() => handleAddNote(verse.id)}
+                      className="h-7 w-7 p-0"
                     >
                       <MessageSquare className="w-3 h-3" />
                     </LiquidGlassButton>
@@ -205,6 +236,7 @@ export function EnhancedBibleReader() {
                       size="sm"
                       variant="ghost"
                       onClick={() => handlePlayAudio(verse.id)}
+                      className="h-7 w-7 p-0"
                     >
                       <Volume2 className="w-3 h-3" />
                     </LiquidGlassButton>
@@ -213,6 +245,7 @@ export function EnhancedBibleReader() {
                       size="sm"
                       variant="ghost"
                       onClick={() => handleShare(verse.id)}
+                      className="h-7 w-7 p-0"
                     >
                       <Share2 className="w-3 h-3" />
                     </LiquidGlassButton>
@@ -221,26 +254,7 @@ export function EnhancedBibleReader() {
               </div>
             </div>
           ))}
-        </CardContent>
-      </LiquidGlassCard>
-
-      {/* Chapter Navigation */}
-      <div className="flex justify-between">
-        <LiquidGlassButton
-          variant="outline"
-          disabled={selectedChapter === 1}
-          onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
-        >
-          Previous Chapter
-        </LiquidGlassButton>
-        
-        <LiquidGlassButton
-          variant="outline"
-          disabled={selectedChapter === 21}
-          onClick={() => setSelectedChapter(prev => Math.min(21, prev + 1))}
-        >
-          Next Chapter
-        </LiquidGlassButton>
+        </div>
       </div>
     </div>
   );

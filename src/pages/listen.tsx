@@ -128,163 +128,168 @@ export default function ListenPage() {
 
   return (
     <MainLayout currentTab="listen">
-      <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl sm:text-3xl font-bold">Listen</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+      <div className="space-y-8">
+        {/* Professional Header */}
+        <div className="text-center space-y-4 mb-12">
+          <div className="relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-6">
+            <Headphones className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-4xl font-bold text-foreground">Listen</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Experience Scripture through audio Bible, sermons, and spiritual content
           </p>
         </div>
 
-        {/* Audio Player */}
-        {currentTrack && (
-          <AudioPlayer 
-            track={{
-              id: currentTrack.id,
-              title: currentTrack.title,
-              subtitle: currentTrack.narrator ? `Narrated by ${currentTrack.narrator}` : currentTrack.description,
-              url: currentTrack.source_url,
-              duration: currentTrack.duration_seconds
-            }}
-            playlist={audioAssets.map(asset => ({
-              id: asset.id,
-              title: asset.title,
-              subtitle: asset.narrator ? `Narrated by ${asset.narrator}` : asset.description,
-              url: asset.source_url,
-              duration: asset.duration_seconds
-            }))}
-            onTrackChange={handleTrackChange}
-          />
-        )}
+        <div className="max-w-6xl mx-auto space-y-6">
+          {/* Audio Player */}
+          {currentTrack && (
+            <AudioPlayer 
+              track={{
+                id: currentTrack.id,
+                title: currentTrack.title,
+                subtitle: currentTrack.narrator ? `Narrated by ${currentTrack.narrator}` : currentTrack.description,
+                url: currentTrack.source_url,
+                duration: currentTrack.duration_seconds
+              }}
+              playlist={audioAssets.map(asset => ({
+                id: asset.id,
+                title: asset.title,
+                subtitle: asset.narrator ? `Narrated by ${asset.narrator}` : asset.description,
+                url: asset.source_url,
+                duration: asset.duration_seconds
+              }))}
+              onTrackChange={handleTrackChange}
+            />
+          )}
 
-        {/* Search and Filter */}
-        <LiquidGlassCard className="p-4">
-          <div className="space-y-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search audio content..."
-                className="pl-10 mobile-input"
-              />
+          {/* Search and Filter */}
+          <LiquidGlassCard className="p-4">
+            <div className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search audio content..."
+                  className="pl-10 mobile-input"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {audioTypes.map(({ value, label, icon: Icon }) => (
+                  <Button
+                    key={value}
+                    variant={selectedType === value ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedType(value)}
+                    className="flex items-center gap-2 mobile-touch-target"
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="hidden sm:inline">{label}</span>
+                    <span className="sm:hidden">{label.split(' ')[0]}</span>
+                  </Button>
+                ))}
+              </div>
             </div>
+          </LiquidGlassCard>
 
-            <div className="flex flex-wrap gap-2">
-              {audioTypes.map(({ value, label, icon: Icon }) => (
-                <Button
-                  key={value}
-                  variant={selectedType === value ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedType(value)}
-                  className="flex items-center gap-2 mobile-touch-target"
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{label}</span>
-                  <span className="sm:hidden">{label.split(' ')[0]}</span>
-                </Button>
+          {/* Content Grid */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <LiquidGlassCard key={i} className="p-4 animate-pulse">
+                  <div className="space-y-3">
+                    <div className="h-4 bg-muted rounded w-3/4" />
+                    <div className="h-3 bg-muted rounded w-full" />
+                    <div className="h-8 bg-muted rounded" />
+                  </div>
+                </LiquidGlassCard>
               ))}
             </div>
-          </div>
-        </LiquidGlassCard>
+          ) : filteredAssets.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredAssets.map((asset) => (
+                <LiquidGlassCard 
+                  key={asset.id} 
+                  className={`p-4 hover:scale-[1.02] transition-transform cursor-pointer ${
+                    currentTrack?.id === asset.id ? 'ring-2 ring-primary' : ''
+                  }`}
+                  onClick={() => handleTrackSelect(asset)}
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1 flex-1">
+                        <div className="flex items-center gap-2">
+                          {getTypeIcon(asset.type)}
+                          <h3 className="font-medium line-clamp-2">{asset.title}</h3>
+                          {asset.premium_only && (
+                            <Crown className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                          )}
+                        </div>
+                        
+                        {asset.description && (
+                          <p className="text-sm text-muted-foreground line-clamp-2">
+                            {asset.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
 
-        {/* Content Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <LiquidGlassCard key={i} className="p-4 animate-pulse">
-                <div className="space-y-3">
-                  <div className="h-4 bg-muted rounded w-3/4" />
-                  <div className="h-3 bg-muted rounded w-full" />
-                  <div className="h-8 bg-muted rounded" />
-                </div>
-              </LiquidGlassCard>
-            ))}
-          </div>
-        ) : filteredAssets.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredAssets.map((asset) => (
-              <LiquidGlassCard 
-                key={asset.id} 
-                className={`p-4 hover:scale-[1.02] transition-transform cursor-pointer ${
-                  currentTrack?.id === asset.id ? 'ring-2 ring-primary' : ''
-                }`}
-                onClick={() => handleTrackSelect(asset)}
-              >
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
-                        {getTypeIcon(asset.type)}
-                        <h3 className="font-medium line-clamp-2">{asset.title}</h3>
-                        {asset.premium_only && (
-                          <Crown className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                        <Badge variant="secondary" className="text-xs">
+                          {asset.type.charAt(0).toUpperCase() + asset.type.slice(1)}
+                        </Badge>
+                        {asset.duration_seconds && (
+                          <span>{formatDuration(asset.duration_seconds)}</span>
                         )}
                       </div>
                       
-                      {asset.description && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {asset.description}
-                        </p>
+                      {asset.narrator && (
+                        <span className="text-xs truncate">{asset.narrator}</span>
                       )}
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {asset.type.charAt(0).toUpperCase() + asset.type.slice(1)}
-                      </Badge>
-                      {asset.duration_seconds && (
-                        <span>{formatDuration(asset.duration_seconds)}</span>
+                      <LiquidGlassButton 
+                        size="sm" 
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleTrackSelect(asset);
+                        }}
+                      >
+                        <Play className="w-4 h-4 mr-2" />
+                        {currentTrack?.id === asset.id ? 'Now Playing' : 'Play'}
+                      </LiquidGlassButton>
+                      
+                      {asset.premium_only ? (
+                        <Button variant="outline" size="sm" disabled>
+                          <Crown className="w-4 h-4" />
+                        </Button>
+                      ) : (
+                        <Button variant="outline" size="sm">
+                          <Download className="w-4 h-4" />
+                        </Button>
                       )}
                     </div>
-                    
-                    {asset.narrator && (
-                      <span className="text-xs truncate">{asset.narrator}</span>
-                    )}
                   </div>
-
-                  <div className="flex items-center gap-2">
-                    <LiquidGlassButton 
-                      size="sm" 
-                      className="flex-1"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleTrackSelect(asset);
-                      }}
-                    >
-                      <Play className="w-4 h-4 mr-2" />
-                      {currentTrack?.id === asset.id ? 'Now Playing' : 'Play'}
-                    </LiquidGlassButton>
-                    
-                    {asset.premium_only ? (
-                      <Button variant="outline" size="sm" disabled>
-                        <Crown className="w-4 h-4" />
-                      </Button>
-                    ) : (
-                      <Button variant="outline" size="sm">
-                        <Download className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </LiquidGlassCard>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <Headphones className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium mb-2">No audio content found</h3>
-            <p className="text-muted-foreground">
-              {searchQuery 
-                ? 'Try different search terms or browse all content'
-                : 'Audio content will appear here when available'
-              }
-            </p>
-          </div>
-        )}
+                </LiquidGlassCard>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Headphones className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium mb-2">No audio content found</h3>
+              <p className="text-muted-foreground">
+                {searchQuery 
+                  ? 'Try different search terms or browse all content'
+                  : 'Audio content will appear here when available'
+                }
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </MainLayout>
   );
