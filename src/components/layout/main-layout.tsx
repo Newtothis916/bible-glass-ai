@@ -68,7 +68,7 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       
       {/* Main content with proper mobile spacing */}
       <div className="relative z-10 min-h-screen">
-        <div className="pb-20 pt-4 safe-area-inset">
+        <div className="pb-20 pt-20 safe-area-inset">
           {children}
         </div>
       </div>

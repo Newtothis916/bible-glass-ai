@@ -2,11 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/components/ui/liquid-glass-card";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
-import { BookOpen, Sparkles, Heart, Users, Award, Calendar, Brain, Target, Play } from "lucide-react";
+import { BookOpen, Sparkles, Heart, Users, Award, Calendar, Brain, Target, Play, Share2, Bookmark } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { practicesAPI } from "@/lib/practices-api";
 import { memoryAPI } from "@/lib/memory-api";
 import { prayerAPI } from "@/lib/prayer-api";
 import heroBible from "@/assets/hero-bible.jpg";
+import verseImage1 from "@/assets/verse-landscape-1.jpg";
+import verseImage2 from "@/assets/verse-landscape-2.jpg"; 
+import verseImage3 from "@/assets/verse-landscape-3.jpg";
+
+const verseImages = {
+  landscape1: verseImage1,
+  landscape2: verseImage2,
+  landscape3: verseImage3
+};
 
 export function Dashboard() {
   const navigate = useNavigate();

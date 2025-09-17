@@ -61,6 +61,7 @@ const navigationSections = [
       { id: "help", label: "Help Center", icon: HelpCircle, path: "/help" },
       { id: "feedback", label: "Feedback", icon: MessageSquare, path: "/feedback" },
       { id: "contact", label: "Contact Support", icon: Mail, path: "/contact" },
+      { id: "giving", label: "Giving", icon: Heart, path: "/giving" },
       { id: "about", label: "About", icon: Info, path: "/about" },
       { id: "privacy", label: "Terms & Privacy", icon: Shield, path: "/privacy" },
     ]
