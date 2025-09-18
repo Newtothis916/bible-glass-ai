@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/components/ui/liquid-glass-card";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
@@ -140,21 +139,22 @@ export function EnhancedBibleReader() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-4">
-      {/* Minimal Top Bar - YouVersion Style */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm px-4 py-3">
+    <div className="max-w-4xl mx-auto">
+      {/* Clean YouVersion-Style Header */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm px-4 py-3 rounded-b-2xl">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <LiquidGlassButton
               variant="ghost"
               size="sm"
               onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
               disabled={selectedChapter === 1}
+              className="hover:bg-muted/50"
             >
               <ChevronLeft className="w-4 h-4" />
             </LiquidGlassButton>
             
-            <h1 className="text-lg font-semibold">
+            <h1 className="text-xl font-semibold text-foreground">
               John {selectedChapter}
             </h1>
             
@@ -163,14 +163,15 @@ export function EnhancedBibleReader() {
               size="sm"
               onClick={() => setSelectedChapter(prev => Math.min(21, prev + 1))}
               disabled={selectedChapter === 21}
+              className="hover:bg-muted/50"
             >
               <ChevronRight className="w-4 h-4" />
             </LiquidGlassButton>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Select value={fontSize} onValueChange={setFontSize}>
-              <SelectTrigger className="w-16 h-8 text-xs">
+              <SelectTrigger className="w-16 h-8 text-xs bg-background hover:bg-muted/50">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -181,36 +182,36 @@ export function EnhancedBibleReader() {
               </SelectContent>
             </Select>
             
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-xs bg-background">
               {versions.find(v => v.id === selectedVersion)?.code}
             </Badge>
           </div>
         </div>
       </div>
 
-      {/* Bible Text - Clean YouVersion-like layout */}
-      <div className="px-4 py-6 space-y-6">
+      {/* Bible Text - Clean YouVersion-like layout with more verses */}
+      <div className="px-6 py-8 space-y-8 bg-background rounded-2xl mt-4 shadow-soft">
         {verses.map((verse, index) => (
           <div key={verse.id} className="group relative">
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 mt-1">
-                <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-medium text-muted-foreground bg-muted/30 rounded-full">
+            <div className="flex gap-6">
+              <div className="flex-shrink-0 mt-2">
+                <span className="inline-flex items-center justify-center w-8 h-8 text-sm font-medium text-muted-foreground/70 bg-muted/20 rounded-full">
                   {verse.number}
                 </span>
               </div>
               
               <div className="flex-1 min-w-0">
-                <p className={`${getFontSizeClass()} leading-relaxed text-foreground font-normal mb-3 selection:bg-primary/20`}>
+                <p className={`${getFontSizeClass()} leading-loose text-foreground font-serif mb-4 selection:bg-primary/20 max-w-none`}>
                   {verse.text}
                 </p>
                 
                 {/* Verse Actions - Only show on hover/touch */}
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <LiquidGlassButton
                     size="sm"
                     variant="ghost"
                     onClick={() => handleBookmark(verse.id)}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 hover:bg-muted/50"
                   >
                     <Bookmark className="w-3.5 h-3.5" />
                   </LiquidGlassButton>
@@ -219,7 +220,7 @@ export function EnhancedBibleReader() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleHighlight(verse.id, 'yellow')}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 hover:bg-muted/50"
                   >
                     <Highlighter className="w-3.5 h-3.5" />
                   </LiquidGlassButton>
@@ -228,7 +229,7 @@ export function EnhancedBibleReader() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleAddNote(verse.id)}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 hover:bg-muted/50"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                   </LiquidGlassButton>
@@ -237,7 +238,7 @@ export function EnhancedBibleReader() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handlePlayAudio(verse.id)}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 hover:bg-muted/50"
                   >
                     <Volume2 className="w-3.5 h-3.5" />
                   </LiquidGlassButton>
@@ -246,7 +247,7 @@ export function EnhancedBibleReader() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleShare(verse.id)}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 hover:bg-muted/50"
                   >
                     <Share2 className="w-3.5 h-3.5" />
                   </LiquidGlassButton>
@@ -257,56 +258,58 @@ export function EnhancedBibleReader() {
         ))}
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="sticky bottom-20 bg-background/95 backdrop-blur-sm px-4 py-3">
-        <div className="flex justify-between items-center">
-          <LiquidGlassButton
-            variant="outline"
-            disabled={selectedChapter === 1}
-            onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
-            className="flex items-center gap-2"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Previous
-          </LiquidGlassButton>
-          
-          <div className="flex items-center gap-3">
-            <Select value={selectedVersion} onValueChange={setSelectedVersion}>
-              <SelectTrigger className="w-24">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {versions.map((version) => (
-                  <SelectItem key={version.id} value={version.id}>
-                    {version.code}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+      {/* Bottom Navigation - Floating style */}
+      <div className="sticky bottom-24 mt-8 px-4">
+        <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-4 shadow-elegant">
+          <div className="flex justify-between items-center">
+            <LiquidGlassButton
+              variant="outline"
+              disabled={selectedChapter === 1}
+              onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
+              className="flex items-center gap-2 bg-background hover:bg-muted/50"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Previous
+            </LiquidGlassButton>
             
-            <Select value={selectedBook} onValueChange={setSelectedBook}>
-              <SelectTrigger className="w-28">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {books.map((book) => (
-                  <SelectItem key={book.id} value={book.id}>
-                    {book.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-3">
+              <Select value={selectedVersion} onValueChange={setSelectedVersion}>
+                <SelectTrigger className="w-20 bg-background hover:bg-muted/50">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {versions.map((version) => (
+                    <SelectItem key={version.id} value={version.id}>
+                      {version.code}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              <Select value={selectedBook} onValueChange={setSelectedBook}>
+                <SelectTrigger className="w-24 bg-background hover:bg-muted/50">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {books.map((book) => (
+                    <SelectItem key={book.id} value={book.id}>
+                      {book.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <LiquidGlassButton
+              variant="outline"
+              disabled={selectedChapter === 21}
+              onClick={() => setSelectedChapter(prev => Math.min(21, prev + 1))}
+              className="flex items-center gap-2 bg-background hover:bg-muted/50"
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </LiquidGlassButton>
           </div>
-          
-          <LiquidGlassButton
-            variant="outline"
-            disabled={selectedChapter === 21}
-            onClick={() => setSelectedChapter(prev => Math.min(21, prev + 1))}
-            className="flex items-center gap-2"
-          >
-            Next
-            <ChevronRight className="w-4 h-4" />
-          </LiquidGlassButton>
         </div>
       </div>
     </div>

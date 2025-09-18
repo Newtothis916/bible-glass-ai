@@ -141,8 +141,8 @@ export function EnhancedAIAssistant() {
 
   return (
     <div className="flex flex-col h-screen max-w-4xl mx-auto bg-background">
-      {/* Claude-style Header */}
-      <div className="flex-shrink-0 px-6 py-4 border-b border-border/50 bg-background">
+      {/* Header */}
+      <div className="flex-shrink-0 px-6 py-4 bg-background">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
             <Bot className="w-5 h-5 text-white" />
@@ -235,8 +235,8 @@ export function EnhancedAIAssistant() {
         </div>
       )}
 
-      {/* Claude-style Input Area */}
-      <div className="flex-shrink-0 px-6 py-4 border-t border-border/50 bg-background">
+      {/* Input Area */}
+      <div className="flex-shrink-0 px-6 py-4 bg-background">
         <form onSubmit={handleSendMessage} className="relative">
           <textarea
             value={input}
@@ -248,7 +248,7 @@ export function EnhancedAIAssistant() {
               }
             }}
             placeholder="Ask me anything about Scripture, theology, or spiritual guidance..."
-            className="w-full min-h-[60px] max-h-32 resize-none bg-background border border-border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className="w-full min-h-[60px] max-h-32 resize-none bg-background rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-primary/50 focus:outline-none transition-colors"
             disabled={isLoading}
           />
           <LiquidGlassButton

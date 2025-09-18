@@ -143,7 +143,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
       )}>
         <LiquidGlassCard className="h-full m-4 overflow-hidden flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-border/20">
+          <div className="flex items-center justify-between p-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center">
                 <BookOpen className="w-4 h-4 text-white" />
@@ -169,7 +169,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
 
           {/* Premium Status */}
           {isPremium && (
-            <div className="px-6 py-3 bg-gradient-primary/10 border-b border-border/20">
+            <div className="px-6 py-3 bg-gradient-primary/10">
               <div className="flex items-center gap-2">
                 <Crown className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium text-primary">Premium Member</span>
@@ -215,7 +215,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
           </div>
 
           {/* Footer */}
-          <div className="p-4 border-t border-border/20">
+          <div className="p-4">
             <div className="text-xs text-muted-foreground text-center">
               Version 1.0.0 • Made with ❤️
             </div>
