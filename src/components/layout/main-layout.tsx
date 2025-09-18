@@ -68,8 +68,11 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       
       {/* Main content with proper spacing below floating nav */}
       <div className="relative z-10 min-h-screen">
-        <div className="pb-20 pt-20 safe-area-inset">
-          {children}
+        <div className="pb-20 pt-4 safe-area-inset">
+          {/* Content wrapper - when side nav is open, add left margin to avoid overlap */}
+          <div className={`transition-all duration-300 ${isSideNavOpen ? 'ml-80 max-w-[90vw]' : 'ml-0'}`}>
+            {children}
+          </div>
         </div>
       </div>
 
