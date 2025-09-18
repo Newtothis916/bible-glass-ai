@@ -67,12 +67,9 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       <OfflineIndicator />
       
       {/* Main content with proper spacing below floating nav */}
-      <div className={`relative min-h-screen ${isSideNavOpen ? 'z-60' : 'z-10'}`}>
-        <div className="pb-20 pt-4 safe-area-inset">
-          {/* Content wrapper - when side nav is open, add left margin to avoid overlap */}
-          <div className={`transition-all duration-300 ${isSideNavOpen ? 'ml-80' : 'ml-0'}`}>
-            {children}
-          </div>
+      <div className="relative z-10 min-h-screen">
+        <div className="pb-20 pt-20 safe-area-inset">
+          {children}
         </div>
       </div>
 
