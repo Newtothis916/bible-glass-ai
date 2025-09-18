@@ -70,7 +70,7 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       <div className="relative z-10 min-h-screen">
         <div className="pb-20 pt-4 safe-area-inset">
           {/* Content wrapper - when side nav is open, add left margin to avoid overlap */}
-          <div className={`transition-all duration-300 ${isSideNavOpen ? 'ml-80 max-w-[90vw]' : 'ml-0'}`}>
+          <div className={`transition-all duration-300 ${isSideNavOpen ? 'ml-80' : 'ml-0'} ${isSideNavOpen ? 'bg-red-100' : 'bg-transparent'}`}>
             {children}
           </div>
         </div>

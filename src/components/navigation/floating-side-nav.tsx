@@ -141,7 +141,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
         "fixed top-0 left-0 h-full w-80 max-w-[90vw] z-50 transform transition-transform duration-300 ease-in-out",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
-        <LiquidGlassCard className="h-full m-4 overflow-hidden flex flex-col">
+        <LiquidGlassCard className="h-full m-4 overflow-hidden flex flex-col shadow-2xl">
           {/* Header */}
           <div className="flex items-center justify-between p-6">
             <div className="flex items-center gap-3">
