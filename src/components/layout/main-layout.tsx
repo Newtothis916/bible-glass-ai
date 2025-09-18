@@ -66,9 +66,9 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       {/* Offline Indicator */}
       <OfflineIndicator />
       
-      {/* Main content with proper mobile spacing */}
+      {/* Main content with proper spacing below floating nav */}
       <div className="relative z-10 min-h-screen">
-        <div className="pb-20 pt-20 safe-area-inset">
+        <div className="pb-20 pt-24 safe-area-inset">
           {children}
         </div>
       </div>

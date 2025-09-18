@@ -8,14 +8,37 @@ import { practicesAPI } from "@/lib/practices-api";
 import { memoryAPI } from "@/lib/memory-api";
 import { prayerAPI } from "@/lib/prayer-api";
 import heroBible from "@/assets/hero-bible.jpg";
-import verseImage1 from "@/assets/verse-landscape-1.jpg";
-import verseImage2 from "@/assets/verse-landscape-2.jpg"; 
-import verseImage3 from "@/assets/verse-landscape-3.jpg";
+import verseLandscape1 from "@/assets/verse-landscape-1.jpg";
+import verseLandscape2 from "@/assets/verse-landscape-2.jpg"; 
+import verseLandscape3 from "@/assets/verse-landscape-3.jpg";
 
-const verseImages = {
-  landscape1: verseImage1,
-  landscape2: verseImage2,
-  landscape3: verseImage3
+// Sample verse of the day data with rotating landscape images
+const versesOfTheDay = [
+  {
+    id: 1,
+    text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, to give you hope and a future.",
+    reference: "Jeremiah 29:11",
+    image: verseLandscape1,
+  },
+  {
+    id: 2,
+    text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+    reference: "Proverbs 3:5-6",
+    image: verseLandscape2,
+  },
+  {
+    id: 3,
+    text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+    reference: "Romans 8:28",
+    image: verseLandscape3,
+  }
+];
+
+// Get today's verse based on date
+const getTodaysVerse = () => {
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+  return versesOfTheDay[dayOfYear % versesOfTheDay.length];
 };
 
 export function Dashboard() {
@@ -27,6 +50,7 @@ export function Dashboard() {
     completedSessions: 0
   });
   const [loading, setLoading] = useState(true);
+  const todaysVerse = getTodaysVerse();
 
   useEffect(() => {
     loadDashboardStats();
@@ -243,23 +267,33 @@ export function Dashboard() {
 
       {/* Verse of the Day */}
       <LiquidGlassCard variant="elevated" className="relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-divine opacity-20 rounded-full -translate-y-16 translate-x-16" />
-        <CardHeader>
-          <CardTitle>Verse of the Day</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <blockquote className="text-lg font-inter font-normal tracking-tighter leading-relaxed">
-            "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
-          </blockquote>
-          <p className="text-sm text-foreground/70 font-inter font-normal tracking-tighter">John 3:16 (WEB)</p>
-          
-          <div className="flex gap-2">
-            <LiquidGlassButton variant="outline" size="sm">
-              Share
-            </LiquidGlassButton>
-            <LiquidGlassButton variant="ghost" size="sm">
-              Save
-            </LiquidGlassButton>
+        <div 
+          className="h-48 bg-cover bg-center relative rounded-t-xl"
+          style={{ backgroundImage: `url(${todaysVerse.image})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-t-xl" />
+        </div>
+        <CardContent className="relative -mt-16 z-10 space-y-4">
+          <div className="bg-background/95 backdrop-blur-sm rounded-xl p-6 border border-border/20">
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen className="w-5 h-5 text-primary" />
+              <h3 className="font-semibold">Verse of the Day</h3>
+            </div>
+            <blockquote className="text-lg font-serif leading-relaxed mb-4 text-foreground">
+              "{todaysVerse.text}"
+            </blockquote>
+            <p className="text-sm text-muted-foreground font-medium mb-4">{todaysVerse.reference}</p>
+            
+            <div className="flex gap-2">
+              <LiquidGlassButton variant="outline" size="sm">
+                <Share2 className="w-4 h-4 mr-2" />
+                Share
+              </LiquidGlassButton>
+              <LiquidGlassButton variant="ghost" size="sm">
+                <Bookmark className="w-4 h-4 mr-2" />
+                Save
+              </LiquidGlassButton>
+            </div>
           </div>
         </CardContent>
       </LiquidGlassCard>

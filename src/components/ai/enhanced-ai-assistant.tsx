@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/components/ui/liquid-glass-card";
+import { format } from "date-fns";
+import { Bot, Send, User } from "lucide-react";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Bot, Send, Sparkles, BookOpen, MessageSquare, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -24,11 +22,10 @@ interface QuickPrompt {
 
 export function EnhancedAIAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputMessage, setInputMessage] = useState("");
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickPrompts: QuickPrompt[] = [
     {
@@ -51,19 +48,19 @@ export function EnhancedAIAssistant() {
     },
     {
       id: '4',
-      title: 'Apply to life',
+      title: 'Apply to daily life',
       prompt: 'How can I apply this biblical principle to my daily life?',
       category: 'application'
     },
     {
       id: '5',
-      title: 'Cross references',
+      title: 'Related verses',
       prompt: 'What other Bible verses relate to this topic?',
       category: 'study'
     },
     {
       id: '6',
-      title: 'Theological meaning',
+      title: 'God\'s character',
       prompt: 'What does this passage teach us about God\'s character?',
       category: 'theology'
     }
@@ -77,8 +74,9 @@ export function EnhancedAIAssistant() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSendMessage = async (messageContent?: string) => {
-    const content = messageContent || inputMessage.trim();
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const content = input.trim();
     if (!content) return;
 
     const userMessage: Message = {
@@ -89,7 +87,7 @@ export function EnhancedAIAssistant() {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInputMessage("");
+    setInput("");
     setIsLoading(true);
 
     try {
@@ -133,163 +131,139 @@ export function EnhancedAIAssistant() {
   };
 
   const handleQuickPrompt = (prompt: string) => {
-    handleSendMessage(prompt);
+    setInput(prompt);
+    const syntheticEvent = {
+      preventDefault: () => {},
+    } as React.FormEvent;
+    
+    setTimeout(() => handleSendMessage(syntheticEvent), 100);
   };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'study': return 'bg-primary';
-      case 'prayer': return 'bg-secondary';
-      case 'theology': return 'bg-accent';
-      case 'application': return 'bg-muted';
-      default: return 'bg-muted';
-    }
-  };
-
-  const filteredPrompts = selectedCategory === 'all' 
-    ? quickPrompts 
-    : quickPrompts.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center">
-        <h1 className="text-2xl font-bold flex items-center justify-center gap-2">
-          <Bot className="w-6 h-6" />
-          AI Bible Assistant
-        </h1>
-        <p className="text-muted-foreground">
-          Ask questions about Scripture, theology, and Christian living
-        </p>
+    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-background">
+      {/* Claude-style Header */}
+      <div className="flex-shrink-0 px-6 py-4 border-b border-border/50 bg-background">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+            <Bot className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold">Bible Assistant</h1>
+            <p className="text-sm text-muted-foreground">
+              Powered by AI • Always verify with Scripture
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Quick Prompts */}
-      <LiquidGlassCard>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5" />
-            Quick Prompts
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex gap-2 flex-wrap">
-            <Badge 
-              variant={selectedCategory === 'all' ? 'default' : 'outline'}
-              className="cursor-pointer"
-              onClick={() => setSelectedCategory('all')}
-            >
-              All
-            </Badge>
-            {['study', 'prayer', 'theology', 'application'].map((category) => (
-              <Badge
-                key={category}
-                variant={selectedCategory === category ? 'default' : 'outline'}
-                className="cursor-pointer capitalize"
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </Badge>
-            ))}
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {filteredPrompts.map((prompt) => (
-              <LiquidGlassButton
-                key={prompt.id}
-                variant="outline"
-                size="sm"
-                className="justify-start h-auto p-3"
-                onClick={() => handleQuickPrompt(prompt.prompt)}
-              >
-                <div className="text-left">
-                  <div className="font-medium">{prompt.title}</div>
-                  <div className="text-xs text-muted-foreground capitalize">
-                    {prompt.category}
-                  </div>
-                </div>
-              </LiquidGlassButton>
-            ))}
-          </div>
-        </CardContent>
-      </LiquidGlassCard>
-
-      {/* Chat Messages */}
-      <LiquidGlassCard className="min-h-[400px]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageSquare className="w-5 h-5" />
-            Conversation
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-6 max-h-96 overflow-y-auto">
-            {messages.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                <Bot className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Ask me anything about the Bible, theology, or Christian faith!</p>
-                <p className="text-sm">Try one of the quick prompts above to get started.</p>
-              </div>
-            ) : (
-              messages.map((message) => (
-                <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === 'user' 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'bg-muted'
-                  }`}>
-                    <div className="whitespace-pre-wrap">{message.content}</div>
-                    {message.citations && message.citations.length > 0 && (
-                      <div className="mt-2 pt-2 border-t border-border/20">
-                        <div className="text-xs text-muted-foreground mb-1">References:</div>
-                        <div className="flex gap-1 flex-wrap">
-                          {message.citations.map((citation, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              {citation}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <div className="text-xs opacity-70 mt-2">
-                      {message.timestamp.toLocaleTimeString()}
+      {/* Claude-style Quick Prompts - Only show when no messages */}
+      {messages.length === 0 && (
+        <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
+          <div className="max-w-2xl w-full space-y-6">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-semibold mb-2">How can I help you today?</h2>
+              <p className="text-muted-foreground">
+                Ask me about Scripture, theology, spiritual guidance, or biblical questions
+              </p>
+            </div>
+            
+            <div className="grid gap-3">
+              {quickPrompts.slice(0, 6).map((prompt) => (
+                <LiquidGlassButton
+                  key={prompt.title}
+                  variant="outline"
+                  className="h-auto p-4 text-left justify-start hover:bg-muted/50 transition-colors"
+                  onClick={() => handleQuickPrompt(prompt.prompt)}
+                >
+                  <div className="w-full">
+                    <div className="font-medium mb-1">{prompt.title}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {prompt.prompt}
                     </div>
                   </div>
+                </LiquidGlassButton>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Claude-style Chat Messages */}
+      {messages.length > 0 && (
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+          {messages.map((message) => (
+            <div key={message.id} className="flex gap-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+                {message.role === 'user' ? (
+                  <User className="w-4 h-4 text-white" />
+                ) : (
+                  <Bot className="w-4 h-4 text-white" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="text-sm font-medium text-muted-foreground">
+                  {message.role === 'user' ? 'You' : 'Assistant'}
                 </div>
-              ))
-            )}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-muted rounded-lg p-3">
-                  <div className="flex items-center gap-2">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Thinking...</span>
-                  </div>
+                <div className="prose prose-sm max-w-none">
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">
+                    {message.content}
+                  </p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {format(new Date(message.timestamp), 'MMM d, h:mm a')}
                 </div>
               </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+            </div>
+          ))}
+          
+          {isLoading && (
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="text-sm font-medium text-muted-foreground">Assistant</div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" />
+                  <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                  <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+      )}
 
-          {/* Input */}
-          <div className="flex gap-2">
-            <Input
-              placeholder="Ask about Scripture, theology, or spiritual questions..."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
-              disabled={isLoading}
-              className="mobile-input"
-            />
-            <LiquidGlassButton
-              onClick={() => handleSendMessage()}
-              disabled={!inputMessage.trim() || isLoading}
-              className="mobile-touch-target"
-            >
-              <Send className="w-4 h-4" />
-            </LiquidGlassButton>
-          </div>
-        </CardContent>
-      </LiquidGlassCard>
+      {/* Claude-style Input Area */}
+      <div className="flex-shrink-0 px-6 py-4 border-t border-border/50 bg-background">
+        <form onSubmit={handleSendMessage} className="relative">
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage(e);
+              }
+            }}
+            placeholder="Ask me anything about Scripture, theology, or spiritual guidance..."
+            className="w-full min-h-[60px] max-h-32 resize-none bg-background border border-border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            disabled={isLoading}
+          />
+          <LiquidGlassButton
+            type="submit"
+            size="sm"
+            disabled={!input.trim() || isLoading}
+            className="absolute right-2 bottom-2 w-8 h-8 p-0"
+          >
+            <Send className="w-4 h-4" />
+          </LiquidGlassButton>
+        </form>
+        <div className="mt-2 text-xs text-muted-foreground text-center">
+          AI responses may contain errors. Always verify with Scripture.
+        </div>
+      </div>
     </div>
   );
 }
