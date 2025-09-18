@@ -4,7 +4,7 @@ import { MemoryDeckComponent } from "@/components/memory/memory-deck";
 export default function Memory() {
   return (
     <MainLayout currentTab="memory">
-      <div className="max-w-6xl mx-auto px-4 py-6">
+      <div className="max-w-6xl mx-auto px-4 pb-6">
         <MemoryDeckComponent />
       </div>
     </MainLayout>

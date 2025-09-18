@@ -6,7 +6,7 @@ import { Info, BookOpen } from "lucide-react";
 export default function AboutPage() {
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 pb-6 space-y-6">
         <div className="text-center space-y-2">
           <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
             About Bible App

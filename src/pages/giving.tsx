@@ -12,7 +12,7 @@ export default function GivingPage() {
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 pb-6 space-y-6">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-4">Support Our Ministry</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">

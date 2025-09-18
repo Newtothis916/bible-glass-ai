@@ -128,7 +128,7 @@ export default function ListenPage() {
 
   return (
     <MainLayout currentTab="listen">
-      <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 pb-6 space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
           <h1 className="text-2xl sm:text-3xl font-bold">Listen</h1>
