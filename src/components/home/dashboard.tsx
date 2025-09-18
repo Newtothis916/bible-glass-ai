@@ -78,7 +78,7 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen px-4 py-6 space-y-6 max-w-6xl mx-auto">
+    <div className="min-h-screen px-4 pb-6 space-y-6 max-w-6xl mx-auto">
       {/* Header with Hero Image */}
       <div className="relative rounded-3xl overflow-hidden mb-8">
         <div 

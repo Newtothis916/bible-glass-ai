@@ -68,7 +68,7 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       
       {/* Main content with proper spacing below floating menu button */}
       <div className="relative z-10 min-h-screen">
-        <div className="pb-20 pt-20 safe-area-inset">
+        <div className="pb-20 pt-28 safe-area-inset">
           {/* Content wrapper - no state changes when nav opens */}
           <div className="ml-0">
             {children}
