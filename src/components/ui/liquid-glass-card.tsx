@@ -7,13 +7,13 @@ const liquidGlassCardVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-card border-2 border-primary/60 hover:shadow-xl hover:shadow-primary/10",
-        elevated: "bg-card border-2 border-primary/70 shadow-elegant hover:shadow-glow",
-        outline: "border-2 border-primary/80 bg-card hover:border-primary hover:shadow-xl hover:shadow-primary/10",
-        solid: "bg-card border-2 border-primary/60 hover:shadow-xl hover:shadow-primary/5",
-        glass: "bg-white/10 backdrop-blur-md border-2 border-white/50 hover:shadow-xl hover:shadow-white/5",
-        divine: "bg-gradient-glass border-2 border-primary/70 shadow-divine hover:shadow-glow",
-        premium: "bg-gradient-divine border-2 border-secondary/70 shadow-divine hover:shadow-glow",
+        default: "bg-card hover:shadow-xl hover:shadow-primary/10",
+        elevated: "bg-card shadow-elegant hover:shadow-glow",
+        outline: "bg-card hover:shadow-xl hover:shadow-primary/10",
+        solid: "bg-card hover:shadow-xl hover:shadow-primary/5",
+        glass: "bg-white/10 backdrop-blur-md hover:shadow-xl hover:shadow-white/5",
+        divine: "bg-gradient-glass shadow-divine hover:shadow-glow",
+        premium: "bg-gradient-divine shadow-divine hover:shadow-glow",
       },
       padding: {
         none: "p-0",
