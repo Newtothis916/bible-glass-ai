@@ -121,7 +121,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
         size="sm"
         onClick={() => setIsOpen(true)}
         className={cn(
-          "fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-background/80 backdrop-blur-md border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300",
+          "fixed top-4 left-4 z-30 w-12 h-12 rounded-full bg-background/80 backdrop-blur-md border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300",
           className
         )}
       >
@@ -131,14 +131,14 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
       {/* Backdrop */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-35 transition-opacity duration-300"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Floating Side Navigation */}
       <div className={cn(
-        "fixed top-0 left-0 h-full w-80 max-w-[90vw] z-50 transform transition-transform duration-300 ease-in-out",
+        "fixed top-0 left-0 h-full w-80 max-w-[90vw] z-40 transform transition-transform duration-300 ease-in-out",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <LiquidGlassCard className="h-full m-4 overflow-hidden flex flex-col">

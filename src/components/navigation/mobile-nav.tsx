@@ -17,7 +17,7 @@ const navItems = [
 
 export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-xl mobile-nav-safe">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-xl">
       <div className="px-2 py-2">
         <div className="flex items-center justify-around max-w-md mx-auto">
           {navItems.map(({ id, label, icon: Icon }) => (
