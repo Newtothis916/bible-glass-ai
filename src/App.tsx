@@ -26,6 +26,9 @@ import AnalyticsPage from "./pages/analytics";
 import HelpPage from "./pages/help";
 import FeedbackPage from "./pages/feedback";
 import AboutPage from "./pages/about";
+import ContactPage from "./pages/contact";
+import GivingPage from "./pages/giving";
+import PrivacyPage from "./pages/privacy";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +61,9 @@ const App = () => (
             <Route path="/help" element={<HelpPage />} />
             <Route path="/feedback" element={<FeedbackPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/giving" element={<GivingPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/success" element={<Success />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
