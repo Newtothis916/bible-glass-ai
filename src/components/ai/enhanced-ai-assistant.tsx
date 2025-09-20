@@ -140,69 +140,67 @@ export function EnhancedAIAssistant() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)] max-w-none mx-0 bg-background">
-      {/* Clean Claude-style Header */}
-      <div className="flex-shrink-0 px-8 py-6 bg-background">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-2xl font-medium text-foreground mb-1">Bible Assistant</h1>
-          <p className="text-muted-foreground text-sm">
-            Ask me about Scripture, theology, or spiritual guidance
-          </p>
-        </div>
+    <div className="flex flex-col h-screen bg-slate-900 text-slate-100">
+      {/* Claude Header */}
+      <div className="flex items-center justify-center py-4 px-6 border-b border-slate-800">
+        <h1 className="text-lg font-normal">
+          <span className="text-slate-100">Claude</span>
+          <span className="text-slate-500 ml-2">Sonnet 4</span>
+        </h1>
       </div>
 
-      {/* Claude-style Welcome Screen */}
+      {/* Welcome Screen - Exact Claude style */}
       {messages.length === 0 && (
-        <div className="flex-1 flex items-center justify-center px-8">
-          <div className="max-w-2xl w-full">
-            <div className="text-center mb-12">
-              <h2 className="text-xl font-medium mb-3 text-foreground">How can I help you today?</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                I'm here to help you explore Scripture, understand theology, find spiritual guidance, and answer biblical questions.
-              </p>
+        <div className="flex-1 flex flex-col items-center justify-center px-8">
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center space-y-8">
+              {/* Orange loading spinner like Claude */}
+              <div className="relative">
+                <div className="w-12 h-12 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin"></div>
+              </div>
+              <h2 className="text-2xl font-normal text-slate-300 text-center max-w-lg">
+                How can I help you this evening?
+              </h2>
             </div>
-            
-            <div className="grid gap-3 max-w-xl mx-auto">
-              {quickPrompts.slice(0, 6).map((prompt) => (
-                <button
-                  key={prompt.id}
-                  onClick={() => handleQuickPrompt(prompt.prompt)}
-                  className="p-4 text-left bg-background hover:bg-muted/30 rounded-lg transition-colors border border-border/40 hover:border-border"
-                >
-                  <div className="font-medium text-foreground mb-1 text-sm">{prompt.title}</div>
-                  <div className="text-xs text-muted-foreground leading-relaxed">
-                    {prompt.prompt}
-                  </div>
-                </button>
-              ))}
+          ) : (
+            <div className="flex flex-col items-center justify-center space-y-8">
+              {/* Orange accent icon */}
+              <div className="w-12 h-12 text-orange-500">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                  <path d="M12 2L14.09 8.26L20 9L14.09 15.74L12 22L9.91 15.74L4 9L9.91 8.26L12 2Z"/>
+                </svg>
+              </div>
+              <h2 className="text-2xl font-normal text-slate-300 text-center max-w-lg">
+                How can I help you this evening?
+              </h2>
             </div>
-          </div>
+          )}
         </div>
       )}
 
-      {/* Claude-style Conversation */}
+      {/* Conversation */}
       {messages.length > 0 && (
-        <div className="flex-1 overflow-y-auto px-8">
-          <div className="max-w-3xl mx-auto space-y-8 py-4">
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-3xl mx-auto px-6 py-8 space-y-12">
             {messages.map((message) => (
-              <div key={message.id} className="space-y-3">
+              <div key={message.id} className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center">
                     {message.role === 'user' ? (
-                      <User className="w-3.5 h-3.5 text-muted-foreground" />
+                      <User className="w-3.5 h-3.5 text-slate-300" />
                     ) : (
-                      <Bot className="w-3.5 h-3.5 text-muted-foreground" />
+                      <Bot className="w-3.5 h-3.5 text-slate-300" />
                     )}
                   </div>
-                  <span className="text-sm font-medium text-foreground">
-                    {message.role === 'user' ? 'You' : 'Assistant'}
+                  <span className="text-sm font-medium text-slate-300">
+                    {message.role === 'user' ? 'You' : 'Claude'}
                   </span>
                 </div>
                 <div className="ml-9">
-                  <div className="text-foreground leading-7 whitespace-pre-wrap text-[15px]">
+                  <div className="text-slate-100 leading-7 whitespace-pre-wrap">
                     {message.content}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-3">
+                  <div className="text-xs text-slate-500 mt-4">
                     {format(new Date(message.timestamp), 'MMM d, h:mm a')}
                   </div>
                 </div>
@@ -210,18 +208,18 @@ export function EnhancedAIAssistant() {
             ))}
             
             {isLoading && (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
-                    <Bot className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center">
+                    <Bot className="w-3.5 h-3.5 text-slate-300" />
                   </div>
-                  <span className="text-sm font-medium text-foreground">Assistant</span>
+                  <span className="text-sm font-medium text-slate-300">Claude</span>
                 </div>
                 <div className="ml-9">
                   <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                    <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                   </div>
                 </div>
               </div>
@@ -231,34 +229,35 @@ export function EnhancedAIAssistant() {
         </div>
       )}
 
-      {/* Claude-style Input Area */}
-      <div className="flex-shrink-0 px-8 pb-8 pt-4 bg-background">
+      {/* Input Area - Exact Claude style */}
+      <div className="p-6">
         <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSendMessage} className="relative">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSendMessage(e);
-                }
-              }}
-              placeholder="Ask me anything about Scripture, theology, or spiritual guidance..."
-              className="w-full min-h-[52px] max-h-32 resize-none bg-background border border-border rounded-lg px-4 py-3 pr-12 focus:ring-1 focus:ring-primary/30 focus:outline-none text-sm placeholder:text-muted-foreground transition-all"
-              disabled={isLoading}
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || isLoading}
-              className="absolute right-2 bottom-2 p-1.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-            >
-              <Send className="w-4 h-4" />
-            </button>
+          <form onSubmit={handleSendMessage}>
+            <div className="relative">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage(e);
+                  }
+                }}
+                placeholder="Chat with Claude"
+                className="w-full min-h-[52px] max-h-32 resize-none bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 pr-16 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                disabled={isLoading}
+              />
+              <div className="absolute right-2 bottom-2 flex items-center gap-2">
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className="p-2 rounded-md bg-orange-500 text-white hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </form>
-          <div className="mt-3 text-xs text-muted-foreground text-center">
-            AI may make mistakes. Always verify with Scripture.
-          </div>
         </div>
       </div>
     </div>
