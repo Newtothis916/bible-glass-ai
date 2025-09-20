@@ -139,10 +139,10 @@ export function EnhancedBibleReader() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4">
+    <div className="w-full max-w-4xl mx-auto px-4 overflow-hidden">
       {/* Clean Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+        <div className="flex items-center gap-3 min-w-0">
           <LiquidGlassButton
             variant="ghost"
             size="sm"
@@ -152,7 +152,7 @@ export function EnhancedBibleReader() {
             <ChevronLeft className="w-4 h-4" />
           </LiquidGlassButton>
           
-          <h1 className="text-2xl font-semibold text-foreground">
+          <h1 className="text-2xl font-semibold text-foreground truncate">
             John {selectedChapter}
           </h1>
           
@@ -166,7 +166,7 @@ export function EnhancedBibleReader() {
           </LiquidGlassButton>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-shrink-0">
           <Select value={fontSize} onValueChange={setFontSize}>
             <SelectTrigger className="w-20 h-9">
               <SelectValue />
@@ -188,20 +188,20 @@ export function EnhancedBibleReader() {
       {/* Bible Text */}
       <div className="space-y-6 mb-8">
         {verses.map((verse) => (
-          <div key={verse.id} className="group flex gap-4">
+          <div key={verse.id} className="group flex gap-4 w-full min-w-0">
             <div className="flex-shrink-0 mt-1">
               <span className="inline-flex items-center justify-center w-7 h-7 text-sm font-medium text-muted-foreground bg-muted/30 rounded-full">
                 {verse.number}
               </span>
             </div>
             
-            <div className="flex-1">
-              <p className={`${getFontSizeClass()} leading-relaxed text-foreground font-serif mb-3 selection:bg-primary/20`}>
+            <div className="flex-1 min-w-0">
+              <p className={`${getFontSizeClass()} leading-relaxed text-foreground font-serif mb-3 selection:bg-primary/20 break-words`}>
                 {verse.text}
               </p>
               
               {/* Verse Actions */}
-              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-wrap">
                 <LiquidGlassButton
                   size="sm"
                   variant="ghost"
@@ -253,18 +253,18 @@ export function EnhancedBibleReader() {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="flex items-center justify-between p-4 bg-card rounded-lg">
+      <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-card rounded-lg gap-4">
         <LiquidGlassButton
           variant="outline"
           disabled={selectedChapter === 1}
           onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-full sm:w-auto"
         >
           <ChevronLeft className="w-4 h-4" />
           Previous
         </LiquidGlassButton>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap justify-center">
           <Select value={selectedVersion} onValueChange={setSelectedVersion}>
             <SelectTrigger className="w-24">
               <SelectValue />
@@ -296,7 +296,7 @@ export function EnhancedBibleReader() {
           variant="outline"
           disabled={selectedChapter === 21}
           onClick={() => setSelectedChapter(prev => Math.min(21, prev + 1))}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-full sm:w-auto"
         >
           Next
           <ChevronRight className="w-4 h-4" />

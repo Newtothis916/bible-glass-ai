@@ -140,38 +140,37 @@ export function EnhancedAIAssistant() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-slate-900 text-slate-100">
-      {/* Claude Header */}
-      <div className="flex items-center justify-center py-4 px-6 border-b border-slate-800">
+    <div className="flex flex-col h-[calc(100vh-6rem)] bg-background text-foreground">
+      {/* Header */}
+      <div className="flex items-center justify-center py-4 px-6 border-b border-border bg-card/50">
         <h1 className="text-lg font-normal">
-          <span className="text-slate-100">Claude</span>
-          <span className="text-slate-500 ml-2">Sonnet 4</span>
+          <span className="text-foreground">Bible AI Assistant</span>
         </h1>
       </div>
 
-      {/* Welcome Screen - Exact Claude style */}
+      {/* Welcome Screen */}
       {messages.length === 0 && (
         <div className="flex-1 flex flex-col items-center justify-center px-8">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center space-y-8">
-              {/* Orange loading spinner like Claude */}
+              {/* Loading spinner */}
               <div className="relative">
-                <div className="w-12 h-12 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin"></div>
+                <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
               </div>
-              <h2 className="text-2xl font-normal text-slate-300 text-center max-w-lg">
-                How can I help you this evening?
+              <h2 className="text-2xl font-normal text-muted-foreground text-center max-w-lg">
+                How can I help you with Scripture today?
               </h2>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center space-y-8">
-              {/* Orange accent icon */}
-              <div className="w-12 h-12 text-orange-500">
+              {/* Icon */}
+              <div className="w-12 h-12 text-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
                   <path d="M12 2L14.09 8.26L20 9L14.09 15.74L12 22L9.91 15.74L4 9L9.91 8.26L12 2Z"/>
                 </svg>
               </div>
-              <h2 className="text-2xl font-normal text-slate-300 text-center max-w-lg">
-                How can I help you this evening?
+              <h2 className="text-2xl font-normal text-muted-foreground text-center max-w-lg">
+                How can I help you with Scripture today?
               </h2>
             </div>
           )}
@@ -185,22 +184,22 @@ export function EnhancedAIAssistant() {
             {messages.map((message) => (
               <div key={message.id} className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
                     {message.role === 'user' ? (
-                      <User className="w-3.5 h-3.5 text-slate-300" />
+                      <User className="w-3.5 h-3.5 text-muted-foreground" />
                     ) : (
-                      <Bot className="w-3.5 h-3.5 text-slate-300" />
+                      <Bot className="w-3.5 h-3.5 text-muted-foreground" />
                     )}
                   </div>
-                  <span className="text-sm font-medium text-slate-300">
-                    {message.role === 'user' ? 'You' : 'Claude'}
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {message.role === 'user' ? 'You' : 'Assistant'}
                   </span>
                 </div>
                 <div className="ml-9">
-                  <div className="text-slate-100 leading-7 whitespace-pre-wrap">
+                  <div className="text-foreground leading-7 whitespace-pre-wrap">
                     {message.content}
                   </div>
-                  <div className="text-xs text-slate-500 mt-4">
+                  <div className="text-xs text-muted-foreground mt-4">
                     {format(new Date(message.timestamp), 'MMM d, h:mm a')}
                   </div>
                 </div>
@@ -210,16 +209,16 @@ export function EnhancedAIAssistant() {
             {isLoading && (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center">
-                    <Bot className="w-3.5 h-3.5 text-slate-300" />
+                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
+                    <Bot className="w-3.5 h-3.5 text-muted-foreground" />
                   </div>
-                  <span className="text-sm font-medium text-slate-300">Claude</span>
+                  <span className="text-sm font-medium text-muted-foreground">Assistant</span>
                 </div>
                 <div className="ml-9">
                   <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                   </div>
                 </div>
               </div>
@@ -229,8 +228,8 @@ export function EnhancedAIAssistant() {
         </div>
       )}
 
-      {/* Input Area - Exact Claude style */}
-      <div className="p-6">
+      {/* Input Area */}
+      <div className="p-6 border-t border-border bg-card/50">
         <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSendMessage}>
             <div className="relative">
@@ -243,15 +242,15 @@ export function EnhancedAIAssistant() {
                     handleSendMessage(e);
                   }
                 }}
-                placeholder="Chat with Claude"
-                className="w-full min-h-[52px] max-h-32 resize-none bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 pr-16 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                placeholder="Ask about Scripture..."
+                className="w-full min-h-[52px] max-h-32 resize-none bg-input border border-border rounded-lg px-4 py-3 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary/50"
                 disabled={isLoading}
               />
               <div className="absolute right-2 bottom-2 flex items-center gap-2">
                 <button
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="p-2 rounded-md bg-orange-500 text-white hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  className="p-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 >
                   <Send className="w-4 h-4" />
                 </button>
