@@ -68,16 +68,24 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       
       {/* Main content with proper spacing below floating menu button and above mobile nav */}
       <div className="relative z-10 min-h-screen">
-        <div className="pb-24 pt-24 px-safe-area-inset-x">
-          {/* Content wrapper - no state changes when nav opens */}
-          <div className="ml-0">
+        {location.pathname === '/ai' ? (
+          /* Full screen for AI assistant */
+          <div className="h-screen">
             {children}
           </div>
-        </div>
+        ) : (
+          /* Normal layout for other pages */
+          <div className="pb-24 pt-24 px-safe-area-inset-x">
+            {/* Content wrapper - no state changes when nav opens */}
+            <div className="ml-0">
+              {children}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Mobile Navigation - Hidden when side nav is open */}
-      {!isSideNavOpen && (
+      {/* Mobile Navigation - Hidden when side nav is open or on AI page */}
+      {!isSideNavOpen && location.pathname !== '/ai' && (
         <div className="z-40">
           <MobileNav activeTab={getActiveTab()} onTabClick={handleTabClick} />
         </div>

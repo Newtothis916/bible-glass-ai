@@ -140,107 +140,89 @@ export function EnhancedAIAssistant() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] max-w-3xl mx-auto bg-background">
-      {/* Claude-style Quick Prompts - Only show when no messages */}
-      {messages.length === 0 && (
-        <div className="flex-1 flex flex-col items-center justify-center px-4 py-8">
-          <div className="max-w-2xl w-full space-y-4">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-medium mb-2 text-foreground">How can I help you today?</h2>
-              <p className="text-muted-foreground text-base">
-                Ask me about Scripture, theology, spiritual guidance, or biblical questions
-              </p>
+    <div className="flex flex-col h-screen w-full bg-background">
+      {/* Claude LLM-style Chat Messages */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-3xl mx-auto px-4 py-6">
+          {messages.length === 0 ? (
+            <div className="flex items-center justify-center h-full min-h-[60vh]">
+              <div className="text-center">
+                <h2 className="text-2xl font-medium text-foreground mb-2">Bible Assistant</h2>
+                <p className="text-muted-foreground text-base">
+                  Ask me anything about Scripture, theology, or spiritual guidance
+                </p>
+              </div>
             </div>
-            
-            <div className="grid gap-2">
-              {quickPrompts.slice(0, 6).map((prompt) => (
-                <button
-                  key={prompt.title}
-                  className="w-full p-4 text-left rounded-lg border border-border/50 hover:bg-muted/30 transition-colors group"
-                  onClick={() => handleQuickPrompt(prompt.prompt)}
-                >
-                  <div className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
-                    {prompt.title}
+          ) : (
+            <div className="space-y-8">
+              {messages.map((message) => (
+                <div key={message.id} className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                    {message.role === 'user' ? (
+                      <User className="w-4 h-4 text-muted-foreground" />
+                    ) : (
+                      <Bot className="w-4 h-4 text-muted-foreground" />
+                    )}
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    {prompt.prompt}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-foreground leading-relaxed whitespace-pre-wrap text-base">
+                      {message.content}
+                    </div>
                   </div>
-                </button>
+                </div>
               ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Claude-style Chat Messages */}
-      {messages.length > 0 && (
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-8">
-          {messages.map((message) => (
-            <div key={message.id} className="flex gap-4 max-w-none">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                {message.role === 'user' ? (
-                  <User className="w-4 h-4 text-muted-foreground" />
-                ) : (
-                  <Bot className="w-4 h-4 text-muted-foreground" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="prose prose-sm max-w-none">
-                  <div className="text-foreground leading-relaxed whitespace-pre-wrap text-base">
-                    {message.content}
+              
+              {isLoading && (
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                    <Bot className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                      <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
-          
-          {isLoading && (
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                <Bot className="w-4 h-4 text-muted-foreground" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" />
-                  <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                  <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                </div>
-              </div>
+              )}
+              <div ref={messagesEndRef} />
             </div>
           )}
-          <div ref={messagesEndRef} />
         </div>
-      )}
+      </div>
 
-      {/* Claude-style Input Area */}
-      <div className="flex-shrink-0 px-4 py-4 bg-background">
-        <form onSubmit={handleSendMessage} className="relative">
-          <div className="relative">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSendMessage(e);
-                }
-              }}
-              placeholder="Message Bible Assistant..."
-              className="w-full min-h-[52px] max-h-32 resize-none bg-background border border-border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:border-primary/50 transition-all text-base"
-              disabled={isLoading}
-              rows={1}
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || isLoading}
-              className="absolute right-2 bottom-2 w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <Send className="w-4 h-4" />
-            </button>
+      {/* Claude LLM-style Input Area */}
+      <div className="flex-shrink-0 border-t border-border bg-background">
+        <div className="max-w-3xl mx-auto px-4 py-4">
+          <form onSubmit={handleSendMessage} className="relative">
+            <div className="relative">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage(e);
+                  }
+                }}
+                placeholder="Message Bible Assistant..."
+                className="w-full min-h-[52px] max-h-32 resize-none bg-background border border-border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:border-primary/50 transition-all text-base"
+                disabled={isLoading}
+                rows={1}
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                className="absolute right-2 bottom-2 w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </div>
+          </form>
+          <div className="mt-2 text-xs text-muted-foreground text-center">
+            AI responses may contain errors. Always verify with Scripture.
           </div>
-        </form>
-        <div className="mt-2 text-xs text-muted-foreground text-center">
-          AI responses may contain errors. Always verify with Scripture.
         </div>
       </div>
     </div>
