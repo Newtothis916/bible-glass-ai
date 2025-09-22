@@ -7,14 +7,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Settings, Moon, Volume2, Bell, Shield, Palette, BookOpen, Download } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 
 export default function SettingsPage() {
-  const [darkMode, setDarkMode] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const [soundEffects, setSoundEffects] = useState(true);
   const [autoPlay, setAutoPlay] = useState(false);
   const [offlineMode, setOfflineMode] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDarkMode = theme === 'dark';
+
+  const toggleDarkMode = (checked: boolean) => {
+    setTheme(checked ? 'dark' : 'light');
+  };
 
   return (
     <MainLayout>
@@ -47,8 +59,9 @@ export default function SettingsPage() {
                   </p>
                 </div>
                 <Switch
-                  checked={darkMode}
-                  onCheckedChange={setDarkMode}
+                  checked={mounted ? isDarkMode : false}
+                  onCheckedChange={toggleDarkMode}
+                  disabled={!mounted}
                 />
               </div>
 

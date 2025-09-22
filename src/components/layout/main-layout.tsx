@@ -66,9 +66,9 @@ export function MainLayout({ children, currentTab }: MainLayoutProps) {
       {/* Offline Indicator */}
       <OfflineIndicator />
       
-      {/* Main content with proper spacing below floating menu button */}
+      {/* Main content with proper spacing below floating menu button and above mobile nav */}
       <div className="relative z-10 min-h-screen">
-        <div className="pb-20 pt-28 safe-area-inset">
+        <div className="pb-24 pt-24 px-safe-area-inset-x">
           {/* Content wrapper - no state changes when nav opens */}
           <div className="ml-0">
             {children}
