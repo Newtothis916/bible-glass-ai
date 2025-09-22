@@ -156,7 +156,7 @@ export function EnhancedAIAssistant() {
           ) : (
             <div className="space-y-8">
               {messages.map((message) => (
-                <div key={message.id} className="flex gap-4">
+                <div key={message.id} className="flex gap-4 max-w-none">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center">
                     {message.role === 'user' ? (
                       <User className="w-4 h-4 text-muted-foreground" />
@@ -164,7 +164,7 @@ export function EnhancedAIAssistant() {
                       <Bot className="w-4 h-4 text-muted-foreground" />
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 max-w-none">
                     <div className="text-foreground leading-relaxed whitespace-pre-wrap text-base">
                       {message.content}
                     </div>
@@ -173,11 +173,11 @@ export function EnhancedAIAssistant() {
               ))}
               
               {isLoading && (
-                <div className="flex gap-4">
+                <div className="flex gap-4 max-w-none">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center">
                     <Bot className="w-4 h-4 text-muted-foreground" />
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 max-w-none">
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" />
                       <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
@@ -207,14 +207,14 @@ export function EnhancedAIAssistant() {
                   }
                 }}
                 placeholder="Message Bible Assistant..."
-                className="w-full min-h-[52px] max-h-32 resize-none bg-background border border-border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:border-primary/50 transition-all text-base"
+                className="w-full min-h-[52px] max-h-32 resize-none bg-background border border-border rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:border-primary/50 transition-all text-base"
                 disabled={isLoading}
                 rows={1}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="absolute right-2 bottom-2 w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <Send className="w-4 h-4" />
               </button>
