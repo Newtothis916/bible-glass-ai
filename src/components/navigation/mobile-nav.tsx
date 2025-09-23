@@ -17,7 +17,7 @@ const navItems = [
 
 export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-glass-bg backdrop-blur-xl border-t border-glass-border shadow-glass-lg">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/5 backdrop-blur-2xl border-t border-white/20 shadow-glass-lg">
       <div className="px-2 py-2">
         <div className="flex items-center justify-around max-w-md mx-auto">
           {navItems.map(({ id, label, icon: Icon }) => (
@@ -27,10 +27,10 @@ export function MobileNav({ activeTab, onTabClick }: MobileNavProps) {
               size="sm"
               onClick={() => onTabClick(id)}
               className={cn(
-                "flex flex-col items-center gap-1 h-14 px-3 py-2 text-xs font-medium transition-all duration-300 mobile-touch-target rounded-xl backdrop-blur-sm",
+                "flex flex-col items-center gap-1 h-14 px-3 py-2 text-xs font-medium transition-all duration-300 mobile-touch-target rounded-xl backdrop-blur-md border border-white/10",
                 activeTab === id 
-                  ? "text-primary-foreground bg-primary/90 backdrop-blur-md shadow-glow border border-primary/30" 
-                  : "text-muted-foreground hover:text-primary hover:bg-white/10 hover:backdrop-blur-md hover:border-white/20 border border-transparent"
+                  ? "text-foreground bg-white/15 backdrop-blur-lg shadow-glass border-white/20" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-white/10 hover:backdrop-blur-lg hover:border-white/15"
               )}
             >
               <Icon className="w-5 h-5" />
