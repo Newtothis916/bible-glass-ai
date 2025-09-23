@@ -134,7 +134,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
         size="sm"
         onClick={() => setIsOpen(true)}
         className={cn(
-          "fixed top-4 left-4 z-30 w-12 h-12 rounded-full bg-background/80 backdrop-blur-md border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300",
+          "fixed top-4 left-4 z-30 w-12 h-12 rounded-full bg-background/80 backdrop-blur-md border border-border/50 shadow-lg transition-all duration-300",
           className
         )}
       >
@@ -229,7 +229,7 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
                         "w-full justify-start gap-3 h-10 px-3 font-normal",
                         isActive(item.path) 
                           ? "bg-primary text-primary-foreground shadow-md" 
-                          : "hover:bg-muted text-foreground",
+                          : "text-foreground hover:bg-transparent hover:text-foreground",
                         item.premium && !isPremium && "opacity-60"
                       )}
                       disabled={item.premium && !isPremium}
