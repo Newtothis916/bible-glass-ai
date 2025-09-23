@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { 
   Menu, X, User, Settings, BookOpen, Bookmark, Download, BarChart3,
   HelpCircle, MessageSquare, Info, Shield, Mail, Heart, Users,
-  Headphones, Search, Bot, Calendar, Home, Crown, Brain, Target
+  Headphones, Search, Bot, Calendar, Home, Crown, Brain, Target,
+  Moon, Sun
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/use-auth";
+import { useTheme } from "next-themes";
 
 interface FloatingSideNavProps {
   className?: string;
@@ -72,9 +74,16 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   const isPremium = false; // TODO: Add subscription logic
   const currentPath = location.pathname;
+
+  // Mount effect for theme
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Scroll lock effect
   useEffect(() => {
@@ -111,6 +120,10 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
     if (path === "/" && currentPath === "/") return true;
     if (path !== "/" && currentPath.startsWith(path)) return true;
     return false;
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   return (
@@ -157,14 +170,35 @@ export function FloatingSideNav({ className, isOpen, setIsOpen }: FloatingSideNa
                 )}
               </div>
             </div>
-            <LiquidGlassButton
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(false)}
-              className="w-8 h-8 rounded-full"
-            >
-              <X className="w-4 h-4" />
-            </LiquidGlassButton>
+            <div className="flex items-center gap-2">
+              {/* Theme Toggle */}
+              <LiquidGlassButton
+                variant="ghost"
+                size="sm"
+                onClick={toggleTheme}
+                className="w-8 h-8 rounded-full"
+                disabled={!mounted}
+              >
+                {mounted ? (
+                  theme === 'dark' ? (
+                    <Sun className="w-4 h-4" />
+                  ) : (
+                    <Moon className="w-4 h-4" />
+                  )
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+              </LiquidGlassButton>
+              {/* Close Button */}
+              <LiquidGlassButton
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsOpen(false)}
+                className="w-8 h-8 rounded-full"
+              >
+                <X className="w-4 h-4" />
+              </LiquidGlassButton>
+            </div>
           </div>
 
           {/* Premium Status */}
