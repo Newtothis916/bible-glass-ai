@@ -210,7 +210,7 @@ export function EnhancedAIAssistant() {
                   }
                 }}
                 placeholder="Message Bible Assistant..."
-                className="w-full min-h-[52px] max-h-32 resize-none bg-gray-100 text-white placeholder-gray-500 rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:bg-gray-200 transition-all text-base"
+                className="w-full min-h-[52px] max-h-32 resize-none bg-gray-100 text-black placeholder-gray-500 rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:bg-gray-200 transition-all text-base"
                 disabled={isLoading}
                 rows={1}
               />
