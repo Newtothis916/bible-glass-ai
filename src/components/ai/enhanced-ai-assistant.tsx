@@ -148,8 +148,11 @@ export function EnhancedAIAssistant() {
             <div className="flex items-center justify-center h-full min-h-[60vh]">
               <div className="text-center">
                 <h2 className="text-2xl font-medium text-foreground mb-2">Bible Assistant</h2>
-                <p className="text-muted-foreground text-base">
+                <p className="text-muted-foreground text-base mb-4">
                   Ask me anything about Scripture, theology, or spiritual guidance
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  AI responses may contain errors. Always verify with Scripture.
                 </p>
               </div>
             </div>
@@ -193,7 +196,7 @@ export function EnhancedAIAssistant() {
       </div>
 
       {/* Claude LLM-style Input Area */}
-      <div className="flex-shrink-0 border-t border-border bg-background">
+      <div className="flex-shrink-0 bg-background">
         <div className="max-w-3xl mx-auto px-4 py-4">
           <form onSubmit={handleSendMessage} className="relative">
             <div className="relative">
@@ -207,7 +210,7 @@ export function EnhancedAIAssistant() {
                   }
                 }}
                 placeholder="Message Bible Assistant..."
-                className="w-full min-h-[52px] max-h-32 resize-none bg-background border border-border rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:border-primary/50 transition-all text-base"
+                className="w-full min-h-[52px] max-h-32 resize-none bg-gray-100 text-white placeholder-gray-500 rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary/20 focus:outline-none focus:bg-gray-200 transition-all text-base"
                 disabled={isLoading}
                 rows={1}
               />
@@ -220,9 +223,6 @@ export function EnhancedAIAssistant() {
               </button>
             </div>
           </form>
-          <div className="mt-2 text-xs text-muted-foreground text-center">
-            AI responses may contain errors. Always verify with Scripture.
-          </div>
         </div>
       </div>
     </div>
