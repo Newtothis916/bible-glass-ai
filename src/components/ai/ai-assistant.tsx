@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import { LiquidGlassCard, CardHeader, CardTitle, CardContent } from "@/components/ui/liquid-glass-card";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
 import { Sparkles, Send, BookOpen, Clock, Star } from "lucide-react";
@@ -34,6 +36,7 @@ export function AIAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>(sampleHistory);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -46,23 +49,90 @@ export function AIAssistant() {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
     setInput('');
     setIsLoading(true);
 
-    // Simulate AI response (in real app, this would call your API)
-    setTimeout(() => {
+    try {
+      // Get the current session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in to use the AI assistant.",
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      // Prepare context from recent messages (last 5 messages)
+      const context = messages.slice(-5).map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
+
+      // Call the edge function
+      const { data, error } = await supabase.functions.invoke('ai-bible-guide', {
+        body: {
+          question: currentInput,
+          context: context
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // Create AI response message
       const aiResponse: ChatMessage = {
         id: Date.now().toString() + '_ai',
         type: 'assistant',
-        content: "I understand you're asking about Scripture. Let me provide you with a thoughtful explanation based on biblical context and various Christian perspectives.\n\nThis is a demonstration response. In the full app, this would connect to a real AI service with proper biblical knowledge and citation capabilities.",
-        citations: [
-          { ref: 'Example Reference', excerpt: 'This would be a relevant scripture excerpt...' }
-        ],
+        content: data.answer,
+        citations: data.citations?.map((ref: string) => ({
+          ref: ref,
+          excerpt: `Reference: ${ref}`
+        })) || [],
         timestamp: new Date()
       };
+
       setMessages(prev => [...prev, aiResponse]);
+    } catch (error: any) {
+      console.error('Error calling AI assistant:', error);
+      
+      // Show user-friendly error message
+      let errorMessage = "Failed to get AI response. Please try again.";
+      
+      if (error.message?.includes('Rate limit')) {
+        errorMessage = "You've reached the rate limit. Please wait a moment before trying again.";
+      } else if (error.message?.includes('usage limit')) {
+        errorMessage = "AI usage limit reached. Please check your subscription or contact support.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive"
+      });
+
+      // Add error message to chat
+      const errorResponse: ChatMessage = {
+        id: Date.now().toString() + '_error',
+        type: 'assistant',
+        content: `I apologize, but I encountered an error: ${errorMessage}`,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   return (

@@ -113,9 +113,10 @@ serve(async (req) => {
     )
   } catch (error) {
     console.error('AI Bible Guide Error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Internal server error',
+        error: errorMessage,
         answer: "I apologize, but I'm experiencing technical difficulties. Please try again in a moment."
       }),
       {

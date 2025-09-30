@@ -23,8 +23,9 @@ serve(async (req) => {
       Deno.env.get('STRIPE_WEBHOOK_SECRET')!
     );
   } catch (err) {
-    console.error('Webhook signature verification failed:', err.message);
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+    console.error('Webhook signature verification failed:', errorMessage);
+    return new Response(`Webhook Error: ${errorMessage}`, { status: 400 });
   }
 
   try {
@@ -55,8 +56,9 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Webhook handler error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       { status: 400 }
     );
   }

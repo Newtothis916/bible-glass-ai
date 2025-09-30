@@ -1,1 +1,4 @@
 project_id = "eqfignpoauuqngchuzkt"
+
+[functions.ai-bible-guide]
+verify_jwt = true
