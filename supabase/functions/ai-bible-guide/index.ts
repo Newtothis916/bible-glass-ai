@@ -39,10 +39,10 @@ serve(async (req) => {
       throw new Error('Invalid user')
     }
 
-    // Prepare OpenAI API call
-    const openaiApiKey = Deno.env.get('OPENAI_API_KEY')
-    if (!openaiApiKey) {
-      throw new Error('OpenAI API key not configured')
+    // Prepare Lovable AI call
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')
+    if (!lovableApiKey) {
+      throw new Error('Lovable AI key not configured')
     }
 
     // Build context for the AI
@@ -54,29 +54,33 @@ serve(async (req) => {
       { role: 'user', content: question }
     ]
 
-    // Call OpenAI API
-    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call Lovable AI Gateway
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
+        'Authorization': `Bearer ${lovableApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'google/gemini-2.5-flash',
         messages: messages,
-        max_tokens: 1000,
-        temperature: 0.7,
       }),
     })
 
-    if (!openaiResponse.ok) {
-      const error = await openaiResponse.json()
-      throw new Error(`OpenAI API error: ${error.error?.message || 'Unknown error'}`)
+    if (!aiResponse.ok) {
+      if (aiResponse.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again in a moment.')
+      }
+      if (aiResponse.status === 402) {
+        throw new Error('AI usage limit reached. Please contact support.')
+      }
+      const error = await aiResponse.json()
+      throw new Error(`AI API error: ${error.error?.message || 'Unknown error'}`)
     }
 
-    const openaiData = await openaiResponse.json()
-    const answer = openaiData.choices[0]?.message?.content || 'I apologize, but I could not generate a response.'
-    const tokensUsed = openaiData.usage?.total_tokens || 0
+    const aiData = await aiResponse.json()
+    const answer = aiData.choices[0]?.message?.content || 'I apologize, but I could not generate a response.'
+    const tokensUsed = aiData.usage?.total_tokens || 0
 
     // Extract potential Bible references from the answer
     const citations = extractBibleReferences(answer)

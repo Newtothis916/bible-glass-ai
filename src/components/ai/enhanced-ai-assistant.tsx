@@ -109,18 +109,30 @@ export function EnhancedAIAssistant() {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error calling AI assistant:', error);
+      
+      let errorMsg = "Failed to get AI response. Please try again.";
+      let errorContent = "I apologize, but I'm experiencing technical difficulties. Please try again in a moment.";
+      
+      if (error?.message?.includes('Rate limit')) {
+        errorMsg = "Rate limit exceeded";
+        errorContent = "You've made too many requests. Please wait a moment before trying again.";
+      } else if (error?.message?.includes('usage limit')) {
+        errorMsg = "Usage limit reached";
+        errorContent = "AI usage limit has been reached. Please contact support to continue using this feature.";
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to get AI response. Please try again.",
+        description: errorMsg,
         variant: "destructive"
       });
 
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "I apologize, but I'm experiencing technical difficulties. Please try again in a moment.",
+        content: errorContent,
         timestamp: new Date()
       };
 
