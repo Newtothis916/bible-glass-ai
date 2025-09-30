@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, useContext, ReactNode } from 'react';
+import { useEffect, useState, createContext, useContext, ReactNode, useMemo } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -26,11 +26,11 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = React.useState<User | null>(null);
-  const [session, setSession] = React.useState<Session | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -40,7 +40,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         
         // Create profile if user just signed up
         if (event === 'SIGNED_IN' && session?.user) {
-          createProfile(session.user);
+          setTimeout(() => {
+            createProfile(session.user);
+          }, 0);
         }
       }
     );
@@ -65,7 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           locale: 'en',
         });
       
-      if (error) {
+      if (error && error.code !== '23505') {
         console.error('Error creating profile:', error);
       }
     } catch (error) {
@@ -100,7 +102,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await supabase.auth.signOut();
   };
 
-  const value = React.useMemo(() => ({
+  const value = useMemo(() => ({
     user,
     session,
     loading,
