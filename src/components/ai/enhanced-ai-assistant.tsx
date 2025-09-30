@@ -4,6 +4,7 @@ import { Bot, Send, User } from "lucide-react";
 import { LiquidGlassButton } from "@/components/ui/liquid-glass-button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { lovableAI } from "@/lib/lovable-ai";
 
 interface Message {
   id: string;
@@ -91,21 +92,22 @@ export function EnhancedAIAssistant() {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('ai-bible-guide', {
-        body: {
-          question: content,
-          context: messages.slice(-5).map(m => ({ role: m.role, content: m.content }))
-        }
+      // Get current user for Lovable AI
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Use Lovable AI service
+      const aiResponse = await lovableAI.askBibleGuide({
+        question: content,
+        context: messages.slice(-5).map(m => ({ role: m.role, content: m.content })),
+        userId: user?.id
       });
-
-      if (error) throw error;
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.answer || "I apologize, but I'm having trouble responding right now. Please try again.",
+        content: aiResponse.answer,
         timestamp: new Date(),
-        citations: data.citations || []
+        citations: aiResponse.citations || []
       };
 
       setMessages(prev => [...prev, assistantMessage]);
