@@ -1,7 +1,5 @@
-import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
@@ -44,41 +42,38 @@ function App() {
         disableTransitionOnChange
       >
         <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/read" element={<ReadPage />} />
-                <Route path="/read/:version/:book/:chapter" element={<ReadPage />} />
-                <Route path="/plans" element={<PlansPage />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/ai" element={<AIPage />} />
-                <Route path="/listen" element={<ListenPage />} />
-                <Route path="/groups" element={<GroupsPage />} />
-                <Route path="/pray" element={<PrayPage />} />
-                <Route path="/practices" element={<PracticesPage />} />
-                <Route path="/memory" element={<MemoryPage />} />
-                <Route path="/rule-of-life" element={<RuleOfLifePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/notes" element={<NotesPage />} />
-                <Route path="/bookmarks" element={<BookmarksPage />} />
-                <Route path="/downloads" element={<DownloadsPage />} />
-                <Route path="/analytics" element={<AnalyticsPage />} />
-                <Route path="/help" element={<HelpPage />} />
-                <Route path="/feedback" element={<FeedbackPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/giving" element={<GivingPage />} />
-                <Route path="/privacy" element={<PrivacyPage />} />
-                <Route path="/success" element={<Success />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/read" element={<ReadPage />} />
+              <Route path="/read/:version/:book/:chapter" element={<ReadPage />} />
+              <Route path="/plans" element={<PlansPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/ai" element={<AIPage />} />
+              <Route path="/listen" element={<ListenPage />} />
+              <Route path="/groups" element={<GroupsPage />} />
+              <Route path="/pray" element={<PrayPage />} />
+              <Route path="/practices" element={<PracticesPage />} />
+              <Route path="/memory" element={<MemoryPage />} />
+              <Route path="/rule-of-life" element={<RuleOfLifePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/notes" element={<NotesPage />} />
+              <Route path="/bookmarks" element={<BookmarksPage />} />
+              <Route path="/downloads" element={<DownloadsPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/help" element={<HelpPage />} />
+              <Route path="/feedback" element={<FeedbackPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/giving" element={<GivingPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/success" element={<Success />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
