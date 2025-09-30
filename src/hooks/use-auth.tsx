@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, useContext, ReactNode, useMemo } from 'react';
+import { useEffect, useState, createContext, useContext, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -11,7 +11,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -25,7 +25,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,9 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         
         // Create profile if user just signed up
         if (event === 'SIGNED_IN' && session?.user) {
-          setTimeout(() => {
-            createProfile(session.user);
-          }, 0);
+          createProfile(session.user);
         }
       }
     );
@@ -67,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           locale: 'en',
         });
       
-      if (error && error.code !== '23505') {
+      if (error) {
         console.error('Error creating profile:', error);
       }
     } catch (error) {
@@ -102,14 +100,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await supabase.auth.signOut();
   };
 
-  const value = useMemo(() => ({
+  const value = {
     user,
     session,
     loading,
     signUp,
     signIn,
     signOut,
-  }), [user, session, loading]);
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+};
