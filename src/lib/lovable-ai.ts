@@ -25,40 +25,7 @@ class LovableAIService {
   }
 
   async askBibleGuide(request: LovableAIRequest): Promise<LovableAIResponse> {
-    // First try Lovable AI if configured
-    if (this.apiKey && this.baseUrl !== 'https://api.lovable.dev') {
-      try {
-        const response = await fetch(`${this.baseUrl}/ai/bible-guide`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.apiKey}`,
-          },
-          body: JSON.stringify({
-            question: request.question,
-            context: request.context || [],
-            userId: request.userId,
-            model: 'bible-assistant-v1',
-            temperature: 0.7,
-            max_tokens: 1000,
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          return {
-            answer: data.answer || data.response || 'I apologize, but I could not generate a response.',
-            citations: data.citations || [],
-            tokens_used: data.tokens_used || 0,
-            response_time_ms: data.response_time_ms || 0,
-          };
-        }
-      } catch (error) {
-        console.warn('Lovable AI not available, falling back to Supabase:', error);
-      }
-    }
-
-    // Fallback to Supabase function (existing implementation)
+    // Call Supabase edge function which uses Lovable AI Gateway internally
     try {
       const { createClient } = await import('@supabase/supabase-js');
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -86,9 +53,9 @@ class LovableAIService {
         response_time_ms: data.response_time_ms || 0,
       };
     } catch (error) {
-      console.error('Both Lovable AI and Supabase unavailable:', error);
+      console.error('Error calling AI Bible Guide:', error);
       
-      // Final fallback response
+      // Return error response
       return {
         answer: "I apologize, but I'm experiencing technical difficulties connecting to the AI service. Please try again in a moment.",
         citations: [],
